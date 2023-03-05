@@ -119,7 +119,6 @@
                                         Data Barang</button>
                                 </div>
                                 <div class="card-header">
-
                                     <?php
                                     if (isset($_SESSION['tambah'])) {
                                         if ($_SESSION['tambah']==1) {
@@ -197,7 +196,6 @@
                                                 <td><?= $value['kuantiti']?></td>
                                                 <td>
                                                     <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_barang'] . '"><i class="bi bi-pen"></i></button>'; ?>
-                                    
                                                     <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_barang'] . '"><i class="bi bi-trash"></i></button>'; ?>
                                                 </td>
                                             </tr>
