@@ -22,57 +22,55 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
-
-                        <li
-                        class="sidebar-item active ">
+                        <?php
+                    $file_name = basename($_SERVER['PHP_SELF']);
+                    $directory = str_replace('/' . $file_name, '', $_SERVER['PHP_SELF']);
+                    $url = $directory . '/' . str_replace('.php', '', $file_name);
+                    $url = str_replace('/ailab/', '', $url);
+                    ?>                   
+                        <?php if ($url == 'admin/index') { echo ' <li class="sidebar-item active ">';} ?>                   
                         <a href="index.php" class='sidebar-link'>
                             <i class="bi bi-grid-fill"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
 
-                    <li
-                    class="sidebar-item ">
+                   <?php if ($url == 'admin/barang') { echo ' <li class="sidebar-item active ">';} ?>
                     <a href="barang.php" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>List Barang</span>
                     </a>
                 </li>
 
-                <li
-                    class="sidebar-item ">
+                <?php if ($url == 'admin/peminjaman') { echo ' <li class="sidebar-item active ">';} ?>
                     <a href="peminjaman.php" class='sidebar-link'>
                         <i class="bi bi-basket-fill"></i>
                         <span>Peminjaman Barang</span>
                     </a>
                 </li>
                 
-                <li
-                    class="sidebar-item ">
+               <?php if ($url == 'admin/pengembalian') { echo ' <li class="sidebar-item active ">';} ?>
                     <a href="pengembalian.php" class='sidebar-link'>
                         <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                         <span>Pengembalian Barang</span>
                     </a>
                 </li>
                 
-                <li
-                    class="sidebar-item ">
-                    <a href="data_mhs.php" class='sidebar-link'>
+                <?php if ($url == 'admin/datamhsw') { echo ' <li class="sidebar-item active ">';} ?>
+                    <a href="datamhsw.php" class='sidebar-link'>
                         <i class="bi bi-person-badge-fill"></i>
                         <span>Tambah Mahasiswa</span>
                     </a>
                 </li>
                 
-                <li
-                    class="sidebar-item ">
+                <?php if ($url == 'admin/persetujuan') { echo ' <li class="sidebar-item active ">';} ?>
                     <a href="persetujuan.php" class='sidebar-link'>
                         <i class="bi bi-cash"></i>
-                        <span>Persetujuan Peminjaman</span>
+                        <span>Persetujuan</span>
                     </a>
                 </li>
                 
-                <li
-                    class="sidebar-item ">
+                <?php if ($url == 'admin/riwayat') { echo ' <li class="sidebar-item active ">';} ?>
                     <a href="riwayat.php" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Riwayat Peminjaman</span>
