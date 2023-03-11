@@ -1,0 +1,1 @@
+<?php $UIDresult='345'; echo $UIDresult; ?>
