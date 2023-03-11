@@ -4,37 +4,34 @@ include "koneksi.php";
 $kon = new Koneksi();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // Retrieve the input values
-  $username = $_POST['tteknisi'];
-  $pass = md5($_POST['tpass']);
-  if ($pass == 0) {
-    $error = 'Masukan NRP/Email and password.';
-    
-  }else{
-  // Perform validation on the input values
-  if (empty( $_POST['tteknisi']) || empty(md5($_POST['tpass']))) {
-    $error = 'Masukan NRP/Email and password.';
-  } else {
-  
-  $abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE nama_teknisi='$username' ");
-    $user = $kon->hasil_data($abc);
- if (!$user) {
-      $error = 'Invalid NRP/email atau password.';
+    // Retrieve the input values
+    $username = $_POST['tteknisi'];
+    $pass = md5($_POST['tpass']);
+    if ($pass == 0) {
+        $error = 'Masukan NRP/Email and password.';
     } else {
-      // Check if the password matches the hshed password stored in the database
-      if (($pass == $user[pass])) {
-        // Passwords match, so create a session for the user and redirect to a secured page
-        $_SESSION['teknisi_id'] = $user['id_teknisi'];
-        header('Location: index.php');
-        exit;
-      } else if($pass != $user[pass]) {
-        // Passwords do not match, so display an error message
-        $error = 'Invalid NRP/email atau password.';
-
-      }
+        // Perform validation on the input values
+        if (empty($_POST['tteknisi']) || empty(md5($_POST['tpass']))) {
+            $error = 'Masukan NRP/Email and password.';
+        } else {
+            $abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE nama_teknisi='$username' ");
+            $user = $kon->hasil_data($abc);
+            if (!$user) {
+                $error = 'Invalid NRP/email atau password.';
+            } else {
+                // Check if the password matches the hshed password stored in the database
+                if (($pass == $user[pass])) {
+                    // Passwords match, so create a session for the user and redirect to a secured page
+                    $_SESSION['teknisi_id'] = $user['id_teknisi'];
+                    header('Location: index.php');
+                    exit;
+                } elseif ($pass != $user[pass]) {
+                    // Passwords do not match, so display an error message
+                    $error = 'Invalid NRP/email atau password.';
+                }
+            }
+        }
     }
-  }
-}
 }
 
 ?>
@@ -51,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="assets\css\login\login.css" />
     <!-- Favicons -->
     <link href="img/logo.png" rel="icon">
-    <title>Login Mahasiswa</title>
+    <title>LOGIN</title>
   </head>
   <body>
     <div class="container">
@@ -63,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              <?php
 // Display any error messages
 if (isset($error)) {
-  echo '<p>' . $error . '</p>';
+    echo '<p>' . $error . '</p>';
 }
 ?>
             <div class="input-field">
