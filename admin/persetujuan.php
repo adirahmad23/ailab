@@ -1,23 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+   
+      <?php include_once "template/header.php"?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Persetujuan Peminjaman</title>
-    
-    <link rel="stylesheet" href="assets/css/main/app.css">
-    <link rel="stylesheet" href="assets/css/main/app-dark.css">
-    <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png">
-    
-    <link rel="stylesheet" href="assets/extensions/simple-datatables/style.css">
-    <link rel="stylesheet" href="assets/css/pages/simple-datatables.css">
-
-</head>
-
-<body>
-    <?php include_once "sidebar.php"?>
+            <body>
+                <?php include_once "template/sidebar.php"?>
     <div id="main">
         <header class="mb-3">
             <a href="#" class="burger-btn d-block d-xl-none">
@@ -108,20 +95,6 @@
                 </div>
             </section>
         </div>
-
-        <footer>
-            <div class="footer clearfix mb-0 text-muted">
-                <div class="float-start">
-                    <p>2021 &copy; Mazer</p>
-                </div>
-                <div class="float-end">
-                    <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                        href="https://saugi.me">Saugi</a></p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
 
     <!-- modal-tambah -->
     <div class="modal" id="modal-tambah" tabindex="-1">
@@ -215,15 +188,7 @@
       </div>
     </div>
     <!-- end-modal-hapus -->
-
-
-
-<script src="assets/js/bootstrap.js"></script>
-<script src="assets/js/app.js"></script>
-
-<script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
-<script src="assets/js/pages/simple-datatables.js"></script>
-
+<?php include_once 'template/footer.php'?>
 </body>
 
 </html>

@@ -66,23 +66,10 @@
             <!DOCTYPE html>
             <html lang="en">
 
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>List Barang</title>
-
-                <link rel="stylesheet" href="assets/css/main/app.css">
-                <link rel="stylesheet" href="assets/css/main/app-dark.css">
-                <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">
-                <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png">
-
-                <link rel="stylesheet" href="assets/extensions/simple-datatables/style.css">
-                <link rel="stylesheet" href="assets/css/pages/simple-datatables.css">
-
-            </head>
+      <?php include_once "template/header.php"?>
 
             <body>
-                <?php include_once "sidebar.php"?>
+                <?php include_once "template/sidebar.php"?>
                 </div>
                 <div id="main">
                     <header class="mb-3">
@@ -287,18 +274,7 @@
                     </section>
                 </div>
 
-                <footer>
-                    <div class="footer clearfix mb-0 text-muted">
-                        <div class="float-start">
-                            <p>2021 &copy; Mazer</p>
-                        </div>
-                        <div class="float-end">
-                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                    href="https://saugi.me">Saugi</a></p>
-                        </div>
-                    </div>
-                </footer>
-                </div>
+            
 
                 <!-- modal-tambah -->
                 <div class="modal" id="modal-tambah" tabindex="-1">
@@ -335,19 +311,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- end-modal-tambah -->
+              <?php include_once 'template/footer.php'?>
 
-
-
-
-
-
-                </div>
-                <script src="assets/js/bootstrap.js"></script>
-                <script src="assets/js/app.js"></script>
-
-                <script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
-                <script src="assets/js/pages/simple-datatables.js"></script>
 
             </body>
 
