@@ -46,6 +46,38 @@
                         <span>Peminjaman Barang</span>
                     </a>
                 </li>
+                
+                <li
+                    class="sidebar-item ">
+                    <a href="peminjaman_mahasiswa.php" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                        <span>Pengembalian Barang</span>
+                    </a>
+                </li>
+                
+                <li
+                    class="sidebar-item ">
+                    <a href="peminjaman_mahasiswa.php" class='sidebar-link'>
+                        <i class="bi bi-person-badge-fill"></i>
+                        <span>Tambah Mahasiswa</span>
+                    </a>
+                </li>
+                
+                <li
+                    class="sidebar-item ">
+                    <a href="peminjaman_mahasiswa.php" class='sidebar-link'>
+                        <i class="bi bi-cash"></i>
+                        <span>Persetujuan Barang</span>
+                    </a>
+                </li>
+                
+                <li
+                    class="sidebar-item ">
+                    <a href="peminjaman_mahasiswa.php" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
+                        <span>Riwayat Peminjaman</span>
+                    </a>
+                </li>
 
                 <li
                     class="sidebar-item">
