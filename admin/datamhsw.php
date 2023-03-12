@@ -21,26 +21,40 @@
             exit();
             }
             }
+//--------------------------tambah----------------------
+            if(isset($_POST['tambah'])){
+            $idrfid = strip_tags($_POST['trfid']);
+            $nama = strip_tags($_POST['tnama']);
+            $nrp = strip_tags($_POST['tnrp']);
+            $kelas = strip_tags($_POST['tkelas']);
+            $email = strip_tags($_POST['temail']);
+            $pass = md5($_POST['tpass']);
+            $pass1 = md5($_POST['tpass1']);
+            if($pass != $pass1) {
+             $_SESSION['tambah'] = "2";
+                header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+            }
+            $verif= $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE id_rfid = '$idrfid' ");
+            $jumlah = $kon->jumlah_data($verif);
+            if ($jumlah>0) {
+                $_SESSION['tambah'] = "3";
+                header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+            }
+            $abc= $kon->kueri("INSERT INTO tb_mahasiswa(id_mahasiswa, id_rfid, nama_mahasiswa, nrp, kelas, email, pass) VALUES (NULL,'$idrfid','$nama','$nrp','$kelas','$email','$pass')");
+            if ($abc==true) {
+                $_SESSION['tambah'] = "1";
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+            }else {
+                $_SESSION['tambah'] = "0";
+                header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+            }
+            }
 
-            // if(isset($_POST['tambah'])){
-            // $kdbarang = strip_tags($_POST['tkdbarang']);
-            // $namabarang = strip_tags($_POST['tnamabarang']);
-            // $merek = strip_tags($_POST['tmerek']);
-            // $kuantiti = strip_tags($_POST['tkuantiti']);
-            // $status = 1;
-            // $abc= $kon->kueri("INSERT INTO tb_barang (id_barang,kd_barang,nama_barang,merek,kuantiti,status) VALUES (NULL,'$kdbarang','$namabarang','$merek','$kuantiti','$status')");
-            // if ($abc==true) {
-            //     $_SESSION['tambah'] = "1";
-            // header("Location: ".$_SERVER['PHP_SELF']);
-            // exit();
-            // }else {
-            //     $_SESSION['tambah'] = "0";
-            //     header("Location: ".$_SERVER['PHP_SELF']);
-            // exit();
-            // }
-            // }
-
-
+//------------------------edit------------------------------------
               if(isset($_POST['edit'])){
             $idmahasiswa = strip_tags($_POST['tidmahasiswa']);
             $idrfid = strip_tags($_POST['tidrfid']);
@@ -106,7 +120,7 @@
                                     if (isset($_SESSION['tambah'])) {
                                         if ($_SESSION['tambah']==1) {
                                                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                        <strong>Data Berhasil Ditambahkan !
+                                                        <strong>Data Mahasiswa Berhasil Ditambahkan !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
 
@@ -114,7 +128,21 @@
                                 
                                         }else if($_SESSION['tambah']==0) {
                                               echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>Data Gagal Ditambahkan !
+                                                        <strong>Data Mahasiswa Gagal Ditambahkan !
+                                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>';
+                                                    unset($_SESSION['tambah']);
+                                                    
+                                        }else if($_SESSION['tambah']==2) {
+                                              echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                        <strong>Password Tidak Sama Dengan Konfirmasi, Data Mahasiswa Gagal Ditambahkan !
+                                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>';
+                                                    unset($_SESSION['tambah']);
+                                                    
+                                        }else if($_SESSION['tambah']==3) {
+                                              echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                        <strong>ID RFID Sudah Ada, Data Mahasiswa Gagal Ditambahkan !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['tambah']);
@@ -125,14 +153,14 @@
                                     if (isset($_SESSION['edit'])) {
                                         if ($_SESSION['edit']==1) {
                                              echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                        <strong>Data Berhasil Diedit !
+                                                        <strong>Data Mahasiswa Berhasil Diedit !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['edit']);
                                 
                                         }else if($_SESSION['edit']==0) {
                                               echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>Data Gagal Diedit !
+                                                        <strong>Data Mahasiswa Gagal Diedit !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['edit']);
@@ -143,14 +171,14 @@
                                     if (isset($_SESSION['hapus'])) {
                                         if ($_SESSION['hapus']==1) {
                                               echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                        <strong>Data Berhasil Dihapus !
+                                                        <strong>Data Mahasiswa Berhasil Dihapus !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['hapus']);
                                 
-                                        }else if($_SESSION['tambah']==0) {
+                                        }else if($_SESSION['hapus']==0) {
                                               echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>Data Gagal Dihapus!
+                                                        <strong>Data Mahasiswa Gagal Dihapus!
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['hapus']);
@@ -281,33 +309,54 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <form method="post">
             <div class="form-group">
-                <label>ID Mahasiswa</label>
-                <input type="text" name="id" class="form-control">
+                <label>ID RFID</label>
+                <div id="idmhsw"></div>
             </div>
             <div class="form-group">
                 <label>Nama Mahasiswa</label>
-                <input type="text" name="id" class="form-control">
+                <input type="text" name="tnama" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>NRP</label>
-                <input type="text" name="id" class="form-control">
+                <input type="text" name="tnrp" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Kelas</label>
-                <input type="text" name="id" class="form-control">
+                <input type="text" name="tkelas" class="form-control" required>
+            </div>
+             <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="temail" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="tpass" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Konfirmasi Password</label>
+                <input type="password" name="tpass1" class="form-control" required>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
+          <button type="submit" name="tambah" class="btn btn-primary">Daftar</button>
+            </form>
           </div>
         </div>
       </div>
     </div>
     <!-- end-modal-tambah -->
      <?php include_once 'template/footer.php' ?>
-
+<script>
+			$(document).ready(function(){
+				 $("#idmhsw").load("tmpmhsw.php");
+				setInterval(function() {
+					$("#idmhsw").load("tmpmhsw.php");
+				}, 500);
+			});
+		</script>
 </body>
 
 </html>

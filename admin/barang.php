@@ -1,4 +1,4 @@
-            <?php
+          <?php
             session_start();
             if (!isset($_SESSION['teknisi_id'])) {
                 header("Location: login.php");
@@ -7,8 +7,8 @@
             include_once "koneksi.php";
             $kon = new Koneksi();
             $ab = $kon->kueri("SELECT * FROM tb_barang");
-            // $data = $kon->hasil_data($ab);
-
+     
+//----------------------Hapus------------------------------------------------------
             if(isset($_POST['delete'])){
                 $id = $_POST['delete'];
                 $dlt = $kon->kueri("DELETE FROM tb_barang WHERE id_barang = '$id' ");
@@ -22,9 +22,17 @@
             exit();
             }
             }
-
+//----------------Tambah------------------------------------------------------------------
             if(isset($_POST['tambah'])){
             $kdbarang = strip_tags($_POST['tkdbarang']);
+            $cek_data = $kon->kueri("SELECT * FROM tb_barang WHERE kd_barang = '$kdbarang' ");
+            $jumlah = $kon->jumlah_data($cek_data);
+            // echo $jumlah;
+            if($jumlah > 0) {
+              $_SESSION['tambah'] = "2";
+                 header("Location: ".$_SERVER['PHP_SELF']);
+            exit(); 
+            }
             $namabarang = strip_tags($_POST['tnamabarang']);
             $merek = strip_tags($_POST['tmerek']);
             $kuantiti = strip_tags($_POST['tkuantiti']);
@@ -41,6 +49,7 @@
             }
             }
 
+//----------------Tambah------------------------------------------------------------------
 
               if(isset($_POST['edit'])){
             $idbarang = strip_tags($_POST['tidbarang']);
@@ -110,7 +119,7 @@
                                     if (isset($_SESSION['tambah'])) {
                                         if ($_SESSION['tambah']==1) {
                                                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                        <strong>Data Berhasil Ditambahkan !
+                                                        <strong>Data Barang Berhasil Ditambahkan !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
 
@@ -118,7 +127,14 @@
                                 
                                         }else if($_SESSION['tambah']==0) {
                                               echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>Data Gagal Ditambahkan !
+                                                        <strong>Data Barang Gagal Ditambahkan !
+                                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>';
+                                                    unset($_SESSION['tambah']);
+                                                    
+                                        }else if($_SESSION['tambah']==2) {
+                                              echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                        <strong>Kode Barang Sudah Ada,Data Barang Gagal Ditambahkan !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['tambah']);
@@ -129,14 +145,14 @@
                                     if (isset($_SESSION['edit'])) {
                                         if ($_SESSION['edit']==1) {
                                              echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                        <strong>Data Berhasil Diedit !
+                                                        <strong>Data Barang Berhasil Diedit !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['edit']);
                                 
                                         }else if($_SESSION['edit']==0) {
                                               echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>Data Gagal Diedit !
+                                                        <strong>Data Barang Gagal Diedit !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['edit']);
@@ -147,14 +163,14 @@
                                     if (isset($_SESSION['hapus'])) {
                                         if ($_SESSION['hapus']==1) {
                                               echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                        <strong>Data Berhasil Dihapus !
+                                                        <strong>Data Barang Berhasil Dihapus !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['hapus']);
                                 
-                                        }else if($_SESSION['tambah']==0) {
+                                        }else if($_SESSION['hapus']==0) {
                                               echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>Data Gagal Dihapus!
+                                                        <strong>Data Barang Gagal Dihapus!
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                                     unset($_SESSION['hapus']);
@@ -288,7 +304,8 @@
                                 <form action="" method="post">
                                     <div class="form-group">
                                         <label>Kode Barang</label>
-                                        <input type="text" name="tkdbarang" class="form-control" required>
+                                        <div id="kdbarang"></div>
+                                   
                                     </div>
                                     <div class="form-group">
                                         <label>Nama Barang</label>
@@ -312,8 +329,14 @@
                     </div>
                 </div>
               <?php include_once 'template/footer.php'?>
-
-
+	<script>
+			$(document).ready(function(){
+				 $("#kdbarang").load("tmpbarang.php");
+				setInterval(function() {
+					$("#kdbarang").load("tmpbarang.php");
+				}, 500);
+			});
+		</script>
             </body>
 
             </html>
