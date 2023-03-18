@@ -1,35 +1,43 @@
 <?php
-
-//fetch_item.php
+// fetch_item.php
 
 include('database_connection.php');
 
-$query = "SELECT * FROM tbl_product ORDER BY id DESC";
+$query = "SELECT * FROM tb_barang ORDER BY id_barang DESC";
 
 $statement = $connect->prepare($query);
 
-if($statement->execute())
-{
+if ($statement->execute()) {
 	$result = $statement->fetchAll();
-	$output = '';
-	foreach($result as $row)
-	{
-		$output .= '
-		<div class="col-md-3" style="margin-top:12px;">  
-            <div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px; height:350px;" align="center">
-            	<img src="images/'.$row["image"].'" class="img-responsive" /><br />
-            	<h4 class="text-info">'.$row["name"].'</h4>
-            	<h4 class="text-danger">$ '.$row["price"] .'</h4>
-            	<input type="text" name="quantity" id="quantity' . $row["id"] .'" class="form-control" value="1" />
-            	<input type="hidden" name="hidden_name" id="name'.$row["id"].'" value="'.$row["name"].'" />
-            	<input type="hidden" name="hidden_price" id="price'.$row["id"].'" value="'.$row["price"].'" />
-            	<input type="button" name="add_to_cart" id="'.$row["id"].'" style="margin-top:5px;" class="btn btn-success form-control add_to_cart" value="Add to Cart" />
-            </div>
-        </div>
-		';
+
+	echo "<table class='table table-striped' id='table1'>";
+	echo "<thead>";
+	echo "<tr>";
+	echo "<th>Kode Barang</th>";
+	echo "<th>Nama Barang</th>";
+	echo "<th>Merek</th>";
+	echo "<th>Jumlah Stock</th>";
+	echo "<th>Aksi</th>";
+	echo "</tr>";
+	echo "</thead>";
+	echo "<tbody>";
+
+	foreach ($result as $row) {
+		echo "<tr>";
+		echo "<td>" . $row['kd_barang'] . "</td>";
+		echo "<td>" . $row['nama_barang'] . "</td>";
+		echo "<td>" . $row['merek'] . "</td>";
+		echo "<td>" . $row['kuantiti'] . "</td>";
+		echo "<td>";
+		echo '	<input type="hidden" name="quantity" id="quantity' . $row["id_barang"] . '" class="form-control" value="1" />
+				<input type="hidden" name="hidden_name" id="kdbarang' . $row["id_barang"] . '" value="' . $row["kd_barang"] . '" />
+				<input type="hidden" name="hidden_name" id="name' . $row["id_barang"] . '" value="' . $row["nama_barang"] . '" />
+				<input type="hidden" name="hidden_price" id="price' . $row["id_barang"] . '" value="' . $row["merek"] . '" />
+				<input type="button" name="add_to_cart" id="' . $row["id_barang"] . '" style="margin-top:5px;" class="btn btn-warning form-control add_to_cart" value="Keranjang" />';
+		// echo "<input type='button' class='btn btn-primary' value='Tambah'>";
+		echo "</td>";
+		echo "</tr>";
 	}
-	echo $output;
+	echo "</tbody>";
+	echo "</table>";
 }
-
-
-?>

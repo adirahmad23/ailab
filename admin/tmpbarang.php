@@ -1,1 +1,1 @@
-<input type='text' name='tkdbarang'  class='form-control' value='DataBarang1'>
+<input type='text' name='tkdbarang' class='form-control' value='1234'>
