@@ -3,11 +3,11 @@ include "koneksi.php";
 $kon = new Koneksi();
 
 //check if the form has been submitted
-if(isset($_POST['delete'])){
+if (isset($_POST['delete'])) {
     $id = $_POST['delete'];
 
     //create query to delete data from table
-        $query = $kon->kueri("DELETE FROM tb_barang WHERE id = $id ");
+    $query = $kon->kueri("DELETE FROM tb_barang WHERE id = $id ");
 
     // $query = "DELETE FROM users WHERE id = $id";
 
@@ -15,9 +15,9 @@ if(isset($_POST['delete'])){
     $result = $kon->jumlah_data($query);
 
     //check if the query executed successfully
-    if($result){
+    if ($result) {
         echo "Data has been deleted successfully";
-    }else{
+    } else {
         echo "Error deleting data";
     }
 }
@@ -27,7 +27,7 @@ $query = $kon->kueri("SELECT * FROM tb_barang");
 $result = $kon->jumlah_data($query);
 echo '<table>';
 echo '<tr><th>ID</th><th>Name</th><th>Email</th><th>Action</th></tr>';
-while($row= $kon->hasil_data($query)){
+while ($row = $kon->hasil_data($query)) {
     echo '<tr>';
     echo '<td>' . $row['id_barang'] . '</td>';
     echo '<td>' . $row['nama_barang'] . '</td>';
@@ -61,8 +61,3 @@ while($row= $kon->hasil_data($query)){
     echo '</div>';
 }
 echo '</table>';
-
-
-?>
-
-
