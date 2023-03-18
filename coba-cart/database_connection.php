@@ -2,4 +2,4 @@
 
 //database_connection.php
 
-$connect = new PDO("mysql:host=localhost;dbname=tbl_product", "root", "");
+$connect = new PDO("mysql:host=localhost;dbname=ailab", "root", "");
