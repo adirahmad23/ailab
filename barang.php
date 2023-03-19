@@ -62,26 +62,26 @@ if (isset($_GET["action"])) {
 
 if (isset($_GET["success"])) {
     $message = '
-	<div class="alert alert-success alert-dismissible">
+	<div class="alert alert-primary alert-dismissible">
 	  	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  	Item Added into Cart
+	  	Item Telah Ditambahkan Dikeranjang
 	</div>
 	';
 }
 
 if (isset($_GET["remove"])) {
     $message = '
-	<div class="alert alert-success alert-dismissible">
+	<div class="alert alert-primary alert-dismissible">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		Item removed from Cart
+		Item Telah Dihapus Dari Keranjang
 	</div>
 	';
 }
 if (isset($_GET["clearall"])) {
     $message = '
-	<div class="alert alert-success alert-dismissible">
+	<div class="alert alert-primary alert-dismissible">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		Your Shopping Cart has been clear...
+		Keranjang Anda Kosong...
 	</div>
 	';
 }
@@ -165,7 +165,7 @@ if (isset($_GET["clearall"])) {
                                                 <input type="hidden" name="kd_barang" value="<?php echo $row["kd_barang"]; ?>" />
                                                 <input type="hidden" name="merek" value="<?php echo $row["merek"]; ?>" />
                                                 <input type="hidden" name="hidden_id" value="<?php echo $row["id_barang"]; ?>" />
-                                                <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
+                                                <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Tambah" />
 
                                             </form>
                                         </td>
@@ -180,16 +180,16 @@ if (isset($_GET["clearall"])) {
 
                 <div style="clear:both"></div>
                 <br />
-                <h3>Order Details</h3>
+                <h3>Detail Keranjang</h3>
                 <div class="table-responsive">
                     <?php echo $message; ?>
                     <div align="right">
-                        <a href="barang.php?action=clear"><b>Clear Cart</b></a>
+                        <a href="barang.php?action=clear"><b>Hapus Barang</b></a>
                     </div>
                     <table class="table table-bordered">
                         <tr>
-                            <th width="40%">Kode Barang</th>
-                            <th width="10%">Nama Barang</th>
+                            <th width="20%">Kode Barang</th>
+                            <th width="20%">Nama Barang</th>
                             <th width="20%">Merek</th>
                             <th width="15%">Kuantiti</th>
                             <th width="5%">Aksi</th>
@@ -217,7 +217,7 @@ if (isset($_GET["clearall"])) {
                         } else {
                             echo '
 				<tr>
-					<td colspan="5" align="center">No Item in Cart</td>
+					<td colspan="5" align="center">Keranjang Anda Kosong</td>
 				</tr>
 				';
                         }
@@ -227,16 +227,7 @@ if (isset($_GET["clearall"])) {
             </section>
         </div>
 
-        <footer>
-            <div class="footer clearfix mb-0 text-muted">
-                <div class="float-start">
-                    <p>2021 &copy; Mazer</p>
-                </div>
-                <div class="float-end">
-                    <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a href="https://saugi.me">Saugi</a></p>
-                </div>
-            </div>
-        </footer>
+        <?php include_once 'footer.php' ?>
     </div>
     </div>
     <script src="assets/js/bootstrap.js"></script>
