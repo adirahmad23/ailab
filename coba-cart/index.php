@@ -107,23 +107,23 @@
 		});
 
 		$(document).on('click', '.add_to_cart', function() {
-			// alert("Halo, selamat datang di halaman web kami!");
 
-			var product_id = $(this).attr("id");
-			var product_name = $('#name' + product_id + '').val();
-			var product_price = $('#price' + product_id + '').val();
-			var product_quantity = $('#quantity' + product_id).val();
-			var kdbarang = $('#kdbarang' + product_id).val();
+			var idbarang = $(this).attr("id");
+
+			var namabarang = $('#namabarang' + idbarang + '').val();
+			var merek = $('#merek' + idbarang + '').val();
+			var kuantiti = $('#kuantiti' + idbarang).val();
+			var kdbarang = $('#kdbarang' + idbarang).val();
 			var action = "add";
-			if (product_quantity > 0) {
+			if (kuantiti > 0) {
 				$.ajax({
 					url: "action.php",
 					method: "POST",
 					data: {
-						product_id: product_id,
-						product_name: product_name,
-						product_price: product_price,
-						product_quantity: product_quantity,
+						idbarang: idbarang,
+						namabarang: namabarang,
+						merek: merek,
+						kuantiti: kuantiti,
 						kdbarang: kdbarang,
 						action: action
 					},
@@ -138,14 +138,14 @@
 		});
 
 		$(document).on('click', '.delete', function() {
-			var product_id = $(this).attr("id");
+			var idbarang = $(this).attr("id");
 			var action = 'remove';
 			if (confirm("Are you sure you want to remove this product?")) {
 				$.ajax({
 					url: "action.php",
 					method: "POST",
 					data: {
-						product_id: product_id,
+						idbarang: idbarang,
 						action: action
 					},
 					success: function() {

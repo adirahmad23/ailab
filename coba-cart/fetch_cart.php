@@ -18,15 +18,15 @@ $output = '
             <th width="5%">Aksi</th>  
         </tr>
 ';
-if (!empty($_SESSION["shopping_cart"])) {
-	foreach ($_SESSION["shopping_cart"] as $keys => $values) {
+if (!empty($_SESSION["pinjam_cart"])) {
+	foreach ($_SESSION["pinjam_cart"] as $keys => $values) {
 		$output .= '
 		<tr>
 			<td>' . $values["kdbarang"] . '</td>
-			<td>' . $values["product_name"] . '</td>
-			<td align="right">' . $values["product_price"] . '</td>
-			<td align="right">' . $values["product_quantity"] . '</td>
-			<td><button name="delete" class="btn btn-danger btn-xs delete" id="' . $values["product_id"] . '">Remove</button></td>
+			<td>' . $values["namabarang"] . '</td>
+			<td align="right">' . $values["merek"] . '</td>
+			<td align="right">' . $values["kuantiti"] . '</td>
+			<td><button name="delete" class="btn btn-danger btn-xs delete" id="' . $values["idbarang"] . '">Remove</button></td>
 		</tr>
 		';
 		$total_item = $total_item + 1;
