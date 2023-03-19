@@ -2,7 +2,8 @@
 
 //index.php
 
-$connect = new PDO("mysql:host=localhost;dbname=table_product", "root", "");
+include "koneksi.php";
+$kon = new Koneksi();
 
 $message = '';
 
@@ -15,20 +16,21 @@ if (isset($_POST["add_to_cart"])) {
 		$cart_data = array();
 	}
 
-	$item_id_list = array_column($cart_data, 'item_id');
+	$item_id_list = array_column($cart_data, 'id_barang');
 
 	if (in_array($_POST["hidden_id"], $item_id_list)) {
 		foreach ($cart_data as $keys => $values) {
-			if ($cart_data[$keys]["item_id"] == $_POST["hidden_id"]) {
-				$cart_data[$keys]["item_quantity"] = $cart_data[$keys]["item_quantity"] + $_POST["quantity"];
+			if ($cart_data[$keys]["id_barang"] == $_POST["hidden_id"]) {
+				$cart_data[$keys]["kuantiti"] = $cart_data[$keys]["kuantiti"] + $_POST["kuantiti"];
 			}
 		}
 	} else {
 		$item_array = array(
-			'item_id'			=>	$_POST["hidden_id"],
-			'item_name'			=>	$_POST["hidden_name"],
-			'item_price'		=>	$_POST["hidden_price"],
-			'item_quantity'		=>	$_POST["quantity"]
+			'id_barang'			=>	$_POST["hidden_id"],
+			'nama_barang'		=>	$_POST["nama_barang"],
+			'merek'				=>	$_POST["merek"],
+			'kuantiti'			=>	$_POST["kuantiti"],
+			'kdbarang'			=>	$_POST["kd_barang"],
 		);
 		$cart_data[] = $item_array;
 	}
@@ -44,7 +46,7 @@ if (isset($_GET["action"])) {
 		$cookie_data = stripslashes($_COOKIE['shopping_cart']);
 		$cart_data = json_decode($cookie_data, true);
 		foreach ($cart_data as $keys => $values) {
-			if ($cart_data[$keys]['item_id'] == $_GET["id"]) {
+			if ($cart_data[$keys]['id_barang'] == $_GET["id"]) {
 				unset($cart_data[$keys]);
 				$item_data = json_encode($cart_data);
 				setcookie("shopping_cart", $item_data, time() + (86400 * 30));
@@ -103,32 +105,46 @@ if (isset($_GET["clearall"])) {
 		<h3 align="center">Simple PHP Mysql Shopping Cart using Cookies</h3><br />
 		<br /><br />
 		<?php
-		$query = "SELECT * FROM tbl_product ORDER BY id ASC";
-		$statement = $connect->prepare($query);
-		$statement->execute();
-		$result = $statement->fetchAll();
-		foreach ($result as $row) {
+		$result = $kon->kueri("SELECT * FROM tb_barang ORDER BY id_barang ASC");
 		?>
-			<div class="col-md-3">
-				<form method="post">
-					<div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;" align="center">
-						<img src="images/<?php echo $row["image"]; ?>" class="img-responsive" /><br />
+		<div class="col-md-3">
+			<table class="table table-striped" id="table1">
+				<thead>
+					<tr>
+						<th>Kode Barang</th>
+						<th>Nama Barang</th>
+						<th>Merek</th>
+						<th>Jumlah Stock</th>
+						<th>Aksi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($result as $row) { ?>
+						<tr>
+							<td><?= $row["kd_barang"] ?></td>
+							<td><?= $row["nama_barang"] ?></td>
+							<td><?= $row["merek"] ?></td>
+							<td><?= $row["kuantiti"] ?></td>
+							<td>
+								<form method="post">
+									<input type="hidden" name="kuantiti" value="1" class="form-control" />
+									<input type="hidden" name="nama_barang" value="<?php echo $row["nama_barang"]; ?>" />
+									<input type="hidden" name="kd_barang" value="<?php echo $row["kd_barang"]; ?>" />
+									<input type="hidden" name="merek" value="<?php echo $row["merek"]; ?>" />
+									<input type="hidden" name="hidden_id" value="<?php echo $row["id_barang"]; ?>" />
+									<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
 
-						<h4 class="text-info"><?php echo $row["name"]; ?></h4>
+								</form>
+							</td>
+						</tr>
+					<?php
+					}
+					?>
+				</tbody>
+			</table>
 
-						<h4 class="text-danger">$ <?php echo $row["price"]; ?></h4>
+		</div>
 
-						<input type="text" name="quantity" value="1" class="form-control" />
-						<input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>" />
-						<input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>" />
-						<input type="hidden" name="hidden_id" value="<?php echo $row["id"]; ?>" />
-						<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
-					</div>
-				</form>
-			</div>
-		<?php
-		}
-		?>
 
 
 		<div style="clear:both"></div>
@@ -141,11 +157,11 @@ if (isset($_GET["clearall"])) {
 			</div>
 			<table class="table table-bordered">
 				<tr>
-					<th width="40%">Item Name</th>
-					<th width="10%">Quantity</th>
-					<th width="20%">Price</th>
-					<th width="15%">Total</th>
-					<th width="5%">Action</th>
+					<th width="40%">Kode Barang</th>
+					<th width="10%">Nama Barang</th>
+					<th width="20%">Merek</th>
+					<th width="15%">Kuantiti</th>
+					<th width="5%">Aksi</th>
 				</tr>
 				<?php
 				if (isset($_COOKIE["shopping_cart"])) {
@@ -155,21 +171,17 @@ if (isset($_GET["clearall"])) {
 					foreach ($cart_data as $keys => $values) {
 				?>
 						<tr>
-							<td><?php echo $values["item_name"]; ?></td>
-							<td><?php echo $values["item_quantity"]; ?></td>
-							<td>$ <?php echo $values["item_price"]; ?></td>
-							<td>$ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2); ?></td>
-							<td><a href="index.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
+							<td><?php echo $values["kdbarang"]; ?></td>
+							<td><?php echo $values["nama_barang"]; ?></td>
+							<td><?php echo $values["merek"]; ?></td>
+							<td><?php echo $values["kuantiti"] ?></td>
+							<td><a href="index.php?action=delete&id=<?php echo $values["id_barang"]; ?>"><span class="text-danger">Remove</span></a></td>
 						</tr>
 					<?php
-						$total = $total + ($values["item_quantity"] * $values["item_price"]);
+						// $total = $total + ($values["kuantiti"] * $values["merek"]);
 					}
 					?>
-					<tr>
-						<td colspan="3" align="right">Total</td>
-						<td align="right">$ <?php echo number_format($total, 2); ?></td>
-						<td></td>
-					</tr>
+
 				<?php
 				} else {
 					echo '
