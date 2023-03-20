@@ -35,9 +35,9 @@
                 }
                 $namabarang = strip_tags($_POST['tnamabarang']);
                 $merek = strip_tags($_POST['tmerek']);
-                $kuantiti = strip_tags($_POST['tkuantiti']);
+                $stok = strip_tags($_POST['tstok']);
                 $status = 1;
-                $abc = $kon->kueri("INSERT INTO tb_barang (id_barang,kd_barang,nama_barang,merek,kuantiti,status) VALUES (NULL,'$kdbarang','$namabarang','$merek','$kuantiti','$status')");
+                $abc = $kon->kueri("INSERT INTO tb_barang (id_barang,kd_barang,nama_barang,merek,stok,status) VALUES (NULL,'$kdbarang','$namabarang','$merek','$stok','$status')");
                 if ($abc == true) {
                     $_SESSION['tambah'] = "1";
                     header("Location: " . $_SERVER['PHP_SELF']);
@@ -49,16 +49,16 @@
                 }
             }
 
-            //----------------Tambah------------------------------------------------------------------
+            //----------------Edit------------------------------------------------------------------
 
             if (isset($_POST['edit'])) {
                 $idbarang = strip_tags($_POST['tidbarang']);
                 $kdbarang = strip_tags($_POST['tkdbarang']);
                 $namabarang = strip_tags($_POST['tnamabarang']);
                 $merek = strip_tags($_POST['tmerek']);
-                $kuantiti = strip_tags($_POST['tkuantiti']);
+                $stok = strip_tags($_POST['tstok']);
                 $status = 1;
-                $abc = $kon->kueri("UPDATE tb_barang SET id_barang='$idbarang',kd_barang='$kdbarang',nama_barang='$namabarang',merek='$merek',kuantiti='$kuantiti',status='$status' WHERE id_barang ='$idbarang' ");
+                $abc = $kon->kueri("UPDATE tb_barang SET id_barang='$idbarang',kd_barang='$kdbarang',nama_barang='$namabarang',merek='$merek',stok='$stok',status='$status' WHERE id_barang ='$idbarang' ");
                 if ($abc == true) {
                     $_SESSION['edit'] = "1";
                     header("Location: " . $_SERVER['PHP_SELF']);
@@ -179,7 +179,7 @@
                                               <th>Kode Barang</th>
                                               <th>Nama Barang</th>
                                               <th>Merek</th>
-                                              <th>Kuantiti</th>
+                                              <th>Jumlah Stok</th>
                                               <th>Aksi</th>
                                           </tr>
                                       </thead>
@@ -189,7 +189,7 @@
                                                   <td><?= $value['kd_barang'] ?></td>
                                                   <td><?= $value['nama_barang'] ?></td>
                                                   <td><?= $value['merek'] ?></td>
-                                                  <td><?= $value['kuantiti'] ?></td>
+                                                  <td><?= $value['stok'] ?></td>
                                                   <td>
                                                       <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_barang'] . '"><i class="bi bi-pen"></i></button>'; ?>
                                                       <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_barang'] . '"><i class="bi bi-trash"></i></button>'; ?>
@@ -254,8 +254,8 @@
                                                   <input type="text" name="tmerek" class="form-control" value="<?= $data['merek'] ?>" required>
                                               </div>
                                               <div class="form-group">
-                                                  <label>Kuantiti</label>
-                                                  <input type="text" name="tkuantiti" class="form-control" value="<?= $data['kuantiti'] ?>" required>
+                                                  <label>Jumlah Stok</label>
+                                                  <input type="text" name="tstok" class="form-control" value="<?= $data['stok'] ?>" required>
                                               </div>
                                           </div>
                                           <div class="modal-footer">
@@ -306,8 +306,8 @@
                                       <input type="text" name="tmerek" class="form-control" required>
                                   </div>
                                   <div class="form-group">
-                                      <label>Kuantiti</label>
-                                      <input type="text" name="tkuantiti" class="form-control" required>
+                                      <label>Jumlah Stok</label>
+                                      <input type="text" name="tstok" class="form-control" required>
                                   </div>
                           </div>
                           <div class="modal-footer">
