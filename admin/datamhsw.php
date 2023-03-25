@@ -35,6 +35,7 @@ if (isset($_POST['tambah'])) {
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     }
+
     $verif = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE id_rfid = '$idrfid' ");
     $jumlah = $kon->jumlah_data($verif);
     if ($jumlah > 0) {
@@ -42,6 +43,15 @@ if (isset($_POST['tambah'])) {
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     }
+
+    $verifnrp = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE nrp = '$nrp' ");
+    $jumlah = $kon->jumlah_data($verifnrp);
+    if ($jumlah > 0) {
+        $_SESSION['tambah'] = "4";
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
     $abc = $kon->kueri("INSERT INTO tb_mahasiswa(id_mahasiswa, id_rfid, nama_mahasiswa, nrp, kelas, email, pass) VALUES (NULL,'$idrfid','$nama','$nrp','$kelas','$email','$pass')");
     if ($abc == true) {
         $_SESSION['tambah'] = "1";
@@ -140,6 +150,12 @@ if (isset($_POST['edit'])) {
                             } else if ($_SESSION['tambah'] == 3) {
                                 echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
                                                         <strong>ID RFID Sudah Ada, Data Mahasiswa Gagal Ditambahkan !
+                                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>';
+                                unset($_SESSION['tambah']);
+                            } else if ($_SESSION['tambah'] == 4) {
+                                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                        <strong>NRP Sudah Ada, Data Mahasiswa Gagal Ditambahkan !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                 unset($_SESSION['tambah']);

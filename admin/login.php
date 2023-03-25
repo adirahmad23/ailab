@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $error = 'Masukan NRP/Email and password.';
     } else {
 
-      $abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE nama_teknisi='$username' ");
+      $abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE nama_teknisi='$username' AND pass = '$pass'");
       $user = $kon->hasil_data($abc);
       if (!$user) {
         $error = 'Invalid NRP/email atau password.';
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link rel="stylesheet" href="assets\css\login\login.css" />
   <!-- Favicons -->
   <link href="img/logo.png" rel="icon">
-  <title>Login Mahasiswa</title>
+  <title>Login Teknisi</title>
 </head>
 
 <body>
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="signin-signup">
 
         <form method="post">
-          <h2 class="title">Sign in</h2>
+          <h2 class="title">Login</h2>
           <?php
           // Display any error messages
           if (isset($error)) {
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <i class="fas fa-lock"></i>
             <input type="password" placeholder="Password" name="tpass" />
           </div>
-          <input type="submit" name="submit" class="btn solid" />
+          <input type="submit" name="submit" value="Login" class="btn solid" />
 
         </form>
       </div>
