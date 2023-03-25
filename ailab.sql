@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Mar 2023 pada 04.30
+-- Waktu pembuatan: 25 Mar 2023 pada 10.23
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 7.4.29
 
@@ -20,46 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `ailab`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `cekid`
---
-
-CREATE TABLE `cekid` (
-  `id` int(11) NOT NULL,
-  `hasil` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `cekid`
---
-
-INSERT INTO `cekid` (`id`, `hasil`) VALUES
-(1, 25);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `tbl_product`
---
-
-CREATE TABLE `tbl_product` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `price` double(10,2) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `tbl_product`
---
-
-INSERT INTO `tbl_product` (`id`, `name`, `image`, `price`) VALUES
-(1, 'Samsung J2 Pro', '1.jpg', 100.00),
-(2, 'HP Notebook', '2.jpg', 299.00),
-(3, 'Panasonic T44 Lite', '3.jpg', 125.00);
 
 -- --------------------------------------------------------
 
@@ -81,10 +41,39 @@ CREATE TABLE `tb_barang` (
 --
 
 INSERT INTO `tb_barang` (`id_barang`, `kd_barang`, `nama_barang`, `merek`, `stok`, `status`) VALUES
-(44, 'DataBarang1', 'solder', 'panasonic', '12', 1),
-(45, '1234', 'timah', 'deko', '100', 1),
-(48, 'barangku', '123', 'nomerek', '12', 1),
-(49, 'sf', 'fsaf', 'asf', '12', 1);
+(44, 'DataBarang1', 'solder', 'panasonic', '3', 1),
+(45, '1234', 'timah', 'deko', '4', 1),
+(48, 'barangku', '123', 'nomerek', '4', 1),
+(49, 'sf', 'fsaf', 'asf', '4', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_chekout`
+--
+
+CREATE TABLE `tb_chekout` (
+  `id_chekout` int(11) NOT NULL,
+  `id_barang` varchar(100) NOT NULL,
+  `kd_barang` varchar(100) NOT NULL,
+  `nama_mahasiswa` varchar(255) NOT NULL,
+  `nama_barang` varchar(255) NOT NULL,
+  `merek` varchar(255) NOT NULL,
+  `kuantiti` varchar(10) NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_chekout`
+--
+
+INSERT INTO `tb_chekout` (`id_chekout`, `id_barang`, `kd_barang`, `nama_mahasiswa`, `nama_barang`, `merek`, `kuantiti`, `status`) VALUES
+(7, '44,45,48,49', 'DataBarang1,1234,barangku,sf', 'user', 'solder,timah,123,fsaf', 'panasonic,deko,nomerek,asf', '2,7,4,3', 'Belum Disetujui'),
+(8, '44,45,48', 'DataBarang1,1234,barangku', 'user', 'solder,timah,123', 'panasonic,deko,nomerek', '3,5,6', 'Belum Disetujui'),
+(9, '45,48,49', '1234,barangku,sf', 'user', 'timah,123,fsaf', 'deko,nomerek,asf', '5,6,6', 'Belum Disetujui'),
+(10, '44,45,48,49', 'DataBarang1,1234,barangku,sf', 'user', 'solder,timah,123,fsaf', 'panasonic,deko,nomerek,asf', '1,5,7,5', 'Belum Disetujui'),
+(11, '49,48,45', 'sf,barangku,1234', 'user', 'fsaf,123,timah', 'asf,nomerek,deko', '6,4,89', 'Belum Disetujui'),
+(12, '44,45,48,49', 'DataBarang1,1234,barangku,sf', 'user', 'solder,timah,123,fsaf', 'panasonic,deko,nomerek,asf', '1,1,1,1', 'Belum Disetujui');
 
 -- --------------------------------------------------------
 
@@ -107,7 +96,7 @@ CREATE TABLE `tb_mahasiswa` (
 --
 
 INSERT INTO `tb_mahasiswa` (`id_mahasiswa`, `id_rfid`, `nama_mahasiswa`, `nrp`, `kelas`, `email`, `pass`) VALUES
-(8, 'DataBarang', 'Adi Rahmad Ramadhan', '0921040046', '4b', 'adirahmad607@gmail.com', '202cb962ac59075b964b07152d234b70');
+(10, '123', 'user', '0921040046', '4b', 'adirahmad607@gmail.com', 'ee11cbb19052e40b07aac0ca060c23ee');
 
 -- --------------------------------------------------------
 
@@ -135,22 +124,16 @@ INSERT INTO `tb_teknisi` (`id_teknisi`, `nama_teknisi`, `email`, `pass`, `status
 --
 
 --
--- Indeks untuk tabel `cekid`
---
-ALTER TABLE `cekid`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `tbl_product`
---
-ALTER TABLE `tbl_product`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `tb_barang`
 --
 ALTER TABLE `tb_barang`
   ADD PRIMARY KEY (`id_barang`);
+
+--
+-- Indeks untuk tabel `tb_chekout`
+--
+ALTER TABLE `tb_chekout`
+  ADD PRIMARY KEY (`id_chekout`);
 
 --
 -- Indeks untuk tabel `tb_mahasiswa`
@@ -169,28 +152,22 @@ ALTER TABLE `tb_teknisi`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `cekid`
---
-ALTER TABLE `cekid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `tbl_product`
---
-ALTER TABLE `tbl_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
 -- AUTO_INCREMENT untuk tabel `tb_barang`
 --
 ALTER TABLE `tb_barang`
   MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
+-- AUTO_INCREMENT untuk tabel `tb_chekout`
+--
+ALTER TABLE `tb_chekout`
+  MODIFY `id_chekout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT untuk tabel `tb_mahasiswa`
 --
 ALTER TABLE `tb_mahasiswa`
-  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_teknisi`
