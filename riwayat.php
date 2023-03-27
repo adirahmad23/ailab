@@ -46,15 +46,18 @@
             <section class="section">
                 <div class="card">
                     <div class="card-header">
-                        Data Peminjaman Barang
+                        Data Riwayat
+                    </div>
+                    <div class="btn-tambah p-3">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Riwayat</button>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped" id="table1">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nama Peminjam</th>
-                                    <th>Nama Barang</th>
+                                    <th>ID Mahasiswa</th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Barang</th>
                                     <th>Tgl Pinjam</th>
                                     <th>Tgl Kembali</th>
                                     <th>Aksi</th>
@@ -66,9 +69,10 @@
                                     <td>vehicula.aliquet@semconsequat.co.uk</td>
                                     <td>076 4820 8838</td>
                                     <td>Offenburg</td>
-                                    <td></td>
+                                    <td>Offenburg</td>
                                     <td>
-                                        <span class="badge bg-success">Active</span>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -76,16 +80,38 @@
                                     <td>fringilla.euismod.enim@quam.ca</td>
                                     <td>0500 527693</td>
                                     <td>New Quay</td>
-                                    <td></td>
+                                    <td>Offenburg</td>
                                     <td>
-                                        <span class="badge bg-success">Active</span>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nathaniel</td>
+                                    <td>mi.Duis@diam.edu</td>
+                                    <td>(012165) 76278</td>
+                                    <td>Offenburg</td>
+                                    <td>Offenburg</td>
+                                    <td>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Oleg</td>
+                                    <td>rhoncus.id@Aliquamauctorvelit.net</td>
+                                    <td>0500 441046</td>
+                                    <td>Rossignol</td>
+                                    <td>Offenburg</td>
+                                    <td>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </section>
         </div>
 
