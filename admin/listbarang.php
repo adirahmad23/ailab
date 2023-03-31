@@ -4,7 +4,7 @@
                 header("Location: login.php");
                 exit();
             }
-            include_once "koneksi.php";
+            include_once "../proses/koneksi.php";
             $kon = new Koneksi();
             $ab = $kon->kueri("SELECT * FROM tb_barang");
 
