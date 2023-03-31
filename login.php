@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "koneksi.php";
+include "proses/koneksi.php";
 $kon = new Koneksi();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $error = 'Invalid NRP atau password.';
     } else {
       // Check if the password matches the hshed password stored in the database
-      if (($password == $user[pass])) {
+      if (($password == $user['pass'])) {
         // Passwords match, so create a session for the user and redirect to a secured page
         $_SESSION['mahasiswa_id'] = $user['id_mahasiswa'];
         $_SESSION['nama'] = $user['nama_mahasiswa'];
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['nrp'] = $user['nrp'];
         header('Location: index.php');
         exit;
-      } else if ($password != $user[pass]) {
+      } else if ($password != $user['pass']) {
         // Passwords do not match, so display an error message
         $error = 'Invalid NRP/email atau password.';
       }
