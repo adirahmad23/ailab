@@ -4,7 +4,7 @@ if (!isset($_SESSION['teknisi_id'])) {
     header("Location: login.php");
     exit();
 }
-include_once "../proses/koneksi.php";
+include_once 'koneksi.php';
 $kon = new Koneksi();
 
 

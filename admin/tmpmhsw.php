@@ -1,1 +1,1 @@
-<input type='text' name='trfid'  class='form-control' value='DataBarang' readonly>
+<input type='text' name='trfid' class='form-control' value='1231' readonly>
