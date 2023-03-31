@@ -64,9 +64,9 @@
                         <?php if ($url == 'barang') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
-                        <a href="barang.php" class='sidebar-link'>
+                        <a href="inventaris.php" class='sidebar-link'>
                             <i class="bi bi-stack"></i>
-                            <span>List Barang</span>
+                            <span>Inventaris Barang</span>
                         </a>
                         </li>
 
