@@ -24,7 +24,7 @@ if (isset($_POST["add_to_cart"])) {
         $cart_data[$keys]["kuantiti"] = $cart_data[$keys]["kuantiti"] + $_POST["kuantiti"];
         if ($cart_data[$keys]["kuantiti"] > $_POST["stok"]) {
           $cart_data[$keys]["kuantiti"] = $_POST["stok"];
-          header("location:barang.php?stok_lebih=1");
+          header("location:inventaris.php?stok_lebih=1");
           exit();
         }
       }
@@ -44,7 +44,7 @@ if (isset($_POST["add_to_cart"])) {
 
   $item_data = json_encode($cart_data);
   setcookie('cart_barang', $item_data, time() + (86400 * 30));
-  header("location:barang.php?success=1");
+  header("location:inventaris.php?success=1");
   $total_item = $total_item + 1;
 }
 
@@ -57,13 +57,13 @@ if (isset($_GET["action"])) {
         unset($cart_data[$keys]);
         $item_data = json_encode($cart_data);
         setcookie("cart_barang", $item_data, time() + (86400 * 30));
-        header("location:barang.php?remove=1");
+        header("location:inventaris.php?remove=1");
       }
     }
   }
   if ($_GET["action"] == "clear") {
     setcookie("cart_barang", "", time() - 3600);
-    header("location:barang.php?clearall=1");
+    header("location:inventaris.php?clearall=1");
   }
 }
 if (isset($_GET["stok_lebih"])) {
@@ -122,7 +122,7 @@ if (isset($_POST['chekout'])) {
   // Menjalankan kueri untuk mengurangi stok dan memasukkan data ke tabel checkout
   if ($kon->kueri($query_update_stok . "INSERT INTO tb_chekout(id_chekout, id_barang, kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
     setcookie("cart_barang", "", time() - 3600);
-    header("location:barang.php?clearall=1");
+    header("location:inventaris.php?clearall=1");
     $_SESSION['chekout'] = "1";
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
@@ -139,7 +139,7 @@ if (isset($_POST['chekout'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>List Barang</title>
+  <title>Inventaris Barang</title>
 
   <link rel="stylesheet" href="assets/css/main/app.css">
   <link rel="stylesheet" href="assets/css/main/app-dark.css">
@@ -166,14 +166,14 @@ if (isset($_POST['chekout'])) {
       <div class="page-title">
         <div class="row">
           <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>List Barang</h3>
+            <h3>Inventaris Barang</h3>
             <p class="text-subtitle text-muted">Silahkan Pilih Barang Yang Akan Anda Pinjam</p>
           </div>
           <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">List Barang</li>
+                <li class="breadcrumb-item active" aria-current="page">Inventaris Barang</li>
               </ol>
             </nav>
           </div>
@@ -301,7 +301,7 @@ if (isset($_POST['chekout'])) {
             </div>
             <div class="table-responsive">
               <div align="right">
-                <a href="barang.php?action=clear"><b>Clear Cart</b></a>
+                <a href="inventaris.php?action=clear"><b>Clear Cart</b></a>
               </div>
               <table class="table table-bordered">
                 <tr>
@@ -336,7 +336,7 @@ if (isset($_POST['chekout'])) {
                             <button class="btn btn-outline-primary plus-btn" type="button">+</button>
                           </div>
                       </td>
-                      <td><a href="barang.php?action=delete&id=<?php echo $values["id_barang"]; ?>" class="btn btn-danger"><i class="bi bi-trash-fill"></i></span></a></td>
+                      <td><a href="inventaris.php?action=delete&id=<?php echo $values["id_barang"]; ?>" class="btn btn-danger"><i class="bi bi-trash-fill"></i></span></a></td>
                     </tr>
                   <?php
                     // $total = $total + ($values["kuantiti"] * $values["merek"]);
@@ -441,7 +441,7 @@ if (isset($_POST['chekout'])) {
 
         // Mengirim data ke server melalui AJAX
         $.ajax({
-          url: "barang.php",
+          url: "inventaris.php",
           type: "POST",
           data: {
             kuantiti: kuantiti
