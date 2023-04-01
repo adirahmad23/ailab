@@ -4,7 +4,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
     header("Location: login.php");
     exit;
 }
-include "koneksi.php";
+include_once "../proses/koneksi.php";
 $kon = new Koneksi();
 $message = '';
 if (isset($_POST["add_to_cart"])) {
