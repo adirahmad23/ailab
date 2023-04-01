@@ -30,10 +30,12 @@
                 $status = 1;
                 $kdbarang = strip_tags($_POST['nama_barang']);
 
-                $cek_data = $kon->kueri("SELECT * FROM tb_barang WHERE nama_barang = '$namabarang' AND merek = '$merek' ");
+                $cek_data = $kon->kueri("SELECT * FROM tb_barang WHERE merek = '$merek' ");
                 $jumlah = $kon->jumlah_data($cek_data);
                 // echo $jumlah;
                 if ($jumlah > 0) {
+                    $_SESSION['nama_barang'] = $namabarang;
+                    $_SESSION['merek'] = $merek;
                     $_SESSION['tambah'] = "2";
                     header("Location: " . $_SERVER['PHP_SELF']);
                     exit();
@@ -112,6 +114,7 @@
                               <div class="btn-tambah p-3">
                                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah
                                       Data Barang</button>
+                                  <a href="update_stok.php" class="btn btn-primary">Refresh Stok</a>
                               </div>
                               <div class="card-header">
                                   <?php
@@ -131,10 +134,13 @@
                                             unset($_SESSION['tambah']);
                                         } else if ($_SESSION['tambah'] == 2) {
                                             echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>Kode Barang Sudah Ada,Data Barang Gagal Ditambahkan !
-                                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                    </div>';
+                                                    <strong>Merek  "' . $_SESSION['merek'] . '" Sudah Ada, Data Barang "' . $_SESSION['nama_barang'] . '" Gagal Ditambahkan!
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>';
+
                                             unset($_SESSION['tambah']);
+                                            unset($_SESSION['nama_barang']);
+                                            unset($_SESSION['merek']);
                                         }
                                     }
 
