@@ -24,8 +24,13 @@
             }
             //----------------Tambah------------------------------------------------------------------
             if (isset($_POST['tambah'])) {
-                $kdbarang = strip_tags($_POST['tkdbarang']);
-                $cek_data = $kon->kueri("SELECT * FROM tb_barang WHERE kd_barang = '$kdbarang' ");
+                $namabarang = strip_tags($_POST['tnamabarang']);
+                $merek = strip_tags($_POST['tmerek']);
+                $stok = 0;
+                $status = 1;
+                $kdbarang = strip_tags($_POST['nama_barang']);
+
+                $cek_data = $kon->kueri("SELECT * FROM tb_barang WHERE nama_barang = '$namabarang' AND merek = '$merek' ");
                 $jumlah = $kon->jumlah_data($cek_data);
                 // echo $jumlah;
                 if ($jumlah > 0) {
@@ -33,11 +38,8 @@
                     header("Location: " . $_SERVER['PHP_SELF']);
                     exit();
                 }
-                $namabarang = strip_tags($_POST['tnamabarang']);
-                $merek = strip_tags($_POST['tmerek']);
-                $stok = strip_tags($_POST['tstok']);
-                $status = 1;
-                $abc = $kon->kueri("INSERT INTO tb_barang (id_barang,kd_barang,nama_barang,merek,stok,status) VALUES (NULL,'$kdbarang','$namabarang','$merek','$stok','$status')");
+
+                $abc = $kon->kueri("INSERT INTO tb_barang (id_barang,nama_barang,merek,stok,status) VALUES (NULL,'$namabarang','$merek','$stok','$status')");
                 if ($abc == true) {
                     $_SESSION['tambah'] = "1";
                     header("Location: " . $_SERVER['PHP_SELF']);
@@ -53,12 +55,9 @@
 
             if (isset($_POST['edit'])) {
                 $idbarang = strip_tags($_POST['tidbarang']);
-                $kdbarang = strip_tags($_POST['tkdbarang']);
                 $namabarang = strip_tags($_POST['tnamabarang']);
                 $merek = strip_tags($_POST['tmerek']);
-                $stok = strip_tags($_POST['tstok']);
-                $status = 1;
-                $abc = $kon->kueri("UPDATE tb_barang SET id_barang='$idbarang',kd_barang='$kdbarang',nama_barang='$namabarang',merek='$merek',stok='$stok',status='$status' WHERE id_barang ='$idbarang' ");
+                $abc = $kon->kueri("UPDATE tb_barang SET nama_barang='$namabarang',merek='$merek' WHERE id_barang ='$idbarang' ");
                 if ($abc == true) {
                     $_SESSION['edit'] = "1";
                     header("Location: " . $_SERVER['PHP_SELF']);
@@ -176,7 +175,7 @@
                                   <table class="table table-striped" id="table1">
                                       <thead>
                                           <tr>
-                                              <th>Kode Barang</th>
+                                              <th width="5%">No</th>
                                               <th>Nama Barang</th>
                                               <th>Merek</th>
                                               <th>Jumlah Stok</th>
@@ -184,9 +183,10 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <?php foreach ($ab as $value) : ?>
+                                          <?php $no = 1;
+                                            foreach ($ab as $value) : ?>
                                               <tr>
-                                                  <td><?= $value['kd_barang'] ?></td>
+                                                  <td><?= $no ?></td>
                                                   <td><?= $value['nama_barang'] ?></td>
                                                   <td><?= $value['merek'] ?></td>
                                                   <td><?= $value['stok'] ?></td>
@@ -226,7 +226,6 @@
                               <!-- modal-edit -->
                               <?php echo '<div class="modal" id="modal-edit' . $value['id_barang'] . '" tabindex="-1">';
                                                 $idbarang = $value['id_barang'];
-
                                                 $tampil = $kon->kueri("SELECT * FROM tb_barang WHERE id_barang = '$idbarang' ");
                                                 $data = $kon->hasil_data($tampil);
                                 ?>
@@ -238,13 +237,8 @@
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <form action="" method="POST">
+                                          <input type="hidden" name="tidbarang" value="<?= $data['id_barang'] ?>">
                                           <div class="modal-body">
-                                              <div class="form-group">
-
-                                                  <label>Kode Barang</label>
-                                                  <input type="hidden" name="tidbarang" value="<?= $data['id_barang'] ?>">
-                                                  <input type="text" name="tkdbarang" class="form-control" value="<?= $data['kd_barang'] ?>" required>
-                                              </div>
                                               <div class="form-group">
                                                   <label>Nama Barang</label>
                                                   <input type="text" name="tnamabarang" class="form-control" value="<?= $data['nama_barang'] ?>" required>
@@ -252,10 +246,6 @@
                                               <div class="form-group">
                                                   <label>Merek</label>
                                                   <input type="text" name="tmerek" class="form-control" value="<?= $data['merek'] ?>" required>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label>Jumlah Stok</label>
-                                                  <input type="text" name="tstok" class="form-control" value="<?= $data['stok'] ?>" required>
                                               </div>
                                           </div>
                                           <div class="modal-footer">
@@ -267,21 +257,14 @@
                               </div>
                           </div>
                           <!-- end-modal-edit -->
-
-
-                      <?php endforeach; ?>
+                      <?php $no++;
+                                            endforeach; ?>
                       </tbody>
                       </table>
                   </div>
               </div>
-
-
-
               </section>
               </div>
-
-
-
               <!-- modal-tambah -->
               <div class="modal" id="modal-tambah" tabindex="-1">
                   <div class="modal-dialog modal-dialog-centered">
@@ -293,21 +276,12 @@
                           <div class="modal-body">
                               <form action="" method="post">
                                   <div class="form-group">
-                                      <label>Kode Barang</label>
-                                      <div id="kdbarang"></div>
-
-                                  </div>
-                                  <div class="form-group">
                                       <label>Nama Barang</label>
                                       <input type="text" name="tnamabarang" class="form-control" required>
                                   </div>
                                   <div class="form-group">
                                       <label>Merek</label>
                                       <input type="text" name="tmerek" class="form-control" required>
-                                  </div>
-                                  <div class="form-group">
-                                      <label>Jumlah Stok</label>
-                                      <input type="text" name="tstok" class="form-control" required>
                                   </div>
                           </div>
                           <div class="modal-footer">

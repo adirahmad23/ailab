@@ -1,21 +1,18 @@
+<?php
+session_start();
+if (!isset($_SESSION['teknisi_id'])) {
+  header("Location: login.php");
+  exit();
+}
+include_once "../proses/koneksi.php";
+$kon = new Koneksi();
+$tampil = $kon->kueri("SELECT * FROM tb_inventaris");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventaris Barang</title>
-
-  <link rel="stylesheet" href="assets/css/main/app.css">
-  <link rel="stylesheet" href="assets/css/main/app-dark.css">
-  <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">
-  <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png">
-
-  <link rel="stylesheet" href="assets/extensions/simple-datatables/style.css">
-  <link rel="stylesheet" href="assets/css/pages/simple-datatables.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
+<?php include_once "template/header.php" ?>
 
 <body>
   <?php include_once "template/sidebar.php" ?>
@@ -48,23 +45,10 @@
         <div class="card">
           <div class="card-header">
             Data List Barang
-
-            <div class="cart d-flex align-items-center">
-              <button type="button" class="btn btn-primary mx-4 " data-bs-toggle="modal" data-bs-target="#cart"><i class="bi bi-cart3"></i></button>
-            </div>
           </div>
-
-          <style>
-            .cart {
-              display: flex;
-              align-items: left;
-            }
-
-            .alert {
-              margin-left: 10px;
-            }
-          </style>
-
+          <div class="btn-tambah p-3">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Inventaris</button>
+          </div>
           <div class="card-body">
             <table class="table table-striped" id="table1">
               <thead>
@@ -72,16 +56,18 @@
                   <th>Kode Barang</th>
                   <th>Nama Barang</th>
                   <th>Merek</th>
-                  <th>Jumlah Stock</th>
-                  <th>Aksi</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                <?php foreach ($tampil as $value) : ?>
+                  <tr>
+                    <td><?= $value['kd_barang'] ?></td>
+                    <td><?= $value['nama_barang'] ?></td>
+                    <td><?= $value['merek'] ?></td>
+                    <td><?= $value['status'] ?></td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
@@ -89,71 +75,100 @@
       </section>
     </div>
 
-    <!-- modal -->
-    <div class="modal" id="cart" tabindex="-1">
-      <div class="modal-dialog modal-dialog modal-xl">
-
+    <!-- modal tambah -->
+    <div class="modal" id="modal-tambah" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">List Data Peminjaman</h5>
+            <h5 class="modal-title">Tambah Data Barang</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    This is the modal body.
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
+            <form action="" method="post">
+              <div class="form-group">
+                <label>Kode Barang</label>
+                <div id="kdbarang"></div>
               </div>
-            </div>
-            <div class="table-responsive">
-              <div align="right">
-                <a href="inventaris.php?action=clear"><b>Clear Cart</b></a>
+              <div class="form-group">
+                <label">Nama :</label>
+                  <select style="width:100%" class="form-control select-barang" id="selectbarang" name="barang">
+                    <option value="" selected disabled>Pilih Barang</option>
+                  </select>
               </div>
-              <table class="table table-bordered">
-                <tr>
-                  <th width="10%">Kode Barang</th>
-                  <th width="30%">Nama Barang</th>
-                  <th width="20%">Merek</th>
-                  <th width="5%">Stok</th>
-                  <th width="14%">Kuantiti</th>
-                  <th width="10%">Aksi</th>
-                </tr>
-              </table>
-            </div>
+
+              <div class="form-group">
+                <label">Merk :</label>
+                  <select style="width:100%" class="form-control select-merek" id="selectmerek" name="merek">
+                    <option value="" selected disabled>Pilih Merek</option>
+                  </select>
+              </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="chekout" class="btn btn-primary">Chekout Barang</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" name="tambah" class="btn btn-primary">Simpan</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-
+    <!-- end modal tambah -->
     <?php include_once 'template/footer.php' ?>
 
   </div>
   </div>
 
-  <script src="assets/js/bootstrap.js"></script>
-  <script src="assets/js/app.js"></script>
 
-  <script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
-  <script src="assets/js/pages/simple-datatables.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#kdbarang").load("tmpbarang.php");
+      setInterval(function() {
+        $("#kdbarang").load("tmpbarang.php");
+      }, 500);
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('.select-barang').select2({
+        data: [
+          <?php
+          //koneksi ke database
+          $query = $kon->kueri("SELECT * FROM tb_barang");
+          //mengambil data dan menuliskan ke dalam format yang sesuai dengan Select2  
+          foreach ($query as $row) {
+            echo "{id: '" . $row['nama_barang'] . "', text: '" . $row['nama_barang'] . "'}, ";
+          }
+          ?>
+        ],
+        dropdownParent: $('#modal-tambah'),
+        placeholder: 'Pilih Barang'
+      }).on('change', function() {
+        var selectedValue = $(this).val();
+        if (selectedValue !== '') {
+          console.log(selectedValue);
+          $.ajax({
+            url: 'get_merek.php', //ubah dengan file yang memuat query select dari tb_barang
+            type: 'POST',
+            dataType: 'json',
+            data: {
+              nama_barang: selectedValue
+            },
+            success: function(data) {
+              $('.select-merek').empty();
+              $('.select-merek').append('<option value="">Pilih Merek</option>');
+              $.each(data, function(index, value) {
+                $('.select-merek').append('<option value="' + value.id_barang + '">' + value.merek + '</option>');
+              });
+            }
+          });
+        }
+      });
+
+      $('.select-merek').select2({
+        dropdownParent: $('#modal-tambah'),
+        placeholder: 'Pilih Merek'
+      });
+    });
+  </script>
 
 </body>
 

@@ -60,7 +60,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'barang') {
+                        <?php if ($url == 'inventaris') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="inventaris.php" class='sidebar-link'>
