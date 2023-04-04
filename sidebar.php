@@ -65,7 +65,7 @@
                         } ?>
                         <a href="inventaris.php" class='sidebar-link'>
                             <i class="bi bi-stack"></i>
-                            <span>Inventaris Barang</span>
+                            <span>Daftar Inventaris</span>
                         </a>
                         </li>
 
