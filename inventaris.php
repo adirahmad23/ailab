@@ -109,34 +109,70 @@ if (isset($_POST['chekout'])) {
   $kuantiti =  implode(",", $_POST['kuantiti']);
   $status = "0";
   $kdbarang = implode(",", $_POST['kd_barang']);
+  $id_inventaris = implode(",", $_POST['id_inventaris']);
+  $aray_idinventaris = explode(",", $id_inventaris);
   $aray_idbarang = explode(",", $id_barang);
   $aray_namabarang = explode(",", $nama_barang);
   $aray_merek = explode(",", $merek);
   $length = count($aray_idbarang);
 
-  for ($i = 0; $i < $length; $i++) {
-    $data_id = $aray_idbarang[$i];
-    echo $data_id . " , ";
-    $data_nama = $aray_namabarang[$i];
-    echo $data_nama . " , ";
-    $data_merek = $aray_merek[$i];
-    echo $data_merek . " , ";
+  $kuantitis = explode(",", $kuantiti);
+  $total = 0;
+  foreach ($kuantitis as $nilai) {
+    $total += $nilai;
   }
 
+
+  for ($i = 0; $i < $total; $i++) {
+    $data_idinven = $aray_idinventaris[$i];
+    $update_stok = $kon->kueri("UPDATE tb_inventaris SET status = '0' WHERE id_inventaris = '$data_idinven' ");
+  }
+
+  for ($i = 0; $i < $length; $i++) {
+    $data_id = $aray_idbarang[$i];
+    $data_nama = $aray_namabarang[$i];
+    $data_merek = $aray_merek[$i];
+    $count_data = $kon->kueri("SELECT id_barang, status, merek, nama_barang, COUNT(*) as total FROM tb_inventaris WHERE status = '0' AND id_barang = '$data_id' AND proses = '1' GROUP BY status, merek, nama_barang ");
+    foreach ($count_data as $row) {
+      $id_barang = $row['id_barang'];
+      $status = $row['status'];
+      $merek = $row['merek'];
+      $nama_barang = $row['nama_barang'];
+      $total = $row['total'];
+      $update_stok = $kon->kueri("SELECT stok FROM tb_barang WHERE id_barang = '$id_barang'");
+      $data = $kon->hasil_data($update_stok);
+      $stok = $data['stok'];
+      $kurang = $stok - $total;
+      $update =  $kon->kueri("UPDATE tb_barang SET stok = '$kurang' WHERE id_barang = '$id_barang'");
+    }
+  }
+  if ($kon->jumlah_data($count_data) > 0) {
+    $loop = 0;
+    foreach ($kuantitis as $angka) {
+      $loop += $angka;
+    }
+    for ($i = 0; $i < $loop; $i++) {
+      $data_idinven = $aray_idinventaris[$i];
+      $update_proses = $kon->kueri("UPDATE tb_inventaris SET proses = '0' WHERE id_inventaris = '$data_idinven' ");
+    }
+  }
+
+
+  //buatkan saya update ke tabel tb_barang hasil count masukan kedalam field stok tanpa marus membuka halaman ini lagi
 
 
   // $tampilinvens = $kon->kueri("SELECT * FROM tb_barang WHERE id_barang = ""  ");
 
   // Kueri untuk mengurangi stok pada tb_barang
-  $query_update_stok = "";
-  $items = explode(",", $id_barang);
-  $quantities = explode(",", $kuantiti);
-  for ($i = 0; $i < count($items); $i++) {
-    $query_update_stok .= "UPDATE tb_barang SET stok = stok - " . $quantities[$i] . " WHERE id_barang = " . $items[$i] . "; ";
-  }
+  // $query_update_stok = "";
+  // $items = explode(",", $id_barang);
+  // $quantities = explode(",", $kuantiti);
+  // for ($i = 0; $i < count($items); $i++) {
+  //   $query_update_stok .= "UPDATE tb_barang SET stok = stok - " . $quantities[$i] . " WHERE id_barang = " . $items[$i] . "; ";
+  // }
 
   // Menjalankan kueri untuk mengurangi stok dan memasukkan data ke tabel checkout
-  if ($kon->kueri($query_update_stok . "INSERT INTO tb_chekout(id_chekout, id_barang, kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
+  if ($kon->kueri($query_update_stok . "INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
     setcookie("cart_barang", "", time() - 3600);
     header("location:inventaris.php?clearall=1");
     $_SESSION['chekout'] = "1";
@@ -238,10 +274,11 @@ if (isset($_POST['chekout'])) {
 
           <?php
           $result = $kon->kueri("SELECT DISTINCT tb_barang.id_barang, tb_barang.nama_barang, tb_barang.merek, tb_barang.stok, tb_inventaris.kd_barang 
-                                    FROM tb_barang 
-                                    LEFT JOIN tb_inventaris ON tb_barang.id_barang = tb_inventaris.id_barang 
-                                    GROUP BY tb_barang.id_barang, tb_barang.nama_barang, tb_barang.merek, tb_barang.stok
-                                    ORDER BY tb_barang.nama_barang ASC;
+          FROM tb_barang 
+          LEFT JOIN tb_inventaris ON tb_barang.id_barang = tb_inventaris.id_barang 
+          GROUP BY tb_barang.id_barang, tb_barang.nama_barang, tb_barang.merek, tb_barang.stok
+          ORDER BY tb_barang.nama_barang ASC;
+          ;
                                 ");
           ?>
           <div class="card-body">
@@ -388,12 +425,21 @@ if (isset($_POST['chekout'])) {
                     $kd = $kon->kueri("SELECT kd_barang FROM tb_inventaris WHERE id_barang = '" . $values["id_barang"] . "' AND status = '1' ");
                     $array_kd = $kon->hasil_array($kd);
 
+                    $id = $kon->kueri("SELECT id_inventaris FROM tb_inventaris WHERE id_barang = '" . $values["id_barang"] . "' AND status = '1' ");
+                    $array_id = $kon->hasil_array($id);
+
                     for ($i = 0; $i < $values['kuantiti']; $i++) {
-                      $arrayw = $array_kd[$i];
-                      $araryinput = implode($arrayw);
+                      $arraykd = $array_kd[$i];
+                      $araryinputkd = implode($arraykd);
                     ?>
-                      <input type="hidden" name="kd_barang[]" value="<?php echo $araryinput; ?>">
+                      <input type="hidden" name="kd_barang[]" value="<?php echo $araryinputkd; ?>">
+
                 <?php
+                    }
+                    for ($i = 0; $i < $values['kuantiti']; $i++) {
+                      $arrayid = $array_id[$i];
+                      $araryinputid = implode($arrayid);
+                      echo "<input type='hidden' name='id_inventaris[]' value='$araryinputid'>";
                     }
                   }
                 } else {

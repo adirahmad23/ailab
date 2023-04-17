@@ -13,5 +13,8 @@
     "enable": true, //   i. enabled
     "baseUri": "/", //  ii. workspace
     "proxyUri": "http://localhost:80/workspace" // iii. actual address
-  }
+  },
+  "stm32-for-vscode.openOCDPath": false,
+  "stm32-for-vscode.makePath": false,
+  "stm32-for-vscode.armToolchainPath": false
 }

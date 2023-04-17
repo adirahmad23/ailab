@@ -32,7 +32,19 @@ if (isset($_POST['tambah'])) {
   $id_barang = $data['id_barang'];
   $nama_barang = $data['nama_barang'];
   $merek = $data['merek'];
-  $tambah = $kon->kueri("INSERT INTO tb_inventaris VALUES( NULL,'$id_barang','$kd_barang','$nama_barang','$merek','$status')");
+  $tambah = $kon->kueri("INSERT INTO tb_inventaris VALUES( NULL,'$id_barang','$kd_barang','$nama_barang','$merek','$status','1')");
+
+  $count_data = $kon->kueri("SELECT status, merek, nama_barang, COUNT(*) as total FROM tb_inventaris GROUP BY status, merek, nama_barang");
+  while ($row = $kon->hasil_data($count_data)) {
+    $status = $row['status'];
+    $merek = $row['merek'];
+    $nama_barang = $row['nama_barang'];
+    $total = $row['total'];
+    //buatkan saya update ke tabel tb_barang hasil count masukan kedalam field stok tanpa marus membuka halaman ini lagi
+    $update =  $kon->kueri("UPDATE tb_barang SET stok = '$total' WHERE status = '$status' AND merek = '$merek' AND nama_barang = '$nama_barang'");
+  }
+
+
   if ($tambah == true) {
     $_SESSION['tambah-inventaris'] = "1";
     header("Location: " . $_SERVER['PHP_SELF']);
