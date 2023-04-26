@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "koneksi.php";
+include_once "../proses/koneksi.php";
 $kon = new Koneksi();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,12 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = 'Invalid NRP/email atau password.';
       } else {
         // Check if the password matches the hshed password stored in the database
-        if (($pass == $user[pass])) {
+        if (($pass == $user['pass'])) {
           // Passwords match, so create a session for the user and redirect to a secured page
           $_SESSION['teknisi_id'] = $user['id_teknisi'];
           header('Location: index.php');
           exit;
-        } else if ($pass != $user[pass]) {
+        } else if ($pass != $user['pass']) {
           // Passwords do not match, so display an error message
           $error = 'Invalid NRP/email atau password.';
         }
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link rel="stylesheet" href="assets\css\login\login.css" /> -->
   <!-- Favicons -->
   <link href="img/logo.png" rel="icon">
-  <title>Login Mahasiswa</title>
+  <title>Login Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
   <!-- Vendor CSS Files -->
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 
   <!-- css -->
-  <link href="login.css" rel="stylesheet">
+  <link href="assets/css/login/login.css" rel="stylesheet">
 </head>
 
 <body>
@@ -81,15 +81,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
       <div class="col-md-5">
         <form class="register-form" method="post">
-          <?php
-          // Display any error messages
-          if (isset($error)) {
-            echo '<p>' . $error . '</p>';
-          }
-          ?>
+
           <div class="p-4 text-center">
             <h4>Selamat Datang</h4>
-            <p>Masukkan Username dan Password Anda</p>
+            <?php
+            // Display any error messages
+            if (isset($error)) {
+              echo '<p>' . $error . '</p>';
+            }
+            ?>
           </div>
           <div class="mb-3">
             <label for="text" class="form-label">Username</label>
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </div>
           <div class="mb-4">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="tpass" placeholder="Password">
+            <input type="password" class="form-control" name="tpass" placeholder="Masukan Password">
           </div>
 
           <div class="mb-3 py-4">
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
   </div>
 
-  <script src="assets/css/login/app.js"></script>
+
 </body>
 
 </html>

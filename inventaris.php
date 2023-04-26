@@ -4,13 +4,12 @@ if (!isset($_SESSION["mahasiswa_id"])) {
   header("Location: login.php");
   exit;
 }
-include "koneksi.php";
+include "proses/koneksi.php";
 $kon = new Koneksi();
 $message = '';
 if (isset($_POST["add_to_cart"])) {
   if (isset($_COOKIE["cart_barang"])) {
     $cookie_data = stripslashes($_COOKIE['cart_barang']);
-
     $cart_data = json_decode($cookie_data, true);
   } else {
     $cart_data = array();
@@ -35,7 +34,7 @@ if (isset($_POST["add_to_cart"])) {
       'nama_barang'          =>    $_POST["nama_barang"],
       'merek'                =>    $_POST["merek"],
       'kuantiti'             =>    $_POST["kuantiti"],
-      'kdbarang'             =>    $_POST["kd_barang"],
+      'kdbarang'             =>    $_POST["kdbarang"],
       'stok'                 =>    $_POST["stok"]
     );
     $cart_data[] = $item_array;
@@ -108,19 +107,72 @@ if (isset($_POST['chekout'])) {
   $nama_barang = implode(",", $_POST['nama_barang']);
   $merek = implode(",", $_POST['merek']);
   $kuantiti =  implode(",", $_POST['kuantiti']);
-  $kdbarang = implode(",", $_POST['kdbarang']);
-  $status = "Belum Disetujui";
+  $status = "0";
+  $kdbarang = implode(",", $_POST['kd_barang']);
+  $id_inventaris = implode(",", $_POST['id_inventaris']);
+  $aray_idinventaris = explode(",", $id_inventaris);
+  $aray_idbarang = explode(",", $id_barang);
+  $aray_namabarang = explode(",", $nama_barang);
+  $aray_merek = explode(",", $merek);
+  $length = count($aray_idbarang);
 
-  // Kueri untuk mengurangi stok pada tb_barang
-  $query_update_stok = "";
-  $items = explode(",", $id_barang);
-  $quantities = explode(",", $kuantiti);
-  for ($i = 0; $i < count($items); $i++) {
-    $query_update_stok .= "UPDATE tb_barang SET stok = stok - " . $quantities[$i] . " WHERE id_barang = " . $items[$i] . "; ";
+  $kuantitis = explode(",", $kuantiti);
+  $total = 0;
+  foreach ($kuantitis as $nilai) {
+    $total += $nilai;
   }
 
+
+  for ($i = 0; $i < $total; $i++) {
+    $data_idinven = $aray_idinventaris[$i];
+    $update_stok = $kon->kueri("UPDATE tb_inventaris SET status = '0' WHERE id_inventaris = '$data_idinven' ");
+  }
+
+  for ($i = 0; $i < $length; $i++) {
+    $data_id = $aray_idbarang[$i];
+    $data_nama = $aray_namabarang[$i];
+    $data_merek = $aray_merek[$i];
+    $count_data = $kon->kueri("SELECT id_barang, status, merek, nama_barang, COUNT(*) as total FROM tb_inventaris WHERE status = '0' AND id_barang = '$data_id' AND proses = '1' GROUP BY status, merek, nama_barang ");
+    foreach ($count_data as $row) {
+      $id_barang = $row['id_barang'];
+      $status = $row['status'];
+      $merek = $row['merek'];
+      $nama_barang = $row['nama_barang'];
+      $total = $row['total'];
+      $update_stok = $kon->kueri("SELECT stok FROM tb_barang WHERE id_barang = '$id_barang'");
+      $data = $kon->hasil_data($update_stok);
+      $stok = $data['stok'];
+      $kurang = $stok - $total;
+      $update =  $kon->kueri("UPDATE tb_barang SET stok = '$kurang' WHERE id_barang = '$id_barang'");
+    }
+  }
+  if ($kon->jumlah_data($count_data) > 0) {
+    $loop = 0;
+    foreach ($kuantitis as $angka) {
+      $loop += $angka;
+    }
+    for ($i = 0; $i < $loop; $i++) {
+      $data_idinven = $aray_idinventaris[$i];
+      $update_proses = $kon->kueri("UPDATE tb_inventaris SET proses = '0' WHERE id_inventaris = '$data_idinven' ");
+    }
+  }
+
+
+  //buatkan saya update ke tabel tb_barang hasil count masukan kedalam field stok tanpa marus membuka halaman ini lagi
+
+
+  // $tampilinvens = $kon->kueri("SELECT * FROM tb_barang WHERE id_barang = ""  ");
+
+  // Kueri untuk mengurangi stok pada tb_barang
+  // $query_update_stok = "";
+  // $items = explode(",", $id_barang);
+  // $quantities = explode(",", $kuantiti);
+  // for ($i = 0; $i < count($items); $i++) {
+  //   $query_update_stok .= "UPDATE tb_barang SET stok = stok - " . $quantities[$i] . " WHERE id_barang = " . $items[$i] . "; ";
+  // }
+
   // Menjalankan kueri untuk mengurangi stok dan memasukkan data ke tabel checkout
-  if ($kon->kueri($query_update_stok . "INSERT INTO tb_chekout(id_chekout, id_barang, kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
+  if ($kon->kueri($query_update_stok . "INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
     setcookie("cart_barang", "", time() - 3600);
     header("location:inventaris.php?clearall=1");
     $_SESSION['chekout'] = "1";
@@ -221,13 +273,21 @@ if (isset($_POST['chekout'])) {
 
 
           <?php
-          $result = $kon->kueri("SELECT * FROM tb_barang ORDER BY id_barang ASC");
+          $result = $kon->kueri("SELECT DISTINCT tb_barang.id_barang, tb_barang.nama_barang, tb_barang.merek, tb_barang.stok, tb_inventaris.kd_barang 
+          FROM tb_barang 
+          LEFT JOIN tb_inventaris ON tb_barang.id_barang = tb_inventaris.id_barang 
+          GROUP BY tb_barang.id_barang, tb_barang.nama_barang, tb_barang.merek, tb_barang.stok
+          ORDER BY tb_barang.nama_barang ASC;
+          ;
+                                ");
           ?>
           <div class="card-body">
             <table class="table table-striped" id="table1">
               <thead>
                 <tr>
-                  <th>Kode Barang</th>
+                  <th width="5%">No</th>
+                  <th>ID Barang</th>
+
                   <th>Nama Barang</th>
                   <th>Merek</th>
                   <th>Jumlah Stock</th>
@@ -235,9 +295,12 @@ if (isset($_POST['chekout'])) {
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($result as $row) { ?>
+                <?php $no = 1;
+                foreach ($result as $row) { ?>
                   <tr>
-                    <td><?= $row["kd_barang"] ?></td>
+                    <td><?= $no ?></td>
+                    <td><?= $row["id_barang"] ?></td>
+
                     <td><?= $row["nama_barang"] ?></td>
                     <td><?= $row["merek"] ?></td>
                     <td><?= $row["stok"] ?></td>
@@ -251,15 +314,16 @@ if (isset($_POST['chekout'])) {
                           <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Chekout" />
                           <input type="hidden" name="kuantiti" value="1" class="form-control" />
                           <input type="hidden" name="nama_barang" value="<?php echo $row["nama_barang"]; ?>" />
-                          <input type="hidden" name="kd_barang" value="<?php echo $row["kd_barang"]; ?>" />
                           <input type="hidden" name="merek" value="<?php echo $row["merek"]; ?>" />
                           <input type="hidden" name="stok" value="<?php echo $row["stok"]; ?>" />
                           <input type="hidden" name="hidden_id" value="<?php echo $row["id_barang"]; ?>" />
+                          <input type="hidden" name="kdbarang" value="<?php echo $row["kd_barang"]; ?>" />
                         </form>
                       </td>
                   </tr>
               <?php
                     }
+                    $no++;
                   }
               ?>
               </tbody>
@@ -305,7 +369,6 @@ if (isset($_POST['chekout'])) {
               </div>
               <table class="table table-bordered">
                 <tr>
-                  <th width="10%">Kode Barang</th>
                   <th width="30%">Nama Barang</th>
                   <th width="20%">Merek</th>
                   <th width="5%">Stok</th>
@@ -321,15 +384,15 @@ if (isset($_POST['chekout'])) {
                   foreach ($cart_data as $keys => $values) {
                     $array[] = $values["kuantiti"];
 
+
                 ?>
                     <tr>
-                      <td><?php echo $values["kdbarang"]; ?></td>
+
                       <td><?php echo $values["nama_barang"]; ?></td>
                       <td><?php echo $values["merek"]; ?></td>
                       <td><?php echo $values["stok"]; ?></td>
                       <td>
                         <form action="" method="post">
-
                           <div class="input-group mb-3">
                             <button class="btn btn-outline-primary minus-btn" type="button">-</button>
                             <input type="text" name="kuantiti[]" class="form-control text-center quantity-input" value="<?= $values['kuantiti'] ?>" min="1" max="<?= $values["stok"] ?>" aria-label="Example text with button addon" aria-describedby="button-addon1" data-idbarang="<?= $values["id_barang"] ?>">
@@ -340,22 +403,45 @@ if (isset($_POST['chekout'])) {
                     </tr>
                   <?php
                     // $total = $total + ($values["kuantiti"] * $values["merek"]);
+
                   }
                   ?>
                   <?php
+
                   foreach ($cart_data as $keys => $values) {
                     $array[] = $values["id_barang"];
-                    $array[] = $values["kdbarang"];
                     $array[] = $values["nama_barang"];
                     $array[] = $values["merek"];
+                    $array[] = $values["kdbarang"];
+                    $array[] = $values["kuantiti"];
+
                     // buatkan input hidden untuk setiap data yang akan diinputkan ke database beri nama array[] agar bisa diinputkan ke database berikan , untuk memisahkan data
                   ?>
                     <input type="hidden" name="id_barang[]" value="<?php echo $values["id_barang"]; ?>">
-                    <input type="hidden" name="kdbarang[]" value="<?php echo $values["kdbarang"]; ?>">
                     <input type="hidden" name="nama_barang[]" value="<?php echo $values["nama_barang"]; ?>">
                     <input type="hidden" name="merek[]" value="<?php echo $values["merek"]; ?>">
 
-                <?php }
+                    <?php
+                    $kd = $kon->kueri("SELECT kd_barang FROM tb_inventaris WHERE id_barang = '" . $values["id_barang"] . "' AND status = '1' ");
+                    $array_kd = $kon->hasil_array($kd);
+
+                    $id = $kon->kueri("SELECT id_inventaris FROM tb_inventaris WHERE id_barang = '" . $values["id_barang"] . "' AND status = '1' ");
+                    $array_id = $kon->hasil_array($id);
+
+                    for ($i = 0; $i < $values['kuantiti']; $i++) {
+                      $arraykd = $array_kd[$i];
+                      $araryinputkd = implode($arraykd);
+                    ?>
+                      <input type="hidden" name="kd_barang[]" value="<?php echo $araryinputkd; ?>">
+
+                <?php
+                    }
+                    for ($i = 0; $i < $values['kuantiti']; $i++) {
+                      $arrayid = $array_id[$i];
+                      $araryinputid = implode($arrayid);
+                      echo "<input type='hidden' name='id_inventaris[]' value='$araryinputid'>";
+                    }
+                  }
                 } else {
                   echo '
                                     <tr>

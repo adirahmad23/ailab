@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "koneksi.php";
+include "proses/koneksi.php";
 $kon = new Koneksi();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $error = 'Invalid NRP atau password.';
     } else {
       // Check if the password matches the hshed password stored in the database
-      if (($password == $user[pass])) {
+      if (($password == $user['pass'])) {
         // Passwords match, so create a session for the user and redirect to a secured page
         $_SESSION['mahasiswa_id'] = $user['id_mahasiswa'];
         $_SESSION['nama'] = $user['nama_mahasiswa'];
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['nrp'] = $user['nrp'];
         header('Location: index.php');
         exit;
-      } else if ($password != $user[pass]) {
+      } else if ($password != $user['pass']) {
         // Passwords do not match, so display an error message
         $error = 'Invalid NRP/email atau password.';
       }
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 
   <!-- css -->
-  <link href="login.css" rel="stylesheet">
+  <link href="assets/css/login/login.css" rel="stylesheet">
 </head>
 
 <body>
@@ -78,15 +78,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
       <div class="col-md-5">
         <form class="register-form" method="post">
-          <?php
-          // Display any error messages
-          if (isset($error)) {
-            echo '<p>' . $error . '</p>';
-          }
-          ?>
+
           <div class="p-5 text-center">
             <h4>Selamat Datang</h4>
-            <p>Masukkan NRP dan Password Anda</p>
+            <?php
+            // Display any error messages
+            if (isset($error)) {
+              echo '<p>' . $error . '</p>';
+            }
+            ?>
           </div>
           <div class="mb-3">
             <label for="text" class="form-label">Username</label>
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           </div>
           <div class="mb-4">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" name="tpass" placeholder="Password">
+            <input type="password" class="form-control" name="tpass" placeholder="Masukan Password">
           </div>
 
           <div class="mb-3 py-4">
