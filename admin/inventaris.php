@@ -9,7 +9,7 @@ $kon = new Koneksi();
 $tampil = $kon->kueri("SELECT * FROM tb_inventaris");
 $count = $kon->kueri("SELECT * FROM tb_inventaris");
 
-//------------------tamabah inventaris------------------
+//------------------tambah inventaris------------------
 if (isset($_POST['tambah'])) {
   $kd_barang = strip_tags($_POST['tkdbarang']);
   $tbarang = strip_tags($_POST['tnamabarang']);

@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION["mahasiswa_id"])) {
+    header("Location: login.php");
+    exit;
+}
+include "proses/koneksi.php";
+$kon = new Koneksi();
+$nama = $_SESSION['nama'];
+$abc = $kon->kueri("SELECT * FROM tb_chekout WHERE nama_mahasiswa = '$nama' ");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,35 +64,34 @@
                         <table class="table table-striped" id="table1">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nama Peminjam</th>
+                                    <th>Kode Barang</th>
                                     <th>Nama Barang</th>
-                                    <th>Tgl Pinjam</th>
-                                    <th>Tgl Kembali</th>
-                                    <th>Aksi</th>
+                                    <th>Merek</th>
+                                    <th>Kuantiti</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                <tr>
-                                    <td>Graiden</td>
-                                    <td>vehicula.aliquet@semconsequat.co.uk</td>
-                                    <td>076 4820 8838</td>
-                                    <td>Offenburg</td>
-                                    <td></td>
-                                    <td>
-                                        <span class="badge bg-success">Active</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Dale</td>
-                                    <td>fringilla.euismod.enim@quam.ca</td>
-                                    <td>0500 527693</td>
-                                    <td>New Quay</td>
-                                    <td></td>
-                                    <td>
-                                        <span class="badge bg-success">Active</span>
-                                    </td>
-                                </tr>
+                                <?php
+                                foreach ($abc as $value) : ?>
+                                    <tr>
+                                        <td><?= $value['kd_barang'] ?></td>
+                                        <td><?= $value['nama_barang'] ?></td>
+                                        <td><?= $value['merek'] ?></td>
+                                        <td><?= $value['kuantiti'] ?></td>
+                                        <td><?php
+
+                                            if ($value['status'] == 0) {
+                                                echo '<span class="badge bg-secondary">Menunggu Persetujuan</span>';
+                                            } else if ($value['status'] == 1) {
+                                                echo '<span class="badge bg-success">Di Setujui</span>';
+                                            }
+                                            ?>
+
+                                    </tr>
+                                <?php endforeach ?>
+
                             </tbody>
                         </table>
                     </div>

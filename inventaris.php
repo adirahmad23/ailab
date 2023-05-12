@@ -115,13 +115,12 @@ if (isset($_POST['chekout'])) {
   $aray_namabarang = explode(",", $nama_barang);
   $aray_merek = explode(",", $merek);
   $length = count($aray_idbarang);
-
   $kuantitis = explode(",", $kuantiti);
   $total = 0;
+
   foreach ($kuantitis as $nilai) {
     $total += $nilai;
   }
-
 
   for ($i = 0; $i < $total; $i++) {
     $data_idinven = $aray_idinventaris[$i];
@@ -157,22 +156,11 @@ if (isset($_POST['chekout'])) {
     }
   }
 
+  $id_barang = implode(",", $_POST['id_barang']);
+  $nama_barang = implode(",", $_POST['nama_barang']);
+  $merek = implode(",", $_POST['merek']);
 
-  //buatkan saya update ke tabel tb_barang hasil count masukan kedalam field stok tanpa marus membuka halaman ini lagi
-
-
-  // $tampilinvens = $kon->kueri("SELECT * FROM tb_barang WHERE id_barang = ""  ");
-
-  // Kueri untuk mengurangi stok pada tb_barang
-  // $query_update_stok = "";
-  // $items = explode(",", $id_barang);
-  // $quantities = explode(",", $kuantiti);
-  // for ($i = 0; $i < count($items); $i++) {
-  //   $query_update_stok .= "UPDATE tb_barang SET stok = stok - " . $quantities[$i] . " WHERE id_barang = " . $items[$i] . "; ";
-  // }
-
-  // Menjalankan kueri untuk mengurangi stok dan memasukkan data ke tabel checkout
-  if ($kon->kueri($query_update_stok . "INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
+  if ($kon->kueri("INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
     setcookie("cart_barang", "", time() - 3600);
     header("location:inventaris.php?clearall=1");
     $_SESSION['chekout'] = "1";
