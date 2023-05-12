@@ -1,6 +1,7 @@
-<?php $data = rand(1, 100);
-$value = "barang" . $data;
-
-
+<?php
+$random_number = rand(1, 1000);
+$value = "idbarang" . $random_number;
 ?>
-<input type='text' name='tkdbarang' class='form-control' value='<?= $value ?>'>
+
+
+<input type='text' name='tkdbarang' class='form-control' value='<?= $value ?>' readonly>
