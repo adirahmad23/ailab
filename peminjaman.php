@@ -7,7 +7,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 include "proses/koneksi.php";
 $kon = new Koneksi();
 $nama = $_SESSION['nama'];
-$abc = $kon->kueri("SELECT * FROM tb_chekout WHERE nama_mahasiswa = '$nama' ");
+$abc = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' ");
 ?>
 
 <!DOCTYPE html>
@@ -86,6 +86,8 @@ $abc = $kon->kueri("SELECT * FROM tb_chekout WHERE nama_mahasiswa = '$nama' ");
                                                 echo '<span class="badge bg-secondary">Menunggu Persetujuan</span>';
                                             } else if ($value['status'] == 1) {
                                                 echo '<span class="badge bg-success">Di Setujui</span>';
+                                            } else if ($value['status'] == 3) {
+                                                echo '<span class="badge bg-danger">Tidak Disetujui</span>';
                                             }
                                             ?>
 

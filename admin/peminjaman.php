@@ -38,63 +38,19 @@
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Data Peminjaman</button>
           </div>
           <div class="card-body">
-            <table class="table table-striped" id="table1">
+            <table class="table table-striped display " id="example">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Nama Peminjam</th>
+                  <th></th>
+                  <th>Id</th>
+                  <th>Nama Mahasiswa</th>
+                  <th>Kode Barang</th>
                   <th>Nama Barang</th>
-                  <th>Tgl Pinjam</th>
-                  <th>Tgl Kembali</th>
-                  <th>Aksi</th>
+                  <th>Merek</th>
+                  <th>Kuantiti</th>
+                  <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Graiden</td>
-                  <td>vehicula.aliquet@semconsequat.co.uk</td>
-                  <td>076 4820 8838</td>
-                  <td>Offenburg</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Dale</td>
-                  <td>fringilla.euismod.enim@quam.ca</td>
-                  <td>0500 527693</td>
-                  <td>New Quay</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Nathaniel</td>
-                  <td>mi.Duis@diam.edu</td>
-                  <td>(012165) 76278</td>
-                  <td>Grumo Appula</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Darius</td>
-                  <td>velit@nec.com</td>
-                  <td>0309 690 7871</td>
-                  <td>Ways</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
             </table>
           </div>
         </div>

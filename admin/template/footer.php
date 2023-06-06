@@ -13,11 +13,12 @@
 </div>
 
 <script src="assets/js/bootstrap.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/app.js"></script>
 <script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
 <script src="assets/js/pages/simple-datatables.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/select2.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="app_ajax.js"></script>
+<?php include_once "app_ajax.php" ?>

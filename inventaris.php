@@ -103,6 +103,7 @@ if (isset($_GET["clearall"])) {
 <?php
 if (isset($_POST['chekout'])) {
   $nama = $_SESSION['nama'];
+  $idmhsw = $_SESSION['mahasiswa_id'];
   $id_barang = implode(",", $_POST['id_barang']);
   $nama_barang = implode(",", $_POST['nama_barang']);
   $merek = implode(",", $_POST['merek']);
@@ -160,7 +161,9 @@ if (isset($_POST['chekout'])) {
   $nama_barang = implode(",", $_POST['nama_barang']);
   $merek = implode(",", $_POST['merek']);
 
+
   if ($kon->kueri("INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
+    $kon->kueri("INSERT INTO tb_peminjaman(id_mahasiswa,nama_mahasiswa, kd_barang, nama_barang, merek, kuantiti, status) VALUES ('$idmhsw','$nama','$kdbarang','$nama_barang','$merek','$kuantiti','0')");
     setcookie("cart_barang", "", time() - 3600);
     header("location:inventaris.php?clearall=1");
     $_SESSION['chekout'] = "1";

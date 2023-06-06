@@ -248,7 +248,7 @@ if (isset($_POST['delete'])) {
               <div id="kdbarang"></div>
             </div>
             <div class="form-group">
-              <label">Nama :</label>
+              <label">Nama Barang :</label>
                 <select style="width:100%" class="form-control select-barang" id="selectbarang" name="tnamabarang" required>
                   <option value="" selected disabled>Pilih Barang</option>
                 </select>

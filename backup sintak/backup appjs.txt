@@ -1,0 +1,98 @@
+<script>
+    /* Formatting function for row details - modify as you need */
+    function format(d) {
+        // `d` is the original data object for the row
+        return (
+            '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" width="100%">' +
+            "<tr>" +
+            "<td width='10%'>Nama Mahasiswa:</td>" +
+            "<td>" +
+            d.nama_mahasiswa +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td width='10%'>Kode Barang:</td>" +
+            "<td>" +
+            d.kd_barang +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td>Nama Barang:</td>" +
+            "<td>" +
+            d.nama_barang +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td>Merek:</td>" +
+            "<td>" +
+            d.merek +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td>Kuantiti:</td>" +
+            "<td>" +
+            d.kuantiti +
+            "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td>Status:</td>" +
+            "<td>" +
+            d.status +
+            "</td>" +
+            "</tr>" +
+            "</table>"
+        );
+    }
+
+    $(document).ready(function() {
+        var table = $("#example").DataTable({
+            ajax: {
+                url: "bacajson.php"
+            },
+            columns: [{
+                    className: "dt-control",
+                    orderable: false,
+                    data: null,
+                    defaultContent: "",
+                },
+                {
+                    data: "nama_mahasiswa"
+                },
+                {
+                    data: "kd_barang"
+                },
+                {
+                    data: "nama_barang"
+                },
+                {
+                    data: "merek"
+                },
+                {
+                    data: "kuantiti"
+                },
+                {
+                    data: "status"
+                },
+            ],
+            order: [
+                [1, "asc"]
+            ],
+        });
+
+        // Add event listener for opening and closing details
+        $("#example tbody").on("click", "td.dt-control", function() {
+            var tr = $(this).closest("tr");
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass("shown");
+            } else {
+                // Open this row
+                row.child(format(row.data())).show();
+                tr.addClass("shown");
+            }
+        });
+    });
+</script>

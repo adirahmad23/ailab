@@ -1,7 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start();
+if (!isset($_SESSION['teknisi_id'])) {
+  header("Location: login.php");
+  exit();
+}
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Memastikan bahwa data 'ktm' telah dikirim
+  if (isset($_POST['ktm'])) {
+    $ktm = $_POST['ktm'];
+    die;
+    //   // Lakukan pemrosesan data sesuai kebutuhan Anda
+    //   // Misalnya, simpan data ke database atau lakukan tindakan lainnya
+
+    //   // Mengirimkan tanggapan JSON jika diperlukan
+    //   $response = array('status' => 'success', 'message' => 'Data KTM berhasil diterima');
+    //   echo json_encode($response);
+    // } else {
+    //   $response = array('status' => 'error', 'message' => 'Data KTM tidak ditemukan');
+    //   echo json_encode($response);
+    // }
+  }
+}
+
+?>
+
+<html lang="en">
 <?php include_once "template/header.php" ?>
+<style>
+  form {
+    background: #fff;
+    margin: 10px auto;
+    padding: 15px 40px 40px 40px;
+    width: 100%;
+  }
+
+  .tab p {
+    font-size: 20px;
+    margin: 0 0 10px 0;
+  }
+
+  /* input {
+    margin: 10px 0;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 17px;
+    border: 1px solid #aaaaaa;
+  } */
+
+  .index-btn-wrapper {
+    display: flex;
+  }
+
+  .index-btn {
+    margin: 20px 15px 0 0;
+    background: #04AA6D;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .index-btn:hover {
+    opacity: 0.8;
+  }
+
+  .step {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    margin: 0 2px;
+    color: white;
+    background: blue;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.25;
+  }
+</style>
 
 <body>
   <?php include_once "template/sidebar.php" ?>
@@ -34,178 +112,150 @@
           <div class="card-header">
             Data Pengembalian Barang
           </div>
-          <div class="btn-tambah p-3">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Data Pengembalian</button>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped" id="table1">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nama Peminjam</th>
-                  <th>Nama Barang</th>
-                  <th>Tgl Pinjam</th>
-                  <th>Tgl Kembali</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Graiden</td>
-                  <td>vehicula.aliquet@semconsequat.co.uk</td>
-                  <td>076 4820 8838</td>
-                  <td>Offenburg</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Dale</td>
-                  <td>fringilla.euismod.enim@quam.ca</td>
-                  <td>0500 527693</td>
-                  <td>New Quay</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Nathaniel</td>
-                  <td>mi.Duis@diam.edu</td>
-                  <td>(012165) 76278</td>
-                  <td>Grumo Appula</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Darius</td>
-                  <td>velit@nec.com</td>
-                  <td>0309 690 7871</td>
-                  <td>Ways</td>
-                  <td>Offenburg</td>
-                  <td>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit"><i class="bi bi-pen"></i></button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-hapus"><i class="bi bi-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="card-body  ">
+            <div class="container box  ">
+              <form id="myForm" action="" method="post" autocomplete="off">
+                <h1 align=center>Data Pengembalian</h1>
+
+                <div style="text-align:center;">
+                  <span class="step" id="step-1">1</span>
+                  <span class="step" id="step-2">2</span>
+                  <span class="step" id="step-3">3</span>
+                  <span class="step" id="step-4">4</span>
+                </div>
+
+                <div class="tab" id="tab-1">
+                  <p>RFID KTM:</p>
+                  <form>
+                    <input class="form form-control" id="ktm" type="text" placeholder="Tap KTM" name="ktm">
+                    <div class="index-btn-wrapper">
+                      <div class="index-btn btn btn-primary " onclick="run(1, 2); kirimdata();">Next</div>
+                    </div>
+                  </form>
+
+                  <script>
+                    function kirimdata() {
+                      var ktm = document.getElementById('ktm').value;
+
+                      // Data yang akan dikirim
+                      var data = {
+                        ktm: ktm
+                      };
+
+                      // Konfigurasi permintaan POST
+                      var options = {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                      };
+
+                      // Kirim permintaan POST menggunakan Fetch API
+                      fetch('url_target', options)
+                        .then(response => response.json())
+                        .then(data => {
+                          // Tanggapan dari server
+                          console.log(data);
+                        })
+                        .catch(error => {
+                          console.error('Terjadi kesalahan:', error);
+                        });
+                    }
+                  </script>
+
+                </div>
+            </div>
+
+            <div class="tab" id="tab-2">
+              <p>Data Barang <?= $ktm ?></p>
+              <div class="form-group">
+                <label for="formGroupExampleInput">Example label</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput2">Another label</label>
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+              </div>
+              <div class="index-btn-wrapper">
+                <div class="index-btn btn btn-primary" onclick="run(2, 1);">Previous</div>
+                <div class="index-btn btn btn-primary" onclick="run(2, 3);">Next</div>
+              </div>
+            </div>
+
+            <div class="tab" id="tab-3">
+              <p>Contact Info:</p>
+              <div class="form-group">
+                <label for="formGroupExampleInput">Example label</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput2">Another label</label>
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+              </div>
+              <div class="index-btn-wrapper">
+                <div class="index-btn btn btn-primary" onclick="run(3, 2);">Previous</div>
+                <div class="index-btn btn btn-primary" onclick="run(3, 4);">Next</div>
+              </div>
+            </div>
+
+            <div class="tab" id="tab-4">
+              <p>Login Info:</p>
+              <input type="text" class="form form-control" placeholder="Username" name="username">
+              <input type="password" class="form form-control" placeholder="Password" name="password">
+              <div class="index-btn-wrapper">
+                <div class="index-btn btn btn-primary" onclick="run(4, 3);">Previous</div>
+                <div class="index-btn btn btn-primary" onclick="run(4, 5);">Next</div>
+              </div>
+            </div>
+
+            <div class="tab" id="tab-5">
+              <div class="index-btn-wrapper">
+                <div class="index-btn btn btn-primary" onclick="run(5, 4);">Previous</div>
+                <button class="index-btn btn btn-primary" type="submit" name="submit" style="background: blue;">Submit</button>
+              </div>
+            </div>
+            </form>
           </div>
         </div>
       </section>
     </div>
 
 
-
-    <!-- modal-tambah -->
-    <div class="modal" id="modal-tambah" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Tambah Data Pengembalian</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>ID Barang</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Nama Peminjam</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Nama Barang</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Tgl Pinjam</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Tgl Kembali</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end-modal-tambah -->
-
-    <!-- modal-edit -->
-    <div class="modal" id="modal-edit" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Data Pengembalian</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>ID Barang</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Nama Peminjam</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Nama Barang</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Tgl Pinjam</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Tgl Kembali</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end-modal-edit -->
-
-    <!-- modal-hapus -->
-    <div class="modal" id="modal-hapus" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Hapus Data Barang</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <center>
-              <h4>Apakah anda ingin hapus data</h4>
-              <h4>tersebut ?</h4>
-            </center>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Hapus</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end-modal-hapus -->
-
     <?php include_once 'template/footer.php' ?>
+    <script>
+      // Default tab
+      $(".tab").css("display", "none");
+      $("#tab-1").css("display", "block");
+
+      function run(hideTab, showTab) {
+        if (hideTab < showTab) { // If not press previous button
+          // Validation if press next button
+          var currentTab = 0;
+          x = $('#tab-' + hideTab);
+          y = $(x).find("input")
+          for (i = 0; i < y.length; i++) {
+            if (y[i].value == "") {
+              $(y[i]).css("background", "#ffdddd");
+              return false;
+            }
+          }
+        }
+
+        // Progress bar
+        for (i = 1; i < showTab; i++) {
+          $("#step-" + i).css("opacity", "1");
+        }
+
+        // Switch tab
+        $("#tab-" + hideTab).css("display", "none");
+        $("#tab-" + showTab).css("display", "block");
+        $("input").css("background", "#fff");
+      }
+    </script>
+
 
 </body>
+
 
 </html>
