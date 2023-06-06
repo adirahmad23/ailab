@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Mar 2023 pada 10.23
--- Versi server: 10.4.24-MariaDB
--- Versi PHP: 7.4.29
+-- Waktu pembuatan: 17 Apr 2023 pada 14.50
+-- Versi server: 10.4.27-MariaDB
+-- Versi PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,22 +29,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tb_barang` (
   `id_barang` int(11) NOT NULL,
-  `kd_barang` varchar(255) NOT NULL,
   `nama_barang` varchar(255) NOT NULL,
   `merek` varchar(255) NOT NULL,
   `stok` varchar(255) NOT NULL,
   `status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_barang`
 --
 
-INSERT INTO `tb_barang` (`id_barang`, `kd_barang`, `nama_barang`, `merek`, `stok`, `status`) VALUES
-(44, 'DataBarang1', 'solder', 'panasonic', '3', 1),
-(45, '1234', 'timah', 'deko', '4', 1),
-(48, 'barangku', '123', 'nomerek', '4', 1),
-(49, 'sf', 'fsaf', 'asf', '4', 1);
+INSERT INTO `tb_barang` (`id_barang`, `nama_barang`, `merek`, `stok`, `status`) VALUES
+(56, 'Motor', 'Merek', '0', 1),
+(60, 'Servo', 'MG', '0', 1),
+(63, 'LM35', 'toshiba', '0', 1),
+(64, 'Avometer', 'Deko', '0', 1);
 
 -- --------------------------------------------------------
 
@@ -55,25 +54,45 @@ INSERT INTO `tb_barang` (`id_barang`, `kd_barang`, `nama_barang`, `merek`, `stok
 CREATE TABLE `tb_chekout` (
   `id_chekout` int(11) NOT NULL,
   `id_barang` varchar(100) NOT NULL,
-  `kd_barang` varchar(100) NOT NULL,
-  `nama_mahasiswa` varchar(255) NOT NULL,
-  `nama_barang` varchar(255) NOT NULL,
-  `merek` varchar(255) NOT NULL,
+  `id_inventaris` varchar(1000) NOT NULL,
+  `kd_barang` varchar(1000) NOT NULL,
+  `nama_mahasiswa` varchar(1000) NOT NULL,
+  `nama_barang` varchar(1000) NOT NULL,
+  `merek` varchar(1000) NOT NULL,
   `kuantiti` varchar(10) NOT NULL,
   `status` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_chekout`
 --
 
-INSERT INTO `tb_chekout` (`id_chekout`, `id_barang`, `kd_barang`, `nama_mahasiswa`, `nama_barang`, `merek`, `kuantiti`, `status`) VALUES
-(7, '44,45,48,49', 'DataBarang1,1234,barangku,sf', 'user', 'solder,timah,123,fsaf', 'panasonic,deko,nomerek,asf', '2,7,4,3', 'Belum Disetujui'),
-(8, '44,45,48', 'DataBarang1,1234,barangku', 'user', 'solder,timah,123', 'panasonic,deko,nomerek', '3,5,6', 'Belum Disetujui'),
-(9, '45,48,49', '1234,barangku,sf', 'user', 'timah,123,fsaf', 'deko,nomerek,asf', '5,6,6', 'Belum Disetujui'),
-(10, '44,45,48,49', 'DataBarang1,1234,barangku,sf', 'user', 'solder,timah,123,fsaf', 'panasonic,deko,nomerek,asf', '1,5,7,5', 'Belum Disetujui'),
-(11, '49,48,45', 'sf,barangku,1234', 'user', 'fsaf,123,timah', 'asf,nomerek,deko', '6,4,89', 'Belum Disetujui'),
-(12, '44,45,48,49', 'DataBarang1,1234,barangku,sf', 'user', 'solder,timah,123,fsaf', 'panasonic,deko,nomerek,asf', '1,1,1,1', 'Belum Disetujui');
+INSERT INTO `tb_chekout` (`id_chekout`, `id_barang`, `id_inventaris`, `kd_barang`, `nama_mahasiswa`, `nama_barang`, `merek`, `kuantiti`, `status`) VALUES
+(11, '64', '11,12', '090030C719,090039216E', 'user', 'Avometer', 'Deko', '2', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_inventaris`
+--
+
+CREATE TABLE `tb_inventaris` (
+  `id_inventaris` int(11) NOT NULL,
+  `id_barang` varchar(100) NOT NULL,
+  `kd_barang` varchar(100) NOT NULL,
+  `nama_barang` varchar(255) NOT NULL,
+  `merek` varchar(255) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `proses` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_inventaris`
+--
+
+INSERT INTO `tb_inventaris` (`id_inventaris`, `id_barang`, `kd_barang`, `nama_barang`, `merek`, `status`, `proses`) VALUES
+(11, '64', '090030C719', 'Avometer', 'Deko', '0', '0'),
+(12, '64', '090039216E', 'Avometer', 'Deko', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -89,7 +108,7 @@ CREATE TABLE `tb_mahasiswa` (
   `kelas` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `pass` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_mahasiswa`
@@ -110,7 +129,7 @@ CREATE TABLE `tb_teknisi` (
   `email` varchar(255) NOT NULL,
   `pass` varchar(500) NOT NULL,
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_teknisi`
@@ -136,6 +155,12 @@ ALTER TABLE `tb_chekout`
   ADD PRIMARY KEY (`id_chekout`);
 
 --
+-- Indeks untuk tabel `tb_inventaris`
+--
+ALTER TABLE `tb_inventaris`
+  ADD PRIMARY KEY (`id_inventaris`);
+
+--
 -- Indeks untuk tabel `tb_mahasiswa`
 --
 ALTER TABLE `tb_mahasiswa`
@@ -155,13 +180,19 @@ ALTER TABLE `tb_teknisi`
 -- AUTO_INCREMENT untuk tabel `tb_barang`
 --
 ALTER TABLE `tb_barang`
-  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_chekout`
 --
 ALTER TABLE `tb_chekout`
-  MODIFY `id_chekout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_chekout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_inventaris`
+--
+ALTER TABLE `tb_inventaris`
+  MODIFY `id_inventaris` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_mahasiswa`

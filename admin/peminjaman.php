@@ -206,6 +206,7 @@
 
     <?php include_once 'template/footer.php' ?>
 
+
 </body>
 
 </html>
