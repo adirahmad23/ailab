@@ -4,10 +4,12 @@ if (!isset($_SESSION["mahasiswa_id"])) {
     header("Location: login.php");
     exit;
 }
-include "proses/koneksi.php";
-$kon = new Koneksi();
-$nama = $_SESSION['nama'];
-$abc = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' ");
+$idmhsw = $_SESSION['mahasiswa_id'];
+include_once "proses/koneksi.php";
+$kon = new koneksi();
+$kondisi = $kon->kueri("SELECT * FROM tb_peminjaman where id_mahasiswa = '$idmhsw' AND status != '3' AND status != '2' ");
+$jumlah = $kon->jumlah_data($kondisi);
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +18,7 @@ $abc = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' "
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peminjaman Barang</title>
+    <title>List Barang</title>
 
     <link rel="stylesheet" href="assets/css/main/app.css">
     <link rel="stylesheet" href="assets/css/main/app-dark.css">
@@ -25,12 +27,12 @@ $abc = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' "
 
     <link rel="stylesheet" href="assets/extensions/simple-datatables/style.css">
     <link rel="stylesheet" href="assets/css/pages/simple-datatables.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <?php include_once "sidebar.php" ?>
-    </div>
     <div id="main">
         <header class="mb-3">
             <a href="#" class="burger-btn d-block d-xl-none">
@@ -43,13 +45,13 @@ $abc = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' "
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Peminjaman Barang</h3>
-                        <p class="text-subtitle text-muted">Data Barang Yang Anda Ajukan</p>
+                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies thanks to simple-datatables</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Peminjaman</li>
+                                <li class="breadcrumb-item active" aria-current="page">Peminjaman Barang</li>
                             </ol>
                         </nav>
                     </div>
@@ -60,56 +62,54 @@ $abc = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' "
                     <div class="card-header">
                         Data Peminjaman Barang
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped" id="table1">
-                            <thead>
-                                <tr>
-                                    <th>Kode Barang</th>
-                                    <th>Nama Barang</th>
-                                    <th>Merek</th>
-                                    <th>Kuantiti</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <?php
-                                foreach ($abc as $value) : ?>
+                    <!-- <div class="btn-tambah p-3">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Data Peminjaman</button>
+                    </div> -->
+                    <?php if ($jumlah > 0) { ?>
+                        <div class="card-body">
+                            <table class="table table-striped display " id="example">
+                                <thead>
                                     <tr>
-                                        <td><?= $value['kd_barang'] ?></td>
-                                        <td><?= $value['nama_barang'] ?></td>
-                                        <td><?= $value['merek'] ?></td>
-                                        <td><?= $value['kuantiti'] ?></td>
-                                        <td><?php
-
-                                            if ($value['status'] == 0) {
-                                                echo '<span class="badge bg-secondary">Menunggu Persetujuan</span>';
-                                            } else if ($value['status'] == 1) {
-                                                echo '<span class="badge bg-success">Di Setujui</span>';
-                                            } else if ($value['status'] == 3) {
-                                                echo '<span class="badge bg-danger">Tidak Disetujui</span>';
-                                            }
-                                            ?>
-
+                                        <th></th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Merek</th>
+                                        <th>Kuantiti</th>
+                                        <th>Status</th>
                                     </tr>
-                                <?php endforeach ?>
-
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                            </table>
+                        </div>
+                    <?php } else if ($jumlah == 0) { ?>
+                        <div class="card-body">
+                            <table class="table table-striped display ">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Merek</th>
+                                        <th>Kuantiti</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" align="center">Anda Belum Meminjam</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    <?php } ?>
                 </div>
-
             </section>
         </div>
 
-        <?php include_once 'footer.php' ?>
-    </div>
-    </div>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/app.js"></script>
 
-    <script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
-    <script src="assets/js/pages/simple-datatables.js"></script>
+        <!-- end-modal-hapus -->
+
+        <?php include_once 'footer.php' ?>
+        <?php include_once "app_ajax.php" ?>
 
 </body>
 

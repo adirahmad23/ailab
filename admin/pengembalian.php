@@ -4,24 +4,8 @@ if (!isset($_SESSION['teknisi_id'])) {
   header("Location: login.php");
   exit();
 }
+$idktm = $_SESSION['ktm'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Memastikan bahwa data 'ktm' telah dikirim
-  if (isset($_POST['ktm'])) {
-    $ktm = $_POST['ktm'];
-    die;
-    //   // Lakukan pemrosesan data sesuai kebutuhan Anda
-    //   // Misalnya, simpan data ke database atau lakukan tindakan lainnya
-
-    //   // Mengirimkan tanggapan JSON jika diperlukan
-    //   $response = array('status' => 'success', 'message' => 'Data KTM berhasil diterima');
-    //   echo json_encode($response);
-    // } else {
-    //   $response = array('status' => 'error', 'message' => 'Data KTM tidak ditemukan');
-    //   echo json_encode($response);
-    // }
-  }
-}
 
 ?>
 
@@ -137,29 +121,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     function kirimdata() {
                       var ktm = document.getElementById('ktm').value;
 
-                      // Data yang akan dikirim
-                      var data = {
-                        ktm: ktm
-                      };
-
-                      // Konfigurasi permintaan POST
-                      var options = {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                      };
-
-                      // Kirim permintaan POST menggunakan Fetch API
-                      fetch('url_target', options)
-                        .then(response => response.json())
-                        .then(data => {
-                          // Tanggapan dari server
-                          console.log(data);
+                      fetch('tester.php', {
+                          method: 'POST',
+                          headers: {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                          },
+                          body: 'ktm=' + encodeURIComponent(ktm)
                         })
-                        .catch(error => {
-                          console.error('Terjadi kesalahan:', error);
+                        .then(function(response) {
+                          return response.text();
+                        })
+                        .then(function(data) {
+                          console.log(data);
+                          // Lakukan tindakan setelah mendapatkan respons dari PHP
                         });
                     }
                   </script>
@@ -168,7 +142,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="tab" id="tab-2">
-              <p>Data Barang <?= $ktm ?></p>
+
+              <p>Data Barang <?= $_SESSION['ktm'] ?> </p>
               <div class="form-group">
                 <label for="formGroupExampleInput">Example label</label>
                 <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
@@ -178,8 +153,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
               </div>
               <div class="index-btn-wrapper">
-                <div class="index-btn btn btn-primary" onclick="run(2, 1);">Previous</div>
+                <div class="index-btn btn btn-primary" onclick="run(2, 1);unset();">Previous</div>
                 <div class="index-btn btn btn-primary" onclick="run(2, 3);">Next</div>
+                <script>
+                  function unset() {
+                    var unset = unset;
+
+                    fetch('tester.php', {
+                        method: 'POST',
+                        headers: {
+                          'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'unset=' + encodeURIComponent(unset)
+                      })
+                      .then(function(response) {
+                        return response.text();
+                      })
+                      .then(function(data) {
+                        console.log(data);
+                        // Lakukan tindakan setelah mendapatkan respons dari PHP
+                      });
+                  }
+                </script>
               </div>
             </div>
 

@@ -9,6 +9,8 @@
         </div>
     </div>
 </footer>
+</div>
+</div>
 
 <script src="assets/js/bootstrap.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
@@ -18,4 +20,4 @@
 <script src="assets/js/pages/simple-datatables.js"></script>
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/select2.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js">
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>

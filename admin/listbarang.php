@@ -30,7 +30,7 @@
                 $status = 1;
                 $kdbarang = strip_tags($_POST['nama_barang']);
 
-                $cek_data = $kon->kueri("SELECT * FROM tb_barang WHERE merek = '$merek' ");
+                $cek_data = $kon->kueri("SELECT * FROM tb_barang WHERE nama_barang = '$namabarang' AND merek = '$merek' ");
                 $jumlah = $kon->jumlah_data($cek_data);
                 // echo $jumlah;
                 if ($jumlah > 0) {

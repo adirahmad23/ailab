@@ -20,7 +20,29 @@ if (isset($_POST['sukses'])) {
 
 if (isset($_POST['tolak'])) {
   $id = strip_tags($_POST['id']);
-  $abc = $kon->kueri("UPDATE tb_peminjaman SET status = '3' WHERE id_pinjam = '$id' ");
+  $kembalikanbarang = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_pinjam = '$id' ");
+  $var = $kon->hasil_data($kembalikanbarang);
+  $kd = $var['kd_barang'];
+  $pecahArr = explode(",", $kd);
+  for ($i = 0; $i < count($pecahArr); $i++) {
+    $kd_barang = $pecahArr[$i];
+    $kembalikan = $kon->kueri("UPDATE tb_inventaris SET status='1',proses='1' WHERE kd_barang = '$kd_barang' ");
+    if ($kembalikan == true) {
+      $count_data = $kon->kueri("SELECT status, merek, nama_barang, COUNT(*) as total FROM tb_inventaris GROUP BY status, merek, nama_barang");
+      while ($row = $kon->hasil_data($count_data)) {
+        $status = $row['status'];
+        $merek = $row['merek'];
+        $nama_barang = $row['nama_barang'];
+        $total = $row['total'];
+        //buatkan saya update ke tabel tb_barang hasil count masukan kedalam field stok tanpa marus membuka halaman ini lagi
+        $update =  $kon->kueri("UPDATE tb_barang SET stok = '$total' WHERE status = '$status' AND merek = '$merek' AND nama_barang = '$nama_barang'");
+      }
+    }
+  }
+
+
+
+  $abc = $kon->kueri("UPDATE tb_peminjaman SET status = '2' WHERE id_pinjam = '$id' ");
   if ($abc == true) {
     $_SESSION['tolak'] = "1";
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -127,97 +149,6 @@ if (isset($_POST['tolak'])) {
       </section>
     </div>
 
-    <!-- modal-tambah -->
-    <div class="modal" id="modal-tambah" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Tambah Data Persetujuan</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>ID Mahasiswa</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Nama Mahasiswa</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Barang</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Kelas</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end-modal-tambah -->
-
-    <!-- modal-edit -->
-    <div class="modal" id="modal-edit" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Data Persetujuan</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>ID Mahasiswa</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Nama Mahasiswa</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Barang</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label>Kelas</label>
-              <input type="text" name="id" class="form-control">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end-modal-edit -->
-
-    <!-- modal-hapus -->
-    <div class="modal" id="modal-hapus" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Hapus Data Persetujuan</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <center>
-              <h4>Apakah anda ingin hapus data</h4>
-              <h4>tersebut ?</h4>
-            </center>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-primary">Hapus</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- end-modal-hapus -->
     <?php include_once 'template/footer.php' ?>
 </body>

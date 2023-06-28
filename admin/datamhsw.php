@@ -28,21 +28,21 @@ if (isset($_POST['tambah'])) {
     $nrp = strip_tags($_POST['tnrp']);
     $kelas = strip_tags($_POST['tkelas']);
     $email = strip_tags($_POST['temail']);
-    $pass = md5($_POST['tpass']);
-    $pass1 = md5($_POST['tpass1']);
-    if ($pass != $pass1) {
-        $_SESSION['tambah'] = "2";
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    }
+    $pass = md5($_POST['tnrp']);
+    // $pass1 = md5($_POST['tpass1']);
+    // if ($pass != $pass1) {
+    //     $_SESSION['tambah'] = "2";
+    //     header("Location: " . $_SERVER['PHP_SELF']);
+    //     exit();
+    // }
 
-    $verif = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE id_rfid = '$idrfid' ");
-    $jumlah = $kon->jumlah_data($verif);
-    if ($jumlah > 0) {
-        $_SESSION['tambah'] = "3";
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    }
+    // $verif = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE id_rfid = '$idrfid' ");
+    // $jumlah = $kon->jumlah_data($verif);
+    // if ($jumlah > 0) {
+    //     $_SESSION['tambah'] = "3";
+    //     header("Location: " . $_SERVER['PHP_SELF']);
+    //     exit();
+    // }
 
     $verifnrp = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE nrp = '$nrp' ");
     $jumlah = $kon->jumlah_data($verifnrp);
@@ -207,10 +207,11 @@ if (isset($_POST['edit'])) {
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <?php
-                            $loop = $kon->kueri("SELECT * FROM tb_mahasiswa");
-                            foreach ($loop as $value) : ?>
-                                <tbody>
+
+                            <tbody>
+                                <?php
+                                $loop = $kon->kueri("SELECT * FROM tb_mahasiswa");
+                                foreach ($loop as $value) : ?>
                                     <tr>
                                         <td><?= $value['id_rfid'] ?></td>
                                         <td><?= $value['nama_mahasiswa'] ?></td>
@@ -221,41 +222,41 @@ if (isset($_POST['edit'])) {
                                             <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_mahasiswa'] . '"><i class="bi bi-pen"></i></button>'; ?>
                                             <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_mahasiswa'] . '"><i class="bi bi-trash"></i></button>'; ?> </td>
                                     </tr>
-                                </tbody>
+                            </tbody>
 
-                                <!-- modal-hapus -->
-                                <?php echo '<div class="modal fade" id="hapus' . $value['id_mahasiswa'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Hapus Data Barang</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <center>
-                                                <h4>Apakah anda ingin hapus data</h4>
-                                                <h4>tersebut ?</h4>
-                                            </center>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                                            <form action="" method="POST">
-                                                <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_mahasiswa'] . ' " ">Hapus</button>'; ?>
+                            <!-- modal-hapus -->
+                            <?php echo '<div class="modal fade" id="hapus' . $value['id_mahasiswa'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Hapus Data Barang</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <center>
+                                            <h4>Apakah anda ingin hapus data</h4>
+                                            <h4>tersebut ?</h4>
+                                        </center>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                                        <form action="" method="POST">
+                                            <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_mahasiswa'] . ' " ">Hapus</button>'; ?>
 
-                                            </form>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
+                            </div>
                     </div>
                     <!-- end-modal-hapus -->
 
 
                     <!-- modal-edit -->
                     <?php echo '<div class="modal" id="modal-edit' . $value['id_mahasiswa'] . '" tabindex="-1">';
-                                $idbarang = $value['id_mahasiswa'];
+                                    $idbarang = $value['id_mahasiswa'];
 
-                                $tampil = $kon->kueri("SELECT * FROM tb_mahasiswa WHERE id_mahasiswa = '$idbarang' ");
-                                $data = $kon->hasil_data($tampil);
+                                    $tampil = $kon->kueri("SELECT * FROM tb_mahasiswa WHERE id_mahasiswa = '$idbarang' ");
+                                    $data = $kon->hasil_data($tampil);
                     ?>
 
                     <div class="modal-dialog modal-dialog-centered">
@@ -335,14 +336,14 @@ if (isset($_POST['edit'])) {
                             <label>Email</label>
                             <input type="email" name="temail" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Password</label>
                             <input type="password" name="tpass" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label>Konfirmasi Password</label>
                             <input type="password" name="tpass1" class="form-control" required>
-                        </div>
+                        </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>

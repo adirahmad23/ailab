@@ -6,6 +6,8 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 }
 include "proses/koneksi.php";
 $kon = new Koneksi();
+$nama = $_SESSION['nama'];
+$idmhsw = $_SESSION['mahasiswa_id'];
 $message = '';
 if (isset($_POST["add_to_cart"])) {
   if (isset($_COOKIE["cart_barang"])) {
@@ -160,9 +162,9 @@ if (isset($_POST['chekout'])) {
   $id_barang = implode(",", $_POST['id_barang']);
   $nama_barang = implode(",", $_POST['nama_barang']);
   $merek = implode(",", $_POST['merek']);
+  $idmhswa = $_SESSION['mahasiswa_id'];
 
-
-  if ($kon->kueri("INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
+  if ($kon->kueri("INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, id_mahasiswa, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$idmhswa','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
     $kon->kueri("INSERT INTO tb_peminjaman(id_mahasiswa,nama_mahasiswa, kd_barang, nama_barang, merek, kuantiti, status) VALUES ('$idmhsw','$nama','$kdbarang','$nama_barang','$merek','$kuantiti','0')");
     setcookie("cart_barang", "", time() - 3600);
     header("location:inventaris.php?clearall=1");
@@ -286,35 +288,44 @@ if (isset($_POST['chekout'])) {
                 </tr>
               </thead>
               <tbody>
-                <?php $no = 1;
-                foreach ($result as $row) { ?>
+                <?php
+                $minim = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' AND id_mahasiswa = '$idmhsw' AND (status = '0' OR status = '1') ");
+                $data = $kon->hasil_data($minim);
+                if ($data > 0) { ?>
                   <tr>
-                    <td><?= $no ?></td>
-                    <td><?= $row["id_barang"] ?></td>
-
-                    <td><?= $row["nama_barang"] ?></td>
-                    <td><?= $row["merek"] ?></td>
-                    <td><?= $row["stok"] ?></td>
-                    <?php if ($row["stok"] == 0) { ?>
-                      <td>
-                        <input type="submit" style="margin-top:5px;" class="btn btn-primary" value="Kosong" disabled />
-                      </td>
-                    <?php } else { ?>
-                      <td>
-                        <form method="post">
-                          <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Chekout" />
-                          <input type="hidden" name="kuantiti" value="1" class="form-control" />
-                          <input type="hidden" name="nama_barang" value="<?php echo $row["nama_barang"]; ?>" />
-                          <input type="hidden" name="merek" value="<?php echo $row["merek"]; ?>" />
-                          <input type="hidden" name="stok" value="<?php echo $row["stok"]; ?>" />
-                          <input type="hidden" name="hidden_id" value="<?php echo $row["id_barang"]; ?>" />
-                          <input type="hidden" name="kdbarang" value="<?php echo $row["kd_barang"]; ?>" />
-                        </form>
-                      </td>
+                    <td colspan="6" class="text-center">Anda Sudah Meminjam Barang</td>
                   </tr>
+                <?php } else { ?>
+                  <?php $no = 1;
+                  foreach ($result as $row) { ?>
+                    <tr>
+                      <td><?= $no ?></td>
+                      <td><?= $row["id_barang"] ?></td>
+
+                      <td><?= $row["nama_barang"] ?></td>
+                      <td><?= $row["merek"] ?></td>
+                      <td><?= $row["stok"] ?></td>
+                      <?php if ($row["stok"] == 0) { ?>
+                        <td>
+                          <input type="submit" style="margin-top:5px;" class="btn btn-primary" value="Kosong" disabled />
+                        </td>
+                      <?php } else { ?>
+                        <td>
+                          <form method="post">
+                            <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Chekout" />
+                            <input type="hidden" name="kuantiti" value="1" class="form-control" />
+                            <input type="hidden" name="nama_barang" value="<?php echo $row["nama_barang"]; ?>" />
+                            <input type="hidden" name="merek" value="<?php echo $row["merek"]; ?>" />
+                            <input type="hidden" name="stok" value="<?php echo $row["stok"]; ?>" />
+                            <input type="hidden" name="hidden_id" value="<?php echo $row["id_barang"]; ?>" />
+                            <input type="hidden" name="kdbarang" value="<?php echo $row["kd_barang"]; ?>" />
+                          </form>
+                        </td>
+                    </tr>
               <?php
+                      }
+                      $no++;
                     }
-                    $no++;
                   }
               ?>
               </tbody>

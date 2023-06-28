@@ -7,6 +7,8 @@
     <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/shared/iconly.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
 </head>
 
 <body>
