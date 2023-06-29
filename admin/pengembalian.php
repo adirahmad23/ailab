@@ -4,66 +4,14 @@ if (!isset($_SESSION['teknisi_id'])) {
   header("Location: login.php");
   exit();
 }
-$idktm = $_SESSION['ktm'];
-
+include_once "../proses/koneksi.php";
+$kon = new Koneksi();
 
 ?>
-
+<!DOCTYPE html>
 <html lang="en">
+
 <?php include_once "template/header.php" ?>
-<style>
-  form {
-    background: #fff;
-    margin: 10px auto;
-    padding: 15px 40px 40px 40px;
-    width: 100%;
-  }
-
-  .tab p {
-    font-size: 20px;
-    margin: 0 0 10px 0;
-  }
-
-  /* input {
-    margin: 10px 0;
-    padding: 10px;
-    box-sizing: border-box;
-    width: 100%;
-    font-size: 17px;
-    border: 1px solid #aaaaaa;
-  } */
-
-  .index-btn-wrapper {
-    display: flex;
-  }
-
-  .index-btn {
-    margin: 20px 15px 0 0;
-    background: #04AA6D;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 17px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .index-btn:hover {
-    opacity: 0.8;
-  }
-
-  .step {
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-    margin: 0 2px;
-    color: white;
-    background: blue;
-    border-radius: 50%;
-    display: inline-block;
-    opacity: 0.25;
-  }
-</style>
 
 <body>
   <?php include_once "template/sidebar.php" ?>
@@ -78,14 +26,14 @@ $idktm = $_SESSION['ktm'];
       <div class="page-title">
         <div class="row">
           <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Pengembalian Barang</h3>
+            <h3>Pengembalian Peminjaman</h3>
             <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies thanks to simple-datatables</p>
           </div>
           <div class="col-12 col-md-6 order-md-2 order-first">
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Pengembalian Barang</li>
+                <li class="breadcrumb-item active" aria-current="page">Pengembalian</li>
               </ol>
             </nav>
           </div>
@@ -94,163 +42,69 @@ $idktm = $_SESSION['ktm'];
       <section class="section">
         <div class="card">
           <div class="card-header">
-            Data Pengembalian Barang
+            Data Pengembalian
           </div>
-          <div class="card-body  ">
-            <div class="container box  ">
-              <form id="myForm" action="" method="post" autocomplete="off">
-                <h1 align=center>Data Pengembalian</h1>
-
-                <div style="text-align:center;">
-                  <span class="step" id="step-1">1</span>
-                  <span class="step" id="step-2">2</span>
-                  <span class="step" id="step-3">3</span>
-                  <span class="step" id="step-4">4</span>
-                </div>
-
-                <div class="tab" id="tab-1">
-                  <p>RFID KTM:</p>
-                  <form>
-                    <input class="form form-control" id="ktm" type="text" placeholder="Tap KTM" name="ktm">
-                    <div class="index-btn-wrapper">
-                      <div class="index-btn btn btn-primary " onclick="run(1, 2); kirimdata();">Next</div>
-                    </div>
-                  </form>
-
-                  <script>
-                    function kirimdata() {
-                      var ktm = document.getElementById('ktm').value;
-
-                      fetch('tester.php', {
-                          method: 'POST',
-                          headers: {
-                            'Content-type': 'application/x-www-form-urlencoded'
-                          },
-                          body: 'ktm=' + encodeURIComponent(ktm)
-                        })
-                        .then(function(response) {
-                          return response.text();
-                        })
-                        .then(function(data) {
-                          console.log(data);
-                          // Lakukan tindakan setelah mendapatkan respons dari PHP
-                        });
-                    }
-                  </script>
-
-                </div>
-            </div>
-
-            <div class="tab" id="tab-2">
-
-              <p>Data Barang <?= $_SESSION['ktm'] ?> </p>
-              <div class="form-group">
-                <label for="formGroupExampleInput">Example label</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-              </div>
-              <div class="form-group">
-                <label for="formGroupExampleInput2">Another label</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-              </div>
-              <div class="index-btn-wrapper">
-                <div class="index-btn btn btn-primary" onclick="run(2, 1);unset();">Previous</div>
-                <div class="index-btn btn btn-primary" onclick="run(2, 3);">Next</div>
-                <script>
-                  function unset() {
-                    var unset = unset;
-
-                    fetch('tester.php', {
-                        method: 'POST',
-                        headers: {
-                          'Content-type': 'application/x-www-form-urlencoded'
-                        },
-                        body: 'unset=' + encodeURIComponent(unset)
-                      })
-                      .then(function(response) {
-                        return response.text();
-                      })
-                      .then(function(data) {
-                        console.log(data);
-                        // Lakukan tindakan setelah mendapatkan respons dari PHP
-                      });
-                  }
-                </script>
-              </div>
-            </div>
-
-            <div class="tab" id="tab-3">
-              <p>Contact Info:</p>
-              <div class="form-group">
-                <label for="formGroupExampleInput">Example label</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-              </div>
-              <div class="form-group">
-                <label for="formGroupExampleInput2">Another label</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-              </div>
-              <div class="index-btn-wrapper">
-                <div class="index-btn btn btn-primary" onclick="run(3, 2);">Previous</div>
-                <div class="index-btn btn btn-primary" onclick="run(3, 4);">Next</div>
-              </div>
-            </div>
-
-            <div class="tab" id="tab-4">
-              <p>Login Info:</p>
-              <input type="text" class="form form-control" placeholder="Username" name="username">
-              <input type="password" class="form form-control" placeholder="Password" name="password">
-              <div class="index-btn-wrapper">
-                <div class="index-btn btn btn-primary" onclick="run(4, 3);">Previous</div>
-                <div class="index-btn btn btn-primary" onclick="run(4, 5);">Next</div>
-              </div>
-            </div>
-
-            <div class="tab" id="tab-5">
-              <div class="index-btn-wrapper">
-                <div class="index-btn btn btn-primary" onclick="run(5, 4);">Previous</div>
-                <button class="index-btn btn btn-primary" type="submit" name="submit" style="background: blue;">Submit</button>
-              </div>
-            </div>
+          <div>
+            <form action="" method="POST">
+              <input type="text" name="ktm" placeholder="Tap RFID KTM">
+              <p>Otomatis Terisi Saat Tap RFID</p>
+              <input type="submit" name="cari" value="Cari Data">
             </form>
+          </div>
+          <div class="card-header">
+
+          </div>
+          <div class="card-body">
+            <table class="table table-striped" id="table1">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Mahasiswa</th>
+                  <th>ID RFID</th>
+                  <th>AKSI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $no = 1;
+                if (isset($_POST['cari'])) {
+                  $ktm = $_POST['ktm'];
+                  $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_rfid = '$ktm' AND status = '1' ");
+
+                  foreach ($tampil as $row) {
+
+
+                ?>
+                    <tr>
+                      <td><?= $no ?></td>
+                      <td><?= $row['nama_mahasiswa'] ?></td>
+                      <td><?= $row['id_rfid'] ?></td>
+                      <td>
+                        <a href="javascript:void(0)" class="btn btn-primary" onclick="setCookieAndRedirect(<?= $row['id_pinjam'] ?>)">Proses Pengembalian</a>
+
+                        <script>
+                          function setCookieAndRedirect(idPinjam) {
+                            document.cookie = "idPinjam=" + idPinjam;
+                            window.location.href = "proses_pengembalian.php";
+                          }
+                        </script>
+
+                      </td>
+                    </tr>
+                <?php $no++;
+                  }
+                }
+                ?>
+
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
     </div>
 
-
+    <!-- end-modal-hapus -->
     <?php include_once 'template/footer.php' ?>
-    <script>
-      // Default tab
-      $(".tab").css("display", "none");
-      $("#tab-1").css("display", "block");
-
-      function run(hideTab, showTab) {
-        if (hideTab < showTab) { // If not press previous button
-          // Validation if press next button
-          var currentTab = 0;
-          x = $('#tab-' + hideTab);
-          y = $(x).find("input")
-          for (i = 0; i < y.length; i++) {
-            if (y[i].value == "") {
-              $(y[i]).css("background", "#ffdddd");
-              return false;
-            }
-          }
-        }
-
-        // Progress bar
-        for (i = 1; i < showTab; i++) {
-          $("#step-" + i).css("opacity", "1");
-        }
-
-        // Switch tab
-        $("#tab-" + hideTab).css("display", "none");
-        $("#tab-" + showTab).css("display", "block");
-        $("input").css("background", "#fff");
-      }
-    </script>
-
-
 </body>
-
 
 </html>

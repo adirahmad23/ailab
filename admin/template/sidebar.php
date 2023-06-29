@@ -90,7 +90,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/pengembalian') {
+                        <?php if (($url == 'admin/pengembalian') || ($url == 'admin/proses_pengembalian')) {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="pengembalian.php" class='sidebar-link'>
