@@ -38,8 +38,6 @@ if (isset($_POST['add'])) {
                 $data = $kon->jumlah_data($select);
                 $jumlah = $kon->kueri("SELECT * FROM tb_pengembalian WHERE id_pinjam = '$idPinjam' ");
                 $datajumlah = $kon->jumlah_data($jumlah);
-                echo $datajumlah;
-
                 if ($data > 0) {
                     echo "<script>alert('Barang Sudah Ada Di List')</script>";
                     echo "<script>window.location.href = 'proses_pengembalian.php'</script>";

@@ -222,31 +222,31 @@ if (isset($_POST['edit'])) {
                                             <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_mahasiswa'] . '"><i class="bi bi-pen"></i></button>'; ?>
                                             <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_mahasiswa'] . '"><i class="bi bi-trash"></i></button>'; ?> </td>
                                     </tr>
-                            </tbody>
 
-                            <!-- modal-hapus -->
-                            <?php echo '<div class="modal fade" id="hapus' . $value['id_mahasiswa'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Hapus Data Barang</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <center>
-                                            <h4>Apakah anda ingin hapus data</h4>
-                                            <h4>tersebut ?</h4>
-                                        </center>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                                        <form action="" method="POST">
-                                            <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_mahasiswa'] . ' " ">Hapus</button>'; ?>
 
-                                        </form>
+                                    <!-- modal-hapus -->
+                                    <?php echo '<div class="modal fade" id="hapus' . $value['id_mahasiswa'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Hapus Data Barang</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <center>
+                                                    <h4>Apakah anda ingin hapus data</h4>
+                                                    <h4>tersebut ?</h4>
+                                                </center>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                                                <form action="" method="POST">
+                                                    <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_mahasiswa'] . ' " ">Hapus</button>'; ?>
+
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
                     </div>
                     <!-- end-modal-hapus -->
 
@@ -301,6 +301,7 @@ if (isset($_POST['edit'])) {
                 <!-- end-modal-edit -->
 
             <?php endforeach; ?>
+            </tbody>
             </table>
         </div>
     </div>
