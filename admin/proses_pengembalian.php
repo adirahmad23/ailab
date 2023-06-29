@@ -154,7 +154,8 @@ if (isset($_POST['balik'])) {
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Pengembalian Peminjaman</h3>
-                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies thanks to simple-datatables</p>
+                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
+                            thanks to simple-datatables</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -173,9 +174,16 @@ if (isset($_POST['balik'])) {
                     </div>
                     <div>
                         <form action="" method="POST">
-                            <input type="text" name="kdbarang">
-                            <input type="submit" name="add" value="Kembalikan Barang">
+                            <div class="p-3">
+                                <a href="pengembalian.php" class="btn btn-primary btn-lg"><i
+                                        class="bi bi-arrow-return-left"></i></a>
+                                <span></span>
+                                <input class="col-form-label rounded" style="border-color:blue" type="text"
+                                    name="kdbarang">
+                                <input type="submit" class="btn btn-primary" name="add" value="Kembalikan Barang">
+                            </div>
                         </form>
+
                     </div>
                     <div class="card-header">
                     </div>
@@ -199,11 +207,11 @@ if (isset($_POST['balik'])) {
 
 
                                 ?>
-                                        <tr>
-                                            <td><?= $no ?></td>
-                                            <td><?= $row['nama_barang'] ?></td>
-                                            <td><?= $row['kd_barang'] ?></td>
-                                        </tr>
+                                <tr>
+                                    <td><?= $no ?></td>
+                                    <td><?= $row['nama_barang'] ?></td>
+                                    <td><?= $row['kd_barang'] ?></td>
+                                </tr>
                                 <?php $no++;
                                     }
                                 }
@@ -237,17 +245,17 @@ if (isset($_POST['balik'])) {
                                 $tap = $kon->kueri("SELECT * FROM tb_pengembalian WHERE id_pinjam = '$idPinjam' and id_rfid = '$idrfid' and id_teknisi = '$idteknisi'");
                                 foreach ($tap as $row) {
                                 ?>
-                                    <tr>
-                                        <td><?= $no ?></td>
-                                        <td><?= $row['nama_barang'] ?></td>
-                                        <td><?= $row['kd_barang'] ?></td>
-                                        <td>
-                                            <form action="" method="post">
-                                                <input type="hidden" name="hapus_id" value="<?= $row['id_kembali'] ?>">
-                                                <input type="submit" class="btn btn-danger" value="Hapus" name="hapus">
-                                            </form>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td><?= $no ?></td>
+                                    <td><?= $row['nama_barang'] ?></td>
+                                    <td><?= $row['kd_barang'] ?></td>
+                                    <td>
+                                        <form action="" method="post">
+                                            <input type="hidden" name="hapus_id" value="<?= $row['id_kembali'] ?>">
+                                            <input type="submit" class="btn btn-danger" value="Hapus" name="hapus">
+                                        </form>
+                                    </td>
+                                </tr>
                                 <?php $no++;
                                 }
 
