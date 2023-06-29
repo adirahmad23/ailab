@@ -93,7 +93,8 @@
                           <div class="row">
                               <div class="col-12 col-md-6 order-md-1 order-last">
                                   <h3>List Barang</h3>
-                                  <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
+                                  <p class="text-subtitle text-muted">A sortable, searchable, paginated table without
+                                      dependencies
                                       thanks to simple-datatables</p>
                               </div>
                               <div class="col-12 col-md-6 order-md-2 order-first">
@@ -183,7 +184,7 @@
                                           <tr>
                                               <th width="5%">No</th>
                                               <th>Nama Barang</th>
-                                              <th>Merek</th>
+                                              <th>Spesifikasi</th>
                                               <th>Jumlah Stok</th>
                                               <th>Aksi</th>
                                           </tr>
@@ -250,7 +251,7 @@
                                                   <input type="text" name="tnamabarang" class="form-control" value="<?= $data['nama_barang'] ?>" required>
                                               </div>
                                               <div class="form-group">
-                                                  <label>Merek</label>
+                                                  <label>Spesifikasi</label>
                                                   <input type="text" name="tmerek" class="form-control" value="<?= $data['merek'] ?>" required>
                                               </div>
                                           </div>
@@ -286,7 +287,7 @@
                                       <input type="text" name="tnamabarang" class="form-control" required>
                                   </div>
                                   <div class="form-group">
-                                      <label>Merek</label>
+                                      <label>Spesifikasi</label>
                                       <input type="text" name="tmerek" class="form-control" required>
                                   </div>
                           </div>

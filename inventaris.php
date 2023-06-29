@@ -282,7 +282,7 @@ if (isset($_POST['chekout'])) {
                   <th>ID Barang</th>
 
                   <th>Nama Barang</th>
-                  <th>Merek</th>
+                  <th>Spesifikasi</th>
                   <th>Jumlah Stock</th>
                   <th>Aksi</th>
                 </tr>
@@ -372,7 +372,7 @@ if (isset($_POST['chekout'])) {
               <table class="table table-bordered">
                 <tr>
                   <th width="30%">Nama Barang</th>
-                  <th width="20%">Merek</th>
+                  <th width="20%">Spesifikasi</th>
                   <th width="5%">Stok</th>
                   <th width="14%">Kuantiti</th>
                   <th width="10%">Aksi</th>
