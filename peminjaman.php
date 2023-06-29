@@ -45,7 +45,8 @@ $jumlah = $kon->jumlah_data($kondisi);
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Peminjaman Barang</h3>
-                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies thanks to simple-datatables</p>
+                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
+                            thanks to simple-datatables</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -66,40 +67,40 @@ $jumlah = $kon->jumlah_data($kondisi);
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Data Peminjaman</button>
                     </div> -->
                     <?php if ($jumlah > 0) { ?>
-                        <div class="card-body">
-                            <table class="table table-striped display " id="example">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nama Mahasiswa</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Merek</th>
-                                        <th>Kuantiti</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                    <div class="card-body">
+                        <table class="table table-striped display " id="example">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Spesifikasi</th>
+                                    <th>Kuantiti</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                     <?php } else if ($jumlah == 0) { ?>
-                        <div class="card-body">
-                            <table class="table table-striped display ">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nama Mahasiswa</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Merek</th>
-                                        <th>Kuantiti</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="7" align="center">Anda Belum Meminjam</td>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                    <div class="card-body">
+                        <table class="table table-striped display ">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Spesifikasi</th>
+                                    <th>Kuantiti</th>
+                                    <th>Status</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" align="center">Anda Belum Meminjam</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                     <?php } ?>
                 </div>
             </section>

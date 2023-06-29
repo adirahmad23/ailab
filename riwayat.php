@@ -70,7 +70,7 @@ $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw
                                     <th>Nama Mahasiswa</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
-                                    <th>Merek</th>
+                                    <th>Spesifikasi</th>
                                     <th>Kuantiti</th>
                                     <th>Status</th>
                                 </tr>

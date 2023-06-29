@@ -57,38 +57,39 @@ if (isset($_POST['tolak'])) {
 <?php include_once "template/header.php" ?>
 
 <body>
-  <?php include_once "template/sidebar.php" ?>
-  <div id="main">
-    <header class="mb-3">
-      <a href="#" class="burger-btn d-block d-xl-none">
-        <i class="bi bi-justify fs-3"></i>
-      </a>
-    </header>
+    <?php include_once "template/sidebar.php" ?>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
 
-    <div class="page-heading">
-      <div class="page-title">
-        <div class="row">
-          <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Persetujuan Peminjaman</h3>
-            <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies thanks to simple-datatables</p>
-          </div>
-          <div class="col-12 col-md-6 order-md-2 order-first">
-            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Persetujuan Peminjaman</li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-      </div>
-      <section class="section">
-        <div class="card">
-          <div class="card-header">
-            Data Persetujuan Peminjaman
-          </div>
-          <div class="card-header">
-            <?php
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>Persetujuan Peminjaman</h3>
+                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
+                            thanks to simple-datatables</p>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Persetujuan Peminjaman</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                        Data Persetujuan Peminjaman
+                    </div>
+                    <div class="card-header">
+                        <?php
             if (isset($_SESSION['sukses'])) {
               if ($_SESSION['sukses'] == 1) {
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -110,47 +111,49 @@ if (isset($_POST['tolak'])) {
             }
 
             ?>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped" id="table1">
-              <thead>
-                <tr>
-                  <th>Nama Mahasiswa</th>
-                  <th>Kode Barang</th>
-                  <th>Nama Barang</th>
-                  <th>Merek</th>
-                  <th>Kuantiti</th>
-                  <th>Persetujuan</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                                <tr>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Spesifikasi</th>
+                                    <th>Kuantiti</th>
+                                    <th>Persetujuan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
                 foreach ($tampil as $row) { ?>
-                  <tr>
-                    <td><?= $row['nama_mahasiswa'] ?></td>
-                    <td><?= $row['kd_barang'] ?></td>
-                    <td><?= $row['nama_barang'] ?></td>
-                    <td><?= $row['merek'] ?></td>
-                    <td><?= $row['kuantiti'] ?></td>
-                    <td>
-                      <form action="" method="POST" id="aksi">
-                        <input type="hidden" name="id" value="<?= $row['id_pinjam'] ?>">
-                        <button type="submit" class="btn btn-success" name="sukses"><i class="bi bi-check-circle"></i></button>
-                        <button type="submit" class="btn btn-danger" name="tolak"><i class="bi bi-x-circle"></i></button>
-                      </form>
-                    </td>
-                  </tr>
-                <?php } ?>
+                                <tr>
+                                    <td><?= $row['nama_mahasiswa'] ?></td>
+                                    <td><?= $row['kd_barang'] ?></td>
+                                    <td><?= $row['nama_barang'] ?></td>
+                                    <td><?= $row['merek'] ?></td>
+                                    <td><?= $row['kuantiti'] ?></td>
+                                    <td>
+                                        <form action="" method="POST" id="aksi">
+                                            <input type="hidden" name="id" value="<?= $row['id_pinjam'] ?>">
+                                            <button type="submit" class="btn btn-success" name="sukses"><i
+                                                    class="bi bi-check-circle"></i></button>
+                                            <button type="submit" class="btn btn-danger" name="tolak"><i
+                                                    class="bi bi-x-circle"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php } ?>
 
-              </tbody>
-            </table>
-          </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </div>
-      </section>
-    </div>
 
-    <!-- end-modal-hapus -->
-    <?php include_once 'template/footer.php' ?>
+        <!-- end-modal-hapus -->
+        <?php include_once 'template/footer.php' ?>
 </body>
 
 </html>
