@@ -16,10 +16,10 @@
         <?php if ($url == 'admin/datamhsw') {
           echo '<title>Tambah Mahasiswa</title>';
         } ?>
-        <?php if ($url == 'admin/peminjaman') {
+        <?php if (($url == 'admin/peminjaman') || ($url == 'admin/proses_peminjaman')) {
           echo '<title>Peminjaman Barang</title>';
         } ?>
-        <?php if ($url == 'admin/pengembalian') {
+        <?php if (($url == 'admin/pengembalian') || ($url == 'admin/proses_pengembalian')) {
           echo '<title>Pengembalian Barang</title>';
         } ?>
         <?php if ($url == 'admin/persetujuan') {

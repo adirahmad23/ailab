@@ -81,7 +81,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/peminjaman') {
+                        <?php if (($url == 'admin/peminjaman') || ($url == 'admin/proses_peminjaman')) {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="peminjaman.php" class='sidebar-link'>

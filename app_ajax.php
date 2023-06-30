@@ -13,7 +13,7 @@ $idmhsw = $_SESSION['mahasiswa_id'];
         // $id =; // Mendapatkan nilai id dari permintaan POST
         include_once "proses/koneksi.php";
         $kon = new koneksi();
-        $tampil = $kon->kueri("SELECT * FROM tb_peminjaman where id_mahasiswa = '$idmhsw' AND (status = '0' OR status = '1')");
+        $tampil = $kon->kueri("SELECT * FROM tb_peminjaman where id_mahasiswa = '$idmhsw' AND (status = '0' OR status = '1' OR status = '2')");
         $var = $kon->hasil_array($tampil);
         ?>
         var hasil = <?php echo json_encode($var); ?>;
@@ -93,6 +93,12 @@ $idmhsw = $_SESSION['mahasiswa_id'];
                 },
                 {
                     data: "kuantiti"
+                },
+                {
+                    data: "tgl_pinjam"
+                },
+                {
+                    data: "tgl_batas_kembali"
                 },
                 {
                     data: "status"

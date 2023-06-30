@@ -7,7 +7,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 $idmhsw = $_SESSION['mahasiswa_id'];
 include_once "proses/koneksi.php";
 $kon = new koneksi();
-$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw' AND (status = '3' OR status = '2')");
+$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw' AND (status = '3' OR status = '4')");
 // $row = $kon->jumlah_row($kondisi);
 
 ?>
@@ -67,11 +67,11 @@ $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Mahasiswa</th>
-                                    <th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Spesifikasi</th>
                                     <th>Kuantiti</th>
+                                    <th>Tgl Peminjaman</th>
+                                    <th>Tgl Pengembalian</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -82,17 +82,17 @@ $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw
 
                                     <tr>
                                         <td><?= $no ?></td>
-                                        <td><?= $row['nama_mahasiswa'] ?></td>
-                                        <td><?= $row['kd_barang'] ?></td>
                                         <td><?= $row['nama_barang'] ?></td>
                                         <td><?= $row['merek'] ?></td>
                                         <td><?= $row['kuantiti'] ?></td>
+                                        <td><?= $row['tgl_pinjam'] ?></td>
+                                        <td><?= $row['tgl_kembali'] ?></td>
                                         <td>
                                             <?php
-                                            if ($row['status'] == 3) {
+                                            if ($row['status'] == 4) {
                                                 echo "<span class='badge bg-success'>Peminjaman Selesai</span>";
                                             }
-                                            if ($row['status'] == 2) {
+                                            if ($row['status'] == 3) {
                                                 echo "<span class='badge bg-danger'>Peminjaman ditolak</span>";
                                             }
                                             ?>

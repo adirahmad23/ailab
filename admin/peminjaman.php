@@ -1,32 +1,19 @@
 <?php
 session_start();
 if (!isset($_SESSION["teknisi_id"])) {
-  header("Location: login.php");
-  exit;
+    header("Location: login.php");
+    exit;
 }
 include_once "../proses/koneksi.php";
 $kon = new koneksi();
-$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE status = '0' OR status = '1' ");
+$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE status = '0' OR status = '1'  ");
 // $row = $kon->jumlah_row($kondisi);
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peminjaman</title>
-
-    <link rel="stylesheet" href="assets/css/main/app.css">
-    <link rel="stylesheet" href="assets/css/main/app-dark.css">
-    <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png">
-
-    <link rel="stylesheet" href="assets/extensions/simple-datatables/style.css">
-    <link rel="stylesheet" href="assets/css/pages/simple-datatables.css">
-
-</head>
+<?php include_once "template/header.php" ?>
 
 <body>
     <?php include_once "template/sidebar.php" ?>
@@ -68,34 +55,59 @@ $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE status = '0' OR status 
                                     <th>Nama Barang</th>
                                     <th>Spesifikasi</th>
                                     <th>Kuantiti</th>
+                                    <th>Tgl Peminjaman</th>
+                                    <th>Tgl Batas Pengembalian</th>
                                     <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1;
-                foreach ($tampil as $row) {
-                ?>
+                                foreach ($tampil as $row) {
+                                ?>
 
-                                <tr>
-                                    <td><?= $no ?></td>
-                                    <td><?= $row['nama_mahasiswa'] ?></td>
-                                    <td><?= $row['kd_barang'] ?></td>
-                                    <td><?= $row['nama_barang'] ?></td>
-                                    <td><?= $row['merek'] ?></td>
-                                    <td><?= $row['kuantiti'] ?></td>
-                                    <td>
+                                    <tr>
+                                        <td><?= $no ?></td>
+                                        <td><?= $row['nama_mahasiswa'] ?></td>
+                                        <td><?= $row['kd_barang'] ?></td>
+                                        <td><?= $row['nama_barang'] ?></td>
+                                        <td><?= $row['merek'] ?></td>
+                                        <td><?= $row['kuantiti'] ?></td>
                                         <?php
-                      $status = $row['status'];
-                      if ($status == 0) {
-                        echo '<span class="badge bg-secondary">Menunggu Persetujuan</span>';
-                      } else if ($status == 1) {
-                        echo '<span class="badge bg-success">Di Setujui</span>';
-                      }
-                      ?>
-                                    </td>
-                                </tr>
+                                        $status = $row['status'];
+                                        if ($status == 0) {
+                                            echo '<td>-</td>';
+                                            echo '<td>-</td>';
+                                        } else if ($status == 1) { ?>
+                                            <td><?= $row['tgl_pinjam'] ?></td>
+                                            <td><?= $row['tgl_batas_kembali'] ?></td>
+                                        <?php  } ?>
+                                        <td>
+                                            <?php
+                                            $status = $row['status'];
+                                            if ($status == 0) {
+                                                echo '<span class="badge bg-secondary">Menunggu Persetujuan</span>';
+                                            } else if ($status == 1) {
+                                                echo '<span class="badge bg-success">Di Setujui</span>';
+                                            }
+                                            ?>
+                                        <td>
+                                            <?php if ($status == 1) { ?>
+                                                <a href="javascript:void(0)" class="btn btn-primary btn-sm " onclick="setCookieAndRedirect(<?= $row['id_pinjam'] ?>)">
+                                                    Proses Pinjam</a>
+                                                <script>
+                                                    function setCookieAndRedirect(idPinjam) {
+                                                        document.cookie = "idPinjam=" + idPinjam;
+                                                        window.location.href = "proses_peminjaman.php";
+                                                    }
+                                                </script>
+                                            <?php  } ?>
+
+                                        </td>
+                                        </td>
+                                    </tr>
                                 <?php $no++;
-                } ?>
+                                } ?>
 
                             </tbody>
                         </table>

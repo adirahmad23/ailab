@@ -289,7 +289,7 @@ if (isset($_POST['chekout'])) {
               </thead>
               <tbody>
                 <?php
-                $minim = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' AND id_mahasiswa = '$idmhsw' AND (status = '0' OR status = '1') ");
+                $minim = $kon->kueri("SELECT * FROM tb_peminjaman WHERE nama_mahasiswa = '$nama' AND id_mahasiswa = '$idmhsw' AND (status = '0' OR status = '1' OR status = '2') ");
                 $data = $kon->hasil_data($minim);
                 if ($data > 0) { ?>
                   <tr>

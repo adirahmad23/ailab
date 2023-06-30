@@ -17,6 +17,13 @@ if (isset($_POST['edit-profil'])) {
     $nrp = strip_tags($_POST['tnrp']);
     $kelas = strip_tags($_POST['tkelas']);
     $email = strip_tags($_POST['temail']);
+    $nrpcek = $kon->kueri("SELECT nrp FROM tb_mahasiswa");
+    $datanrp = $kon->hasil_data($nrpcek);
+    if ($nrp == $datanrp['nrp']) {
+        $_SESSION['edit-profil'] = "2";
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
     // $status = 1;
     $abc = $kon->kueri("UPDATE tb_mahasiswa SET nama_mahasiswa='$namamahasiswa',nrp='$nrp',kelas='$kelas',email='$email' WHERE id_mahasiswa ='$idmahasiswa' ");
     if ($abc == true) {
@@ -72,7 +79,7 @@ if (isset($_POST['edit-pass'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artificial Intelligence Laboratory</title>
+    <title>Profile</title>
 
     <link rel="stylesheet" href="assets/css/main/app.css">
     <link rel="stylesheet" href="assets/css/main/app-dark.css">
@@ -175,7 +182,18 @@ if (isset($_POST['edit-pass'])) {
                                     </div>
 
                                     <div class="tab-pane fade profile-edit pt-3" id="edit">
+                                        <?php
+                                        if (isset($_SESSION['edit-profil'])) {
+                                            if ($_SESSION['edit-profil'] == 2) {
+                                                echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <strong>Gagal mengubah profil (NRP Sudah Terdaftar)
+                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>';
 
+                                                unset($_SESSION['edit-profil']);
+                                            }
+                                        }
+                                        ?>
                                         <!-- Profile Edit Form -->
                                         <form method="POST">
                                             <div class="row mb-3">

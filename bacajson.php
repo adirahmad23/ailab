@@ -7,7 +7,7 @@ if (!isset($_SESSION['mahasiswa_id'])) {
     exit();
 }
 $idmhsw = $_SESSION['mahasiswa_id'];
-$kueri = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw' AND (status = '0' OR status = '1')  ");
+$kueri = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw' AND (status = '0' OR status = '1' OR status = '2')  ");
 $value = $kon->hasil_array($kueri);
 
 
@@ -27,6 +27,12 @@ foreach ($value as $data) {
     $merek_array = explode(",", $data["merek"]);
     $first_merek = $merek_array[0];
 
+    $tgl_pinjam_array = explode(",", $data["tgl_pinjam"]);
+    $first_tgl_pinjam = $tgl_pinjam_array[0];
+
+    $tgl_batas_kembali_array = explode(",", $data["tgl_batas_kembali"]);
+    $first_tgl_batas_kembali = $tgl_batas_kembali_array[0];
+
     $kuantiti_array = explode(",", $data["kuantiti"]);
     $first_kuantiti = $kuantiti_array[0];
 
@@ -34,19 +40,18 @@ foreach ($value as $data) {
     if ($data['status'] == 0) {
         $data['status'] = '<span class="badge bg-secondary">Menunggu Persetujuan</span>';
     } else if ($data['status'] == 1) {
-        $data['status'] = '<span class="badge bg-success">Disetujui</span>';
-    } else if ($data['status'] == 3) {
-        $data['status'] = '<span class="badge bg-danger">Ditolak</span>';
+        $data['status'] = '<span class="badge bg-primary">Disetujui</span>';
+    } else if ($data['status'] == 2) {
+        $data['status'] = '<span class="badge bg-success">Dipinjam</span>';
     }
 
     $status_array = explode(",", $data["status"]);
     $first_status = $status_array[0];
 
-    $json =   $first_kd_barang . "," . $first_nama_mahasiswa . "," . $first_nama_barang . "," . $first_merek . "," . $first_kuantiti . "," . $first_status;
-
+    $json =   $first_kd_barang . "," . $first_nama_mahasiswa . "," . $first_nama_barang . "," . $first_merek . "," . $first_kuantiti .  "," . $first_tgl_pinjam . ","  . $first_tgl_batas_kembali . "," . $first_status;
     $arrayData = explode(",", $json);
 
-    $keys = ['kd_barang', 'nama_mahasiswa', 'nama_barang', 'merek', 'kuantiti', 'status'];
+    $keys = ['kd_barang', 'nama_mahasiswa', 'nama_barang', 'merek', 'kuantiti', 'tgl_pinjam', 'tgl_batas_kembali', 'status'];
     $combinedArray = array_combine($keys, $arrayData);
 
     $dataArray[] = $combinedArray;

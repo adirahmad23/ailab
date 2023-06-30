@@ -1,0 +1,1 @@
+<input class='col-form-label rounded' style='border-color:blue' type='text' name='rfid' id='ktmInput' value='87008DF7E3' readonly>
