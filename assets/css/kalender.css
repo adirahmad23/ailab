@@ -1,12 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
 .wrapper {
   width: 270px;
   background: #fff;
@@ -47,7 +40,7 @@ header .icons span:hover {
 }
 
 header .current-date {
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 500;
 }
 
@@ -69,7 +62,7 @@ header .current-date {
 .calendar li {
   color: #333;
   width: calc(700% / 49);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .calendar .weeks li {

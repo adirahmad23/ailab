@@ -4,6 +4,33 @@ if (!isset($_SESSION["teknisi_id"])) {
     header("Location: login.php");
     exit;
 }
+include_once "../proses/koneksi.php";
+$kon = new Koneksi();
+
+$inventaris = $kon->kueri("SELECT * FROM tb_inventaris");
+$jumlahinven = $kon->jumlah_data($inventaris);
+
+$jumlahpinjam = $kon->kueri("SELECT * FROM tb_peminjaman WHERE status = '2'");
+$jumlahpinjam = $kon->jumlah_data($jumlahpinjam);
+
+$jumlahbarang = $kon->kueri("SELECT * FROM tb_inventaris WHERE status = '0'");
+$jumlahbarang = $kon->jumlah_data($jumlahbarang);
+
+// $tanggalHariIni = date('d F Y'); // Format tanggal bulan tahun
+// $tanggalHMin2 = date('d F Y', strtotime('2 days')); // Format tanggal bulan tahun
+
+// echo $tanggalHMin2;
+
+// Mendapatkan tanggal sekarang
+$tanggalSekarang = date('d F Y');
+
+// Mengurangi 2 hari dari tanggal sekarang
+$tanggalSebelumnya = date("d F Y", strtotime("2 days", strtotime($tanggalSekarang)));
+
+// Menghitung jumlah data dengan tanggal batas kembali yang lebih kecil dari tanggal sebelumnya
+$query = "SELECT * FROM `tb_peminjaman` WHERE `tgl_batas_kembali` < '$tanggalSebelumnya' AND `status` = '1' or `status` = '2'";
+$pengingat = $kon->kueri($query);
+$jumlahpengingat = $kon->jumlah_data($pengingat);
 
 ?>
 <!DOCTYPE html>
@@ -36,7 +63,7 @@ if (!isset($_SESSION["teknisi_id"])) {
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total List Inventaris</h6>
-                                    <h6 class="font-extrabold mb-0">112.000</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $jumlahinven ?> Inventaris </h6>
                                 </div>
                             </div>
                         </div>
@@ -52,8 +79,8 @@ if (!isset($_SESSION["teknisi_id"])) {
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Riwayat Peminjaman</h6>
-                                    <h6 class="font-extrabold mb-0">183.000</h6>
+                                    <h6 class="text-muted font-semibold">Peminjaman Aktif</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $jumlahpinjam ?> Peminjam</h6>
                                 </div>
                             </div>
                         </div>
@@ -69,8 +96,8 @@ if (!isset($_SESSION["teknisi_id"])) {
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Barang Pinjaman</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                    <h6 class="text-muted font-semibold">Barang Terpinjam</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $jumlahbarang ?> Terpinjam</h6>
                                 </div>
                             </div>
                         </div>
@@ -86,8 +113,8 @@ if (!isset($_SESSION["teknisi_id"])) {
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Pengingat</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                    <h6 class="text-muted font-semibold ">Pengingat Pengembalian</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $jumlahpengingat ?> Mahasiswa </h6>
                                 </div>
                             </div>
                         </div>
