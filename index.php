@@ -18,6 +18,13 @@ if (!isset($_SESSION["mahasiswa_id"])) {
     <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/shared/iconly.css">
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+    <!-- kalender -->
+    <link rel="stylesheet" href="assets/css/kalender.css">
 </head>
 
 <body>
@@ -36,64 +43,126 @@ if (!isset($_SESSION["mahasiswa_id"])) {
             <p class="text-subtitle text-muted">Selamat Datang di Artificial Intelligence Laboratory (Ailab)</p>
         </div>
         <div class="page-content">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body px-4 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                    <div class="stats-icon purple mb-2">
+                                        <i class="iconly-boldShow"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Total List Inventaris</h6>
+                                    <h6 class="font-extrabold mb-0">112.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body px-4 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                    <div class="stats-icon blue mb-2">
+                                        <i class="iconly-boldProfile"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Riwayat Peminjaman</h6>
+                                    <h6 class="font-extrabold mb-0">183.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body px-4 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                    <div class="stats-icon green mb-2">
+                                        <i class="iconly-boldAdd-User"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Barang Pinjaman</h6>
+                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body px-4 py-4-5">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                    <div class="stats-icon red mb-2">
+                                        <i class="iconly-boldBookmark"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                    <h6 class="text-muted font-semibold">Pengingat</h6>
+                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <section class="row">
-                <div class="col-12">
+                <div class="col-12 col-lg-9">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-12">
                             <div class="card">
-                                <div class="card-body px-4 py-4-5">
-                                    <div class="row">
-                                        <div
-                                            class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                            <div class="stats-icon purple mb-2">
-                                                <i class="iconly-boldShow"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                            <h6 class="text-muted font-semibold">Profile Views</h6>
-                                            <h6 class="font-extrabold mb-0">112.000</h6>
-                                        </div>
-                                    </div>
+                                <div class="card-header">
+                                    <h4>Chart Peminjaman & Pengembalian</h4>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body px-4 py-4-5">
-                                    <div class="row">
-                                        <div
-                                            class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                            <div class="stats-icon blue mb-2">
-                                                <i class="iconly-boldProfile"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                            <h6 class="text-muted font-semibold">Followers</h6>
-                                            <h6 class="font-extrabold mb-0">183.000</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body px-4 py-4-5">
-                                    <div class="row">
-                                        <div
-                                            class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                            <div class="stats-icon green mb-2">
-                                                <i class="iconly-boldAdd-User"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                            <h6 class="text-muted font-semibold">Following</h6>
-                                            <h6 class="font-extrabold mb-0">80.000</h6>
+                                <div class="card-body">
+                                    <div>
+                                        <div>
+                                            <canvas id="myChart"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="col-12 col-lg-3">
+                    <div class="card">
+                        <div class="card-body py-1 px-1">
+                            <div class="d-flex align-items-center">
+                                <div class="wrapper">
+                                    <header>
+                                        <p class="current-date"></p>
+                                        <div class="icons">
+                                            <span id="prev" class="material-symbols-rounded">chevron_left</span>
+                                            <span id="next" class="material-symbols-rounded">chevron_right</span>
+                                        </div>
+                                    </header>
+                                    <div class="calendar">
+                                        <ul class="weeks">
+                                            <li>Mi</li>
+                                            <li>Se</li>
+                                            <li>Se</li>
+                                            <li>Ra</li>
+                                            <li>Ka</li>
+                                            <li>Ju</li>
+                                            <li>Sa</li>
+                                        </ul>
+                                        <ul class="days"></ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         </div>
@@ -103,9 +172,19 @@ if (!isset($_SESSION["mahasiswa_id"])) {
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/app.js"></script>
 
+    <!-- kalender -->
+    <script src="assets/js/kalender.js"></script>
+
+
     <!-- Need: Apexcharts -->
     <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
     <script src="assets/js/pages/dashboard.js"></script>
+
+    <!-- chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/chart.js"></script>
+
+
 
 </body>
 
