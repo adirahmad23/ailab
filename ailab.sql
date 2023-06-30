@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Jun 2023 pada 14.10
+-- Waktu pembuatan: 30 Jun 2023 pada 18.34
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 7.4.33
 
@@ -40,7 +40,7 @@ CREATE TABLE `tb_barang` (
 --
 
 INSERT INTO `tb_barang` (`id_barang`, `nama_barang`, `merek`, `stok`, `status`) VALUES
-(1, 'Motor', 'PG', '2', 1),
+(1, 'Motor', 'PG', '0', 1),
 (2, 'Avometer', 'Deko', '1', 1),
 (3, 'Servo', 'MG', '2', 1),
 (4, 'Motor 1', 'MG', '0', 1);
@@ -69,20 +69,10 @@ CREATE TABLE `tb_chekout` (
 --
 
 INSERT INTO `tb_chekout` (`id_chekout`, `id_barang`, `id_inventaris`, `kd_barang`, `id_mahasiswa`, `nama_mahasiswa`, `nama_barang`, `merek`, `kuantiti`, `status`) VALUES
-(1, '1', '8', '130070055D', 13, 'Adi Rahmad Ramadhan', 'Motor', 'PG', '1', '0'),
-(2, '2', '9', '1300704660', 13, 'Adi Rahmad Ramadhan', 'Avometer', 'Deko', '1', '0'),
-(3, '2', '9', '1300704660', 13, 'Adi Rahmad Ramadhan', 'Avometer', 'Deko', '1', '0'),
-(4, '1', '8,11', '130070055D,130070111C', 13, 'Adi Rahmad Ramadhan', 'Motor', 'PG', '2', '0'),
-(5, '1', '8,11', '130070055D,130070111C', 13, 'Adi Rahmad Ramadhan', 'Motor', 'PG', '2', '0'),
-(6, '2,1,3', '9,8,11,10,12', '1300704660,130070055D,130070111C,13006FED5D,13006FE83C', 13, 'Adi Rahmad Ramadhan', 'Avometer,Motor,Servo', 'Deko,PG,MG', '1,2,2', '0'),
-(7, '2', '9', '1300704660', 13, 'Adi Rahmad Ramadhan', 'Avometer', 'Deko', '1', '0'),
-(8, '1', '8,11', '130070055D,130070111C', 13, 'Adi Rahmad Ramadhan', 'Motor', 'PG', '2', '0'),
-(9, '2', '9', '1300704660', 14, 'Tester ', 'Avometer', 'Deko', '1', '0'),
-(10, '2,1,3', '9,8,11,10,12', '1300704660,130070055D,130070111C,13006FED5D,13006FE83C', 14, 'Tester ', 'Avometer,Motor,Servo', 'Deko,PG,MG', '1,2,2', '0'),
-(11, '2', '9', '1300704660', 14, 'Tester ', 'Avometer', 'Deko', '1', '0'),
-(12, '1,2', '8,11,9', '130070055D,130070111C,1300704660', 14, 'Tester ', 'Motor,Avometer', 'PG,Deko', '2,1', '0'),
-(13, '1', '8,11', '130070055D,130070111C', 14, 'Tester ', 'Motor', 'PG', '2', '0'),
-(14, '1', '8,11', '130070055D,130070111C', 14, 'Tester ', 'Motor', 'PG', '2', '0');
+(25, '2', '9', '87008DF7E3', 13, 'Adi Rahmad Ramadhan', 'Avometer', 'Deko', '1', '0'),
+(26, '2', '9', '87008DF7E3', 13, 'Adi Rahmad Ramadhan', 'Avometer', 'Deko', '1', '0'),
+(27, '2', '9', '87008DF7E3', 13, 'Adi Rahmad Ramadhan', 'Avometer', 'Deko', '1', '0'),
+(28, '1', '8,11', '130070055D,130070111C', 16, 'WEB', 'Motor', 'PG', '2', '0');
 
 -- --------------------------------------------------------
 
@@ -105,10 +95,10 @@ CREATE TABLE `tb_inventaris` (
 --
 
 INSERT INTO `tb_inventaris` (`id_inventaris`, `id_barang`, `kd_barang`, `nama_barang`, `merek`, `status`, `proses`) VALUES
-(8, '1', '130070055D', 'Motor', 'PG', '1', '1'),
-(9, '2', '1300704660', 'Avometer', 'Deko', '1', '1'),
+(8, '1', '130070055D', 'Motor', 'PG', '0', '0'),
+(9, '2', '87008DF7E3', 'Avometer', 'Deko', '1', '1'),
 (10, '3', '13006FED5D', 'Servo', 'MG', '1', '1'),
-(11, '1', '130070111C', 'Motor', 'PG', '1', '1'),
+(11, '1', '130070111C', 'Motor', 'PG', '0', '0'),
 (12, '3', '13006FE83C', 'Servo', 'MG', '1', '1');
 
 -- --------------------------------------------------------
@@ -134,7 +124,8 @@ CREATE TABLE `tb_mahasiswa` (
 INSERT INTO `tb_mahasiswa` (`id_mahasiswa`, `id_rfid`, `nama_mahasiswa`, `nrp`, `kelas`, `email`, `pass`) VALUES
 (13, '130070055D', 'Adi Rahmad Ramadhan', '0921040046', 'TO4B', 'adirahmad607@gmail.com', 'ee11cbb19052e40b07aac0ca060c23ee'),
 (14, '130070055B', 'Tester ', '0921040047', 'TO4b', 'adirahmad607@gmail.com', 'ee11cbb19052e40b07aac0ca060c23ee'),
-(15, '130070055G', 'Tanpa Input Pass', '0921040048', 'TO4b', 'adirahmad607@gmail.com', '3467d47ce6e585b47ad5288db75b94bb');
+(15, '130070055G', 'Tanpa Input Pass', '0921040048', 'TO4b', 'adirahmad607@gmail.com', '3467d47ce6e585b47ad5288db75b94bb'),
+(16, '87008DF7E3', 'WEB', '0921040050', 'TO4B', 'adirahmad607@gmail.com', '0a1d1460f30d9877687a3f9c0b3f97d0');
 
 -- --------------------------------------------------------
 
@@ -151,8 +142,20 @@ CREATE TABLE `tb_peminjaman` (
   `nama_barang` varchar(255) NOT NULL,
   `merek` varchar(255) NOT NULL,
   `kuantiti` varchar(255) NOT NULL,
+  `tgl_pinjam` varchar(200) NOT NULL,
+  `tgl_batas_kembali` varchar(200) NOT NULL,
+  `tgl_kembali` varchar(200) NOT NULL,
   `status` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_peminjaman`
+--
+
+INSERT INTO `tb_peminjaman` (`id_pinjam`, `id_mahasiswa`, `id_rfid`, `nama_mahasiswa`, `kd_barang`, `nama_barang`, `merek`, `kuantiti`, `tgl_pinjam`, `tgl_batas_kembali`, `tgl_kembali`, `status`) VALUES
+(1, 13, '130070055D', 'Adi Rahmad Ramadhan', '87008DF7E3', 'Avometer', 'Deko', '1', '30 Juni 2023', '07 Juli 2023', '30 Juni 2023', '4'),
+(3, 13, '130070055D', 'Adi Rahmad Ramadhan', '87008DF7E3', 'Avometer', 'Deko', '1', '30 Juni 2023', '07 Juli 2023', '30 Juni 2023', '4'),
+(4, 16, '87008DF7E3', 'WEB', '130070055D,130070111C', 'Motor', 'PG', '2', '30 Juni 2023', '02 Juli 2023', '', '2');
 
 -- --------------------------------------------------------
 
@@ -167,6 +170,21 @@ CREATE TABLE `tb_pengembalian` (
   `nama_barang` varchar(255) NOT NULL,
   `kd_barang` varchar(255) NOT NULL,
   `id_teknisi` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_prosespinjam`
+--
+
+CREATE TABLE `tb_prosespinjam` (
+  `id_prosespinjam` int(11) NOT NULL,
+  `id_pinjam` int(11) NOT NULL,
+  `id_rfid` varchar(255) NOT NULL,
+  `nama_barang` varchar(255) NOT NULL,
+  `kd_barang` varchar(255) NOT NULL,
+  `id_teknisi` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -231,6 +249,12 @@ ALTER TABLE `tb_pengembalian`
   ADD PRIMARY KEY (`id_kembali`);
 
 --
+-- Indeks untuk tabel `tb_prosespinjam`
+--
+ALTER TABLE `tb_prosespinjam`
+  ADD PRIMARY KEY (`id_prosespinjam`);
+
+--
 -- Indeks untuk tabel `tb_teknisi`
 --
 ALTER TABLE `tb_teknisi`
@@ -250,7 +274,7 @@ ALTER TABLE `tb_barang`
 -- AUTO_INCREMENT untuk tabel `tb_chekout`
 --
 ALTER TABLE `tb_chekout`
-  MODIFY `id_chekout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_chekout` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_inventaris`
@@ -262,19 +286,25 @@ ALTER TABLE `tb_inventaris`
 -- AUTO_INCREMENT untuk tabel `tb_mahasiswa`
 --
 ALTER TABLE `tb_mahasiswa`
-  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_peminjaman`
 --
 ALTER TABLE `tb_peminjaman`
-  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_pengembalian`
 --
 ALTER TABLE `tb_pengembalian`
-  MODIFY `id_kembali` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id_kembali` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_prosespinjam`
+--
+ALTER TABLE `tb_prosespinjam`
+  MODIFY `id_prosespinjam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_teknisi`
