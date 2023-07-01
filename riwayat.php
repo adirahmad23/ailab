@@ -7,7 +7,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 $idmhsw = $_SESSION['mahasiswa_id'];
 include_once "proses/koneksi.php";
 $kon = new koneksi();
-$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw' AND (status = '3' OR status = '4')");
+$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw' AND (status = '3' OR status = '4') ORDER  BY id_pinjam DESC");
 // $row = $kon->jumlah_row($kondisi);
 
 ?>

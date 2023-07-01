@@ -6,7 +6,7 @@ if (!isset($_SESSION["teknisi_id"])) {
 }
 include_once "../proses/koneksi.php";
 $kon = new koneksi();
-$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE status = '3' OR status = '4'");
+$tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE status = '3' OR status = '4' ORDER  BY id_pinjam DESC");
 ?>
 
 <!DOCTYPE html>
