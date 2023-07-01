@@ -143,7 +143,7 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
                     <div class="card">
                         <div class="card-body py-1 px-1">
                             <div class="d-flex align-items-center">
-                                <div class="wrapper">
+                                <div class="wrapper col-12 col-lg-3">
                                     <header>
                                         <p class="current-date"></p>
                                         <div class="icons">
