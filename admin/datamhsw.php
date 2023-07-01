@@ -44,7 +44,7 @@ if (isset($_POST['tambah'])) {
     //     exit();
     // }
 
-    $verifnrp = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE nrp = '$nrp' ");
+    $verifnrp = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE nrp = '$nrp' OR id_rfid = '$idrfid' ");
     $jumlah = $kon->jumlah_data($verifnrp);
     if ($jumlah > 0) {
         $_SESSION['tambah'] = "4";
@@ -155,7 +155,7 @@ if (isset($_POST['edit'])) {
                                 unset($_SESSION['tambah']);
                             } else if ($_SESSION['tambah'] == 4) {
                                 echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                        <strong>NRP Sudah Ada, Data Mahasiswa Gagal Ditambahkan !
+                                                        <strong>NRP/Id RFID Sudah Ada, Data Mahasiswa Gagal Ditambahkan !
                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>';
                                 unset($_SESSION['tambah']);
