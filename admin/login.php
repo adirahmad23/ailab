@@ -83,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form class="register-form" method="post">
 
           <div class="p-4 text-center">
+            <img src="assets/images/logo/logo.png" width="50px">
             <h4>Selamat Datang</h4>
             <?php
             // Display any error messages
