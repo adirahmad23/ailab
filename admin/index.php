@@ -28,7 +28,7 @@ $tanggalSekarang = date('d F Y');
 $tanggalSebelumnya = date("d F Y", strtotime("2 days", strtotime($tanggalSekarang)));
 
 // Menghitung jumlah data dengan tanggal batas kembali yang lebih kecil dari tanggal sebelumnya
-$query = "SELECT * FROM `tb_peminjaman` WHERE `tgl_batas_kembali` < '$tanggalSebelumnya' AND `status` = '1' or `status` = '2'";
+$query = "SELECT * FROM `tb_peminjaman` WHERE `tgl_batas_kembali` < '$tanggalSebelumnya' AND (status = '1' or status = '2') ";
 $pengingat = $kon->kueri($query);
 $jumlahpengingat = $kon->jumlah_data($pengingat);
 
