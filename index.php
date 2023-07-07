@@ -50,8 +50,9 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <!-- <button class="btn btn-primary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover"><i class="bi bi-bell-fill"></i></button> -->
-                            <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
-                                Popover on bottom
+                            <button type="button" class="btn btn-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+                                <i class="bi bi-bell-fill"></i>
+                                <span class="badge bg-danger badge-number">4</span>
                             </button>
                         </nav>
                     </div>
@@ -60,7 +61,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
         </div>
         <div class="page-content">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
@@ -77,47 +78,13 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                    <div class="stats-icon blue mb-2">
-                                        <i class="iconly-boldProfile"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Riwayat Peminjaman</h6>
-                                    <h6 class="font-extrabold mb-0">183.000</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body px-4 py-4-5">
-                            <div class="row">
-                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                    <div class="stats-icon green mb-2">
-                                        <i class="iconly-boldAdd-User"></i>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Barang Pinjaman</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                     <div class="stats-icon red mb-2">
-                                        <i class="iconly-boldBookmark"></i>
+                                        <i class="bi bi-alarm-fill"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -198,7 +165,116 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 
     <!-- chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="assets/js/chart.js"></script>
+    <script>
+        const chartData = [{
+                day: 'Mon',
+                chart: {
+                    peminjaman: 500,
+                    pengembalian: 200
+                }
+            },
+            {
+                day: 'Tue',
+                chart: {
+                    peminjaman: 300,
+                    pengembalian: 300
+                }
+            },
+            {
+                day: 'Wed',
+                chart: {
+                    peminjaman: 400,
+                    pengembalian: 500
+                }
+            },
+            {
+                day: 'Thu',
+                chart: {
+                    peminjaman: 600,
+                    pengembalian: 100
+                }
+            },
+            {
+                day: 'Fri',
+                chart: {
+                    peminjaman: 600,
+                    pengembalian: 300
+                }
+            },
+            {
+                day: 'Sat',
+                chart: {
+                    peminjaman: 700,
+                    pengembalian: 200
+                }
+            },
+            {
+                day: 'Sun',
+                chart: {
+                    peminjaman: 900,
+                    pengembalian: 100
+                }
+            }
+        ];
+        // setup 
+        const data = {
+            datasets: [{
+                label: 'Peminjaman',
+                data: chartData,
+                backgroundColor: 'rgba(255, 26, 104, 0.2)',
+                borderColor: 'rgba(255, 26, 104, 1)',
+                tension: 0.4,
+                parsing: {
+                    xAxisKey: 'day',
+                    yAxisKey: 'chart.peminjaman'
+                }
+            }, {
+                label: 'Pengembalian',
+                data: chartData,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                tension: 0.4,
+                parsing: {
+                    xAxisKey: 'day',
+                    yAxisKey: 'chart.pengembalian'
+                }
+            }]
+        };
+
+        // config 
+        const config = {
+            type: 'line',
+            data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        // render init block
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+        // Instantly assign Chart.js version
+        const chartVersion = document.getElementById('chartVersion');
+        chartVersion.innerText = Chart.version;
+    </script>
+
+    <!-- popover -->
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        });
+        var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
+            container: 'body'
+        })
+    </script>
 
 
 

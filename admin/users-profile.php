@@ -125,7 +125,7 @@ if (isset($_POST['edit-pass'])) {
                     <div class="col-xl-4">
                         <div class="card">
                             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                                <img src="assets/images/faces/5.jpg" width="100px" alt="Profile" class="rounded-circle">
+                                <img src="assets/images/faces/5.webp" width="100px" alt="Profile" class="rounded-circle">
                                 <br>
                                 <h3><?= $data['nama_teknisi'] ?></h3>
                             </div>
