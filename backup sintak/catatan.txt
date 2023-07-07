@@ -1,0 +1,22 @@
+flag pinjam
+0 menunggu persetujuan
+1 disetujui
+2 ditolak (buka inventarid)
+3 selesai pinjam (buka inventaris)
+
+flag pinjam
+0 menunggu persetujuan
+1 disetujui
+2 dipinjam
+3 ditolak (buka inventarid)
+4 selesai pinjam (buka inventaris)
+
+catatan
+peminjaman mahasiswa data kosong tidak bisa
+dashboard mahasiswa
+1. pengingat
+2. total inventaris
+
+bar mobile user
+
+jika tombol ditekan lampu nyala 1 2 detik lampu 2 nyala 2 detik

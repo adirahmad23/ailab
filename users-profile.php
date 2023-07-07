@@ -238,20 +238,20 @@ if (isset($_POST['edit-pass'])) {
                                             <div class="row mb-3">
                                                 <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Password Lama</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="tpasslama" type="password" class="form-control" id="currentPassword">
+                                                    <input name="tpasslama" type="password" class="form-control" id="currentPassword" placeholder="Masukan Password Lama" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Password Baru</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="tpassbaru" type="password" class="form-control" id="newPassword">
+                                                    <input name="tpassbaru" type="password" class="form-control" id="newPassword" placeholder="Masukan Password Baru" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Konfirmasi Password
                                                     Baru</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="tkonfirmasipass" type="password" class="form-control" id="renewPassword">
+                                                    <input name="tkonfirmasipass" type="password" class="form-control" id="renewPassword" placeholder="Konfirmasi Password Baru" required>
                                                 </div>
                                             </div>
                                             <div class="text-center">

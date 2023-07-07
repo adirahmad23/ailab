@@ -104,6 +104,27 @@ $kon = new Koneksi();
                         </script>
                       </td>
                     </tr>
+                  <?php $no++;
+                  }
+                } else {
+                  $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE  status = '2' ");
+                  foreach ($tampil as $row) {
+                  ?>
+                    <tr>
+                      <td><?= $no ?></td>
+                      <td><?= $row['nama_mahasiswa'] ?></td>
+                      <td><?= $row['id_rfid'] ?></td>
+                      <td>
+                        <a href="javascript:void(0)" class="btn btn-primary" onclick="setCookieAndRedirect(<?= $row['id_pinjam'] ?>)">Proses
+                          Pengembalian</a>
+                        <script>
+                          function setCookieAndRedirect(idPinjam) {
+                            document.cookie = "idPinjam=" + idPinjam;
+                            window.location.href = "proses_pengembalian.php";
+                          }
+                        </script>
+                      </td>
+                    </tr>
                 <?php $no++;
                   }
                 }

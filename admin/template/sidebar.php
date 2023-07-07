@@ -160,7 +160,7 @@
 
                         </li>
 
-                        <?php if ($url == 'users-profile') {
+                        <?php if ($url == 'admin/users-profile') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="users-profile.php" class='sidebar-link'>

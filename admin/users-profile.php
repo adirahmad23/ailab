@@ -1,55 +1,61 @@
 <?php
 session_start();
-if (!isset($_SESSION["mahasiswa_id"])) {
+if (!isset($_SESSION["teknisi_id"])) {
     header("Location: login.php");
     exit;
 }
-include "proses/koneksi.php";
+include "../proses/koneksi.php";
 $kon = new Koneksi();
 $nama = $_SESSION['nama'];
-$idmhsw = $_SESSION['mahasiswa_id'];
-$abc = $kon->kueri("SELECT * FROM tb_mahasiswa WHERE id_mahasiswa = '$idmhsw' ");
+$idteknisi = $_SESSION['teknisi_id'];
+$abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE id_teknisi = '$idteknisi' ");
 $data = $kon->hasil_data($abc);
 
+
+
+
 if (isset($_POST['edit-profil'])) {
-    $idmahasiswa = $_SESSION['mahasiswa_id'];
-    $namamahasiswa = strip_tags($_POST['tnama']);
-    $nrp = strip_tags($_POST['tnrp']);
-    $kelas = strip_tags($_POST['tkelas']);
+    $idteknisi = $_SESSION['teknisi_id'];
+    $namateknisi = strip_tags($_POST['tnama']);
     $email = strip_tags($_POST['temail']);
-    $nrpcek = $kon->kueri("SELECT nrp FROM tb_mahasiswa");
-    $datanrp = $kon->hasil_data($nrpcek);
-    if ($nrp == $datanrp['nrp']) {
-        $_SESSION['edit-profil'] = "2";
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    }
-    // $status = 1;
-    $abc = $kon->kueri("UPDATE tb_mahasiswa SET nama_mahasiswa='$namamahasiswa',nrp='$nrp',kelas='$kelas',email='$email' WHERE id_mahasiswa ='$idmahasiswa' ");
-    if ($abc == true) {
-        $_SESSION['edit-profil'] = "1";
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+
+    $emailcek = $kon->kueri("SELECT nama_teknisi,email FROM tb_teknisi where id_teknisi = '$idteknisi' ");
+    $datanama = $kon->hasil_data($emailcek);
+    if ($email != $datanama['email']) {
+        $abc = $kon->kueri("UPDATE tb_teknisi SET nama_teknisi='$namateknisi', email='$email' WHERE id_teknisi ='$idteknisi' ");
+        if ($abc == true) {
+            $_SESSION['edit-profil'] = "1";
+        } else {
+            $_SESSION['edit-profil'] = "0";
+        }
+    } else if ($namateknisi != $datanama['nama_teknisi']) {
+        $abc = $kon->kueri("UPDATE tb_teknisi SET nama_teknisi='$namateknisi', email='$email' WHERE id_teknisi ='$idteknisi' ");
+        if ($abc == true) {
+            $_SESSION['edit-profil'] = "1";
+        } else {
+            $_SESSION['edit-profil'] = "0";
+        }
     } else {
-        $_SESSION['edit-profil'] = "0";
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        $_SESSION['edit-profil'] = "2";
     }
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 
 if (isset($_POST['edit-pass'])) {
-    $idmahasiswa = $_SESSION['mahasiswa_id'];
+    $idteknisi = $_SESSION['teknisi_id'];
     $passlama =  md5(strip_tags($_POST['tpasslama']));
     $passbaru = md5(strip_tags($_POST['tpassbaru']));
     $konfirmasipass = md5(strip_tags($_POST['tkonfirmasipass']));
 
-    $abc = $kon->kueri("SELECT * FROM tb_mahasiswa WHERE id_mahasiswa = '$idmahasiswa' ");
+    $abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE id_teknisi = '$idteknisi' ");
     $data = $kon->hasil_data($abc);
     $pass = $data['pass'];
     if ($passlama == $pass) {
         if ($passbaru == $konfirmasipass) {
-            $abc = $kon->kueri("UPDATE tb_mahasiswa SET pass='$passbaru' WHERE id_mahasiswa ='$idmahasiswa' ");
+            $abc = $kon->kueri("UPDATE tb_teknisi SET pass='$passbaru' WHERE id_teknisi ='$idteknisi' ");
             if ($abc == true) {
                 $_SESSION['edit-pass'] = "1";
                 header("Location: " . $_SERVER['PHP_SELF']);
@@ -90,7 +96,7 @@ if (isset($_POST['edit-pass'])) {
 
 
 <body>
-    <?php include_once "sidebar.php" ?>
+    <?php include_once "template/sidebar.php" ?>
     <div id="main">
         <header class="mb-3">
             <a href="#" class="burger-btn d-block d-xl-none">
@@ -121,7 +127,7 @@ if (isset($_POST['edit-pass'])) {
                             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                                 <img src="assets/images/faces/5.jpg" width="100px" alt="Profile" class="rounded-circle">
                                 <br>
-                                <h3><?= $data['nama_mahasiswa'] ?></h3>
+                                <h3><?= $data['nama_teknisi'] ?></h3>
                             </div>
                         </div>
                     </div>
@@ -146,37 +152,24 @@ if (isset($_POST['edit-pass'])) {
                                         <form>
 
                                             <div class="row mb-3">
-                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">ID RFID
-                                                </label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="<?= $data['id_rfid'] ?>" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
                                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nama
                                                 </label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="<?= $data['nama_mahasiswa'] ?>" readonly>
+                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="<?= $data['nama_teknisi'] ?>" readonly>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-3">
-                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">NRP
+                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Jabatan
                                                 </label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="<?= $data['nrp'] ?>" readonly>
+                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="<?php if ($data['status'] == '1') {
+                                                                                                                                        echo 'Teknisi';
+                                                                                                                                    } else if ($data['status'] == '0') {
+                                                                                                                                        echo "Kepala Lab";
+                                                                                                                                    }  ?>" readonly>
                                                 </div>
                                             </div>
-
-                                            <div class="row mb-3">
-                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Kelas
-                                                </label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="fullName" type="text" class="form-control" id="fullName" value="<?= $data['kelas'] ?>" readonly>
-                                                </div>
-                                            </div>
-
                                         </form>
 
                                     </div>
@@ -186,7 +179,7 @@ if (isset($_POST['edit-pass'])) {
                                         if (isset($_SESSION['edit-profil'])) {
                                             if ($_SESSION['edit-profil'] == 2) {
                                                 echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                <strong>Gagal mengubah profil (NRP Sudah Terdaftar)
+                                                <strong>Gagal mengubah profil (Nama Sudah Terdaftar)
                                                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                             </div>';
 
@@ -200,7 +193,7 @@ if (isset($_POST['edit-pass'])) {
                                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nama
                                                     Mahasiswa</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="tnama" type="text" class="form-control" id="fullName" value="<?= $data['nama_mahasiswa'] ?>">
+                                                    <input name="tnama" type="text" class="form-control" id="fullName" value="<?= $data['nama_teknisi'] ?>">
                                                 </div>
                                             </div>
 
@@ -208,20 +201,6 @@ if (isset($_POST['edit-pass'])) {
                                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                                 <div class="col-md-8 col-lg-9">
                                                     <input name="temail" type="text" class="form-control" id="fullName" value="<?= $data['email'] ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
-                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">NRP</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="tnrp" type="text" class="form-control" id="fullName" value="<?= $data['nrp'] ?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-3">
-                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Kelas</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                    <input name="tkelas" type="text" class="form-control" id="fullName" value="<?= $data['kelas'] ?>">
                                                 </div>
                                             </div>
 
@@ -238,20 +217,20 @@ if (isset($_POST['edit-pass'])) {
                                             <div class="row mb-3">
                                                 <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Password Lama</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="tpasslama" type="password" class="form-control" id="currentPassword">
+                                                    <input name="tpasslama" type="password" class="form-control" id="currentPassword" placeholder="Masukan Password Lama" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Password Baru</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="tpassbaru" type="password" class="form-control" id="newPassword">
+                                                    <input name="tpassbaru" type="password" class="form-control" id="newPassword" placeholder="Masukan Password Baru" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Konfirmasi Password
                                                     Baru</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <input name="tkonfirmasipass" type="password" class="form-control" id="renewPassword">
+                                                    <input name="tkonfirmasipass" type="password" class="form-control" id="renewPassword" placeholder="Konfirmasi Password Baru" required>
                                                 </div>
                                             </div>
                                             <div class="text-center">
@@ -298,7 +277,7 @@ if (isset($_POST['edit-pass'])) {
                 </section>
             </div>
 
-            <?php include_once 'footer.php' ?>
+            <?php include_once 'template/footer.php' ?>
 
 </body>
 
