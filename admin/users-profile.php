@@ -6,7 +6,7 @@ if (!isset($_SESSION["teknisi_id"])) {
 }
 include "../proses/koneksi.php";
 $kon = new Koneksi();
-$nama = $_SESSION['nama'];
+$nama =  $_SESSION['nama_teknisi'];
 $idteknisi = $_SESSION['teknisi_id'];
 $abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE id_teknisi = '$idteknisi' ");
 $data = $kon->hasil_data($abc);

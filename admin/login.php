@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (($pass == $user['pass'])) {
           // Passwords match, so create a session for the user and redirect to a secured page
           $_SESSION['teknisi_id'] = $user['id_teknisi'];
+          $_SESSION['nama_teknisi'] = $user['nama_teknisi'];
           header('Location: index.php');
           exit;
         } else if ($pass != $user['pass']) {
