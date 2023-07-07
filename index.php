@@ -37,9 +37,26 @@ if (!isset($_SESSION["mahasiswa_id"])) {
             </a>
         </header>
 
+
+
         <div class="page-heading">
-            <h3>Halo <?= $_SESSION['nama'] ?></h3>
-            <p class="text-subtitle text-muted">Selamat Datang di Artificial Intelligence Laboratory (Ailab)</p>
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>Halo<?= $_SESSION['nama'] ?></h3>
+                        <p class="text-subtitle text-muted">Selamat Datang di Artificial Intelligence Laboratory (Ailab)
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <!-- <button class="btn btn-primary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover"><i class="bi bi-bell-fill"></i></button> -->
+                            <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+                                Popover on bottom
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="page-content">
             <div class="row">
