@@ -192,7 +192,7 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             <?php
-            $kueri = $kon->kueri("SELECT tgl_pinjam FROM tb_peminjaman WHERE status = '3' OR status = '4' ORDER BY tgl_pinjam ASC");
+            $kueri = $kon->kueri("SELECT tgl_pinjam FROM tb_peminjaman WHERE status = '2' OR status = '4' ORDER BY tgl_pinjam ASC");
             $jumlahPeminjamanHariIni = 0;
             $tanggalHariIni = date('d-m-Y'); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD'
             $jumlahTglPinjam = 0; // Inisialisasi variabel untuk menyimpan jumlah $tglPinjam
