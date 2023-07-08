@@ -38,6 +38,9 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
 
 <?php include_once "template/header.php" ?>
 
+
+
+
 <body>
     <?php include_once "template/sidebar.php" ?>
     <div id="main">
@@ -124,10 +127,10 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
             <section class="row">
                 <div class="col-12 col-lg-9">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12 ">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Chart Peminjaman & Pengembalian</h4>
+                                    <h4>Grafik Peminjaman</h4>
                                 </div>
                                 <div class="card-body">
                                     <div>
@@ -136,7 +139,20 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Grafik Pengembalian</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <canvas id="myChart1"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
 
                 </div>
                 <div class="col-12 col-lg-3">
@@ -147,19 +163,19 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
                                     <header>
                                         <p class="current-date"></p>
                                         <div class="icons">
-                                            <span id="prev" class="material-symbols-rounded">chevron_left</span>
-                                            <span id="next" class="material-symbols-rounded">chevron_right</span>
+                                            <span id="prev" class="material-symbols-rounded"><i class="bi bi-chevron-left"></i></span>
+                                            <span id="next" class="material-symbols-rounded"><i class="bi bi-chevron-right"></i></i></span>
                                         </div>
                                     </header>
                                     <div class="calendar ">
                                         <ul class="weeks">
-                                            <li>Mi</li>
-                                            <li>Se</li>
-                                            <li>Se</li>
-                                            <li>Ra</li>
-                                            <li>Ka</li>
-                                            <li>Ju</li>
-                                            <li>Sa</li>
+                                            <li>Min</li>
+                                            <li>Sen</li>
+                                            <li>Sel</li>
+                                            <li>Rab</li>
+                                            <li>Kam</li>
+                                            <li>Jum</li>
+                                            <li>Sab</li>
                                         </ul>
                                         <ul class="days"></ul>
                                     </div>
@@ -173,108 +189,144 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
             </section>
         </div>
 
-        <?php include_once 'template/footer.php' ?>
-
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const chartData = [{
-                    day: 'Mon',
-                    chart: {
-                        peminjaman: 500,
-                        pengembalian: 200
-                    }
-                },
-                {
-                    day: 'Tue',
-                    chart: {
-                        peminjaman: 300,
-                        pengembalian: 300
-                    }
-                },
-                {
-                    day: 'Wed',
-                    chart: {
-                        peminjaman: 400,
-                        pengembalian: 500
-                    }
-                },
-                {
-                    day: 'Thu',
-                    chart: {
-                        peminjaman: 600,
-                        pengembalian: 100
-                    }
-                },
-                {
-                    day: 'Fri',
-                    chart: {
-                        peminjaman: 600,
-                        pengembalian: 300
-                    }
-                },
-                {
-                    day: 'Sat',
-                    chart: {
-                        peminjaman: 700,
-                        pengembalian: 200
-                    }
-                },
-                {
-                    day: 'Sun',
-                    chart: {
-                        peminjaman: 900,
-                        pengembalian: 100
+            <?php
+            $kueri = $kon->kueri("SELECT tgl_pinjam FROM tb_peminjaman WHERE status = '3' OR status = '4' ORDER BY tgl_pinjam ASC");
+            $jumlahPeminjamanHariIni = 0;
+            $tanggalHariIni = date('d-m-Y'); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD'
+            $jumlahTglPinjam = 0; // Inisialisasi variabel untuk menyimpan jumlah $tglPinjam
+            $labels = []; // Menyimpan tanggal peminjaman sebagai label
+            $data = []; // Menyimpan jumlah peminjaman pada setiap tanggal
+            foreach ($kueri as $item) {
+                $tglPinjam = date('d-m-Y', strtotime($item['tgl_pinjam'])); // Mengubah format tanggal peminjaman dalam array menjadi 'YYYY-MM-DD'
+                // Menghitung jumlah $tglPinjam
+                $jumlahTglPinjam++;
+                $labels[] = $tglPinjam; // Menambahkan tanggal peminjaman ke dalam array $labels
+                // $data[] = $jumlahTglPinjam; // Menambahkan jumlah tanggal peminjaman ke dalam array $data
+                $countData = array_count_values($labels);
+                $data = [];
+
+                foreach ($labels as $label) {
+                    if (!isset($data[$label])) {
+                        $data[$label] = $countData[$label];
                     }
                 }
-            ];
-            // setup 
-            const data = {
-                datasets: [{
-                    label: 'Peminjaman',
-                    data: chartData,
-                    backgroundColor: 'rgba(255, 26, 104, 0.2)',
-                    borderColor: 'rgba(255, 26, 104, 1)',
-                    tension: 0.4,
-                    parsing: {
-                        xAxisKey: 'day',
-                        yAxisKey: 'chart.peminjaman'
-                    }
-                }, {
-                    label: 'Pengembalian',
-                    data: chartData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    tension: 0.4,
-                    parsing: {
-                        xAxisKey: 'day',
-                        yAxisKey: 'chart.pengembalian'
-                    }
-                }]
-            };
+                $uniqueLabels = array_keys($data);
+                $uniqueData = array_values($data);
+            }
 
-            // config 
-            const config = {
+
+            ?>
+            const ctx = document.getElementById('myChart');
+
+            new Chart(ctx, {
                 type: 'line',
-                data,
+                data: {
+                    labels: <?php echo json_encode($uniqueLabels); ?>,
+                    datasets: [{
+                            label: 'Peminjaman',
+                            data: <?php echo json_encode($uniqueData); ?>,
+                            lineTension: 0.4,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 1,
+                            pointRadius: 4
+                        },
+
+                    ]
+                },
                 options: {
                     scales: {
                         y: {
                             beginAtZero: true
                         }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Grafik Peminjaman'
+                        }
                     }
                 }
-            };
-
-            // render init block
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-                config
-            );
-
-            // Instantly assign Chart.js version
-            const chartVersion = document.getElementById('chartVersion');
-            chartVersion.innerText = Chart.version;
+            });
         </script>
 
+
+        <script>
+            <?php
+            $kueri = $kon->kueri("SELECT tgl_kembali FROM tb_peminjaman WHERE status = '4' order by tgl_kembali asc");
+            $jumlahPeminjamanHariIni = 0;
+            $tanggalHariIni = date('d-m-Y'); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD'
+            $jumlahTglPinjam = 0; // Inisialisasi variabel untuk menyimpan jumlah $tglPinjam
+            $labels = []; // Menyimpan tanggal peminjaman sebagai label
+            $data = []; // Menyimpan jumlah peminjaman pada setiap tanggal
+            foreach ($kueri as $item) {
+                $tglPinjam = date('d-m-Y', strtotime($item['tgl_kembali'])); // Mengubah format tanggal peminjaman dalam array menjadi 'YYYY-MM-DD'
+                // Menghitung jumlah $tglPinjam
+                $jumlahTglPinjam++;
+                $labels[] = $tglPinjam; // Menambahkan tanggal peminjaman ke dalam array $labels
+                // $data[] = $jumlahTglPinjam; // Menambahkan jumlah tanggal peminjaman ke dalam array $data
+                $countData = array_count_values($labels);
+                $data = [];
+
+                foreach ($labels as $label) {
+                    if (!isset($data[$label])) {
+                        $data[$label] = $countData[$label];
+                    }
+                }
+                $uniqueLabels = array_keys($data);
+                $uniqueData = array_values($data);
+            }
+
+
+            ?>
+            const ctx1 = document.getElementById('myChart1');
+
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode($uniqueLabels); ?>,
+                    datasets: [{
+                            label: 'Pengembalian',
+                            data: <?php echo json_encode($uniqueData); ?>,
+                            lineTension: 0.4,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 1,
+                            pointRadius: 4
+                        },
+
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Grafik Pengembalian'
+                        }
+                    }
+                }
+            });
+        </script>
+        <?php include_once 'template/footer.php' ?>
 </body>
 
 </html>

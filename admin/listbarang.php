@@ -110,8 +110,7 @@
                                   Data List Barang
                               </div>
                               <div class="btn-tambah p-3">
-                                  <button class="btn btn-primary" data-bs-toggle="modal"
-                                      data-bs-target="#modal-tambah">Tambah
+                                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah
                                       Data Barang</button>
                                   <a href="update_stok.php" class="btn btn-primary">Refresh Stok</a>
                               </div>
@@ -190,42 +189,40 @@
                                       <tbody>
                                           <?php $no = 1;
                                             foreach ($ab as $value) : ?>
-                                          <tr>
-                                              <td><?= $no ?></td>
-                                              <td><?= $value['nama_barang'] ?></td>
-                                              <td><?= $value['merek'] ?></td>
-                                              <td><?= $value['stok'] ?></td>
-                                              <td>
-                                                  <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_barang'] . '"><i class="bi bi-pen"></i></button>'; ?>
-                                                  <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_barang'] . '"><i class="bi bi-trash"></i></button>'; ?>
-                                              </td>
-                                          </tr>
+                                              <tr>
+                                                  <td><?= $no ?></td>
+                                                  <td><?= $value['nama_barang'] ?></td>
+                                                  <td><?= $value['merek'] ?></td>
+                                                  <td><?= $value['stok'] ?></td>
+                                                  <td>
+                                                      <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_barang'] . '"><i class="bi bi-pen"></i></button>'; ?>
+                                                      <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_barang'] . '"><i class="bi bi-trash"></i></button>'; ?>
+                                                  </td>
+                                              </tr>
 
-                                          <!-- modal-hapus -->
-                                          <?php echo '<div class="modal fade" id="hapus' . $value['id_barang'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
-                                          <div class="modal-dialog modal-dialog-centered">
-                                              <div class="modal-content">
-                                                  <div class="modal-header">
-                                                      <h5 class="modal-title">Hapus Data Barang</h5>
-                                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                          aria-label="Close"></button>
-                                                  </div>
-                                                  <div class="modal-body">
-                                                      <center>
-                                                          <h4>Apakah anda ingin hapus data</h4>
-                                                          <h4>tersebut ?</h4>
-                                                      </center>
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                      <button type="button" class="btn btn-danger"
-                                                          data-bs-dismiss="modal">Batal</button>
-                                                      <form action="" method="POST">
-                                                          <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_barang'] . ' " ">Hapus</button>'; ?>
+                                              <!-- modal-hapus -->
+                                              <?php echo '<div class="modal fade" id="hapus' . $value['id_barang'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
+                                              <div class="modal-dialog modal-dialog-centered">
+                                                  <div class="modal-content">
+                                                      <div class="modal-header">
+                                                          <h5 class="modal-title">Hapus Data Barang</h5>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          <center>
+                                                              <h4>Apakah anda ingin hapus data</h4>
+                                                              <h4>tersebut ?</h4>
+                                                          </center>
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                                                          <form action="" method="POST">
+                                                              <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_barang'] . ' " ">Hapus</button>'; ?>
 
-                                                      </form>
+                                                          </form>
+                                                      </div>
                                                   </div>
                                               </div>
-                                          </div>
                               </div>
                               <!-- end-modal-hapus -->
 
@@ -241,26 +238,22 @@
                                   <div class="modal-content">
                                       <div class="modal-header">
                                           <h5 class="modal-title">Edit Data Barang</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                              aria-label="Close"></button>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <form action="" method="POST">
                                           <input type="hidden" name="tidbarang" value="<?= $data['id_barang'] ?>">
                                           <div class="modal-body">
                                               <div class="form-group">
                                                   <label>Nama Barang</label>
-                                                  <input type="text" name="tnamabarang" class="form-control"
-                                                      value="<?= $data['nama_barang'] ?>" required>
+                                                  <input type="text" name="tnamabarang" class="form-control" value="<?= $data['nama_barang'] ?>" required>
                                               </div>
                                               <div class="form-group">
                                                   <label>Spesifikasi</label>
-                                                  <input type="text" name="tmerek" class="form-control"
-                                                      value="<?= $data['merek'] ?>" required>
+                                                  <input type="text" name="tmerek" class="form-control" value="<?= $data['merek'] ?>" required>
                                               </div>
                                           </div>
                                           <div class="modal-footer">
-                                              <button type="button" class="btn btn-danger"
-                                                  data-bs-dismiss="modal">Batal</button>
+                                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                                               <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
                                           </div>
                                       </form>
@@ -268,10 +261,10 @@
                               </div>
                           </div>
                           <!-- end-modal-edit -->
-                          <?php $no++;
+                      <?php $no++;
                                             endforeach; ?>
-                          </tbody>
-                          </table>
+                      </tbody>
+                      </table>
                   </div>
               </div>
               </section>
@@ -282,20 +275,17 @@
                       <div class="modal-content">
                           <div class="modal-header">
                               <h5 class="modal-title">Tambah Data Barang</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                  aria-label="Close"></button>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
                               <form action="" method="post">
                                   <div class="form-group">
                                       <label>Nama Barang</label>
-                                      <input type="text" name="tnamabarang" class="form-control"
-                                          placeholder="Masukkan Nama Barang" required>
+                                      <input type="text" name="tnamabarang" class="form-control" placeholder="Masukkan Nama Barang" required>
                                   </div>
                                   <div class="form-group">
                                       <label>Spesifikasi</label>
-                                      <input type="text" name="tmerek" class="form-control"
-                                          placeholder="Masukkan Spesifikasi" required>
+                                      <input type="text" name="tmerek" class="form-control" placeholder="Masukkan Spesifikasi" required>
                                   </div>
                           </div>
                           <div class="modal-footer">
@@ -308,12 +298,12 @@
               </div>
               <?php include_once 'template/footer.php' ?>
               <script>
-              $(document).ready(function() {
-                  $("#kdbarang").load("tmpbarang.php");
-                  setInterval(function() {
+                  $(document).ready(function() {
                       $("#kdbarang").load("tmpbarang.php");
-                  }, 500);
-              });
+                      setInterval(function() {
+                          $("#kdbarang").load("tmpbarang.php");
+                      }, 500);
+                  });
               </script>
           </body>
 

@@ -278,7 +278,7 @@ if (isset($_POST['chekout'])) {
               <thead>
                 <tr>
                   <th width="5%">No</th>
-                  <!-- <th>ID Barang</th> -->
+                  <!-- <th>ID Barang</th>git -->
 
                   <th>Nama Barang</th>
                   <th>Spesifikasi</th>
