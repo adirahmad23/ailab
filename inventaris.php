@@ -278,7 +278,7 @@ if (isset($_POST['chekout'])) {
               <thead>
                 <tr>
                   <th width="5%">No</th>
-                  <th>ID Barang</th>
+                  <!-- <th>ID Barang</th> -->
 
                   <th>Nama Barang</th>
                   <th>Spesifikasi</th>
@@ -299,7 +299,7 @@ if (isset($_POST['chekout'])) {
                   foreach ($result as $row) { ?>
                     <tr>
                       <td><?= $no ?></td>
-                      <td><?= $row["id_barang"] ?></td>
+                      <!-- <td><?= $row["id_barang"] ?></td> -->
 
                       <td><?= $row["nama_barang"] ?></td>
                       <td><?= $row["merek"] ?></td>

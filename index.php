@@ -63,7 +63,7 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Halo<?= $_SESSION['nama'] ?></h3>
+                        <h3>Halo <?= $_SESSION['nama'] ?></h3>
                         <p class="text-subtitle text-muted">Selamat Datang di Artificial Intelligence Laboratory (Ailab)
                         </p>
                     </div>
