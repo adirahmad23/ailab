@@ -103,10 +103,8 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                                     <h4>Chart Peminjaman & Pengembalian</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div>
-                                        <div>
-                                            <canvas id="myChart"></canvas>
-                                        </div>
+                                    <div class="chart-container">
+                                        <canvas id="myChart"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +116,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                     <div class="card">
                         <div class="card-body py-1 px-1">
                             <div class="d-flex align-items-center">
-                                <div class="wrapper">
+                                <div class="wrapper container">
                                     <header>
                                         <p class="current-date"></p>
                                         <div class="icons">
@@ -126,7 +124,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                                             <span id="next" class="material-symbols-rounded">chevron_right</span>
                                         </div>
                                     </header>
-                                    <div class="calendar">
+                                    <div class="calendar ">
                                         <ul class="weeks">
                                             <li>Mi</li>
                                             <li>Se</li>

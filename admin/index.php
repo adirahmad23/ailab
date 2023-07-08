@@ -143,7 +143,7 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
                     <div class="card">
                         <div class="card-body py-1 px-1">
                             <div class="d-flex align-items-center">
-                                <div class="wrapper col-12 col-lg-3">
+                                <div class="wrapper container">
                                     <header>
                                         <p class="current-date"></p>
                                         <div class="icons">
@@ -151,7 +151,7 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
                                             <span id="next" class="material-symbols-rounded">chevron_right</span>
                                         </div>
                                     </header>
-                                    <div class="calendar">
+                                    <div class="calendar ">
                                         <ul class="weeks">
                                             <li>Mi</li>
                                             <li>Se</li>
