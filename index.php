@@ -4,6 +4,28 @@ if (!isset($_SESSION["mahasiswa_id"])) {
     header("Location: login.php");
     exit;
 }
+include_once "proses/koneksi.php";
+$kon = new Koneksi();
+$user = $_SESSION['mahasiswa_id'];
+
+$jumlahbarang = $kon->kueri("SELECT * FROM tb_inventaris WHERE status = '0'");
+$jumlahbarang = $kon->jumlah_data($jumlahbarang);
+
+// $tanggalHariIni = date('d F Y'); // Format tanggal bulan tahun
+// $tanggalHMin2 = date('d F Y', strtotime('2 days')); // Format tanggal bulan tahun
+
+// echo $tanggalHMin2;
+
+// Mendapatkan tanggal sekarang
+$tanggalSekarang = date('d F Y');
+
+// Mengurangi 2 hari dari tanggal sekarang
+$tanggalSebelumnya = date("d F Y", strtotime("2 days", strtotime($tanggalSekarang)));
+
+// Menghitung jumlah data dengan tanggal batas kembali yang lebih kecil dari tanggal sebelumnya
+$query = "SELECT * FROM `tb_peminjaman` WHERE `tgl_batas_kembali` < '$tanggalSebelumnya' AND (status = '1' or status = '2') AND id_mahasiswa = '$user' ";
+$pengingat = $kon->kueri($query);
+$jumlahpengingat = $kon->jumlah_data($pengingat);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +70,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <!-- <button class="btn btn-primary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover"><i class="bi bi-bell-fill"></i></button> -->
-                            <button type="button" class="btn btn-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+                            <button type="button" class="btn btn-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Bottom popover">
                                 <i class="bi bi-bell-fill"></i>
                                 <span class="badge bg-danger badge-number">4</span>
                             </button>
@@ -65,12 +87,12 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                             <div class="row">
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                     <div class="stats-icon purple mb-2">
-                                        <i class="iconly-boldShow"></i>
+                                        <center><i style="margin-top:-30px" class="bi bi-bar-chart-fill"></i></center>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total List Inventaris</h6>
-                                    <h6 class="font-extrabold mb-0">112.000</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $jumlahbarang ?> Inventaris</h6>
                                 </div>
                             </div>
                         </div>
@@ -81,13 +103,13 @@ if (!isset($_SESSION["mahasiswa_id"])) {
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                    <div class="stats-icon red mb-2">
-                                        <i class="bi bi-alarm-fill"></i>
+                                    <div class="stats-icon red">
+                                        <center><i style="margin-top:-30px" class="bi bi-alarm-fill"></i></center>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Pengingat</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                    <h6 class="font-extrabold mb-0"><?= $jumlahpengingat ?> Pengingat</h6>
                                 </div>
                             </div>
                         </div>
@@ -148,9 +170,8 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 
         <?php include_once 'footer.php' ?>
     </div>
-    <!-- <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/app.js"></script> -->
-
+    <script src="assets/js/bootstrap.js"></script>
+    <!-- <script src="assets/js/app.js"></script> -->
     <!-- kalender -->
     <script src="assets/js/kalender.js"></script>
 

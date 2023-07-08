@@ -44,7 +44,6 @@ $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE id_mahasiswa = '$idmhsw
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Riwayat Pinjaman</h3>
-                        <p class="text-subtitle text-muted">Data Barang Yang Anda Ajukan</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">

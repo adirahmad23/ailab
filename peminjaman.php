@@ -45,8 +45,7 @@ $jumlah = $kon->jumlah_data($kondisi);
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Peminjaman Barang</h3>
-                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
-                            thanks to simple-datatables</p>
+
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -69,7 +68,7 @@ $jumlah = $kon->jumlah_data($kondisi);
                     <?php if ($jumlah > 0) { ?>
                         <div class="card-body table-responsive">
                             <table id="example" class="display" style="width:100%">
-                                <thead class=" table-responsive">
+                                <thead>
                                     <tr>
                                         <th></th>
                                         <th>Nama Mahasiswa</th>
@@ -85,7 +84,7 @@ $jumlah = $kon->jumlah_data($kondisi);
                             </table>
                         </div>
                     <?php } else if ($jumlah == 0) { ?>
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <table class="table table-striped display ">
                                 <thead>
                                     <tr>

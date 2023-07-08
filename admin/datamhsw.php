@@ -105,8 +105,6 @@ if (isset($_POST['edit'])) {
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Data Mahasiswa</h3>
-                        <p class="text-subtitle text-muted">A sortable, searchable, paginated table without dependencies
-                            thanks to simple-datatables</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -214,44 +212,42 @@ if (isset($_POST['edit'])) {
                                 <?php
                                 $loop = $kon->kueri("SELECT * FROM tb_mahasiswa");
                                 foreach ($loop as $value) : ?>
-                                <tr>
-                                    <td><?= $value['id_rfid'] ?></td>
-                                    <td><?= $value['nama_mahasiswa'] ?></td>
-                                    <td><?= $value['nrp'] ?></td>
-                                    <td><?= $value['kelas'] ?></td>
-                                    <td><?= $value['email'] ?></td>
-                                    <td>
-                                        <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_mahasiswa'] . '"><i class="bi bi-pen"></i></button>'; ?>
-                                        <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_mahasiswa'] . '"><i class="bi bi-trash"></i></button>'; ?>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><?= $value['id_rfid'] ?></td>
+                                        <td><?= $value['nama_mahasiswa'] ?></td>
+                                        <td><?= $value['nrp'] ?></td>
+                                        <td><?= $value['kelas'] ?></td>
+                                        <td><?= $value['email'] ?></td>
+                                        <td>
+                                            <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-primary" data-bs-target="#modal-edit' . $value['id_mahasiswa'] . '"><i class="bi bi-pen"></i></button>'; ?>
+                                            <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#hapus' . $value['id_mahasiswa'] . '"><i class="bi bi-trash"></i></button>'; ?>
+                                        </td>
+                                    </tr>
 
 
-                                <!-- modal-hapus -->
-                                <?php echo '<div class="modal fade" id="hapus' . $value['id_mahasiswa'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Hapus Data Barang</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <center>
-                                                <h4>Apakah anda ingin hapus data</h4>
-                                                <h4>tersebut ?</h4>
-                                            </center>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger"
-                                                data-bs-dismiss="modal">Batal</button>
-                                            <form action="" method="POST">
-                                                <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_mahasiswa'] . ' " ">Hapus</button>'; ?>
+                                    <!-- modal-hapus -->
+                                    <?php echo '<div class="modal fade" id="hapus' . $value['id_mahasiswa'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Hapus Data Barang</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <center>
+                                                    <h4>Apakah anda ingin hapus data</h4>
+                                                    <h4>tersebut ?</h4>
+                                                </center>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                                                <form action="" method="POST">
+                                                    <?php echo '<button type="submit" class="btn btn-primary" name="delete" value="' . $value['id_mahasiswa'] . ' " ">Hapus</button>'; ?>
 
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                     </div>
                     <!-- end-modal-hapus -->
 
@@ -268,8 +264,7 @@ if (isset($_POST['edit'])) {
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Edit Data Barang</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form action="" method="POST">
                                 <div class="modal-body">
@@ -277,28 +272,23 @@ if (isset($_POST['edit'])) {
 
                                         <label>ID RFID</label>
                                         <input type="hidden" name="tidmahasiswa" value="<?= $data['id_mahasiswa'] ?>">
-                                        <input type="text" name="tidrfid" class="form-control"
-                                            value="<?= $data['id_rfid'] ?>" required>
+                                        <input type="text" name="tidrfid" class="form-control" value="<?= $data['id_rfid'] ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Nama Mahasiswa</label>
-                                        <input type="text" name="tnamamahasiswa" class="form-control"
-                                            value="<?= $data['nama_mahasiswa'] ?>" required>
+                                        <input type="text" name="tnamamahasiswa" class="form-control" value="<?= $data['nama_mahasiswa'] ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label>NRP</label>
-                                        <input type="text" name="tnrp" class="form-control" value="<?= $data['nrp'] ?>"
-                                            required>
+                                        <input type="text" name="tnrp" class="form-control" value="<?= $data['nrp'] ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Kelas</label>
-                                        <input type="text" name="tkelas" class="form-control"
-                                            value="<?= $data['kelas'] ?>" required>
+                                        <input type="text" name="tkelas" class="form-control" value="<?= $data['kelas'] ?>" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="text" name="temail" class="form-control"
-                                            value="<?= $data['email'] ?>" required>
+                                        <input type="text" name="temail" class="form-control" value="<?= $data['email'] ?>" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -311,9 +301,9 @@ if (isset($_POST['edit'])) {
                 </div>
                 <!-- end-modal-edit -->
 
-                <?php endforeach; ?>
-                </tbody>
-                </table>
+            <?php endforeach; ?>
+            </tbody>
+            </table>
         </div>
     </div>
     </section>
@@ -334,8 +324,7 @@ if (isset($_POST['edit'])) {
                         </div>
                         <div class="form-group">
                             <label>Nama Mahasiswa</label>
-                            <input type="text" name="tnama" class="form-control" placeholder="Masukkan Nama Mahasiswa"
-                                required>
+                            <input type="text" name="tnama" class="form-control" placeholder="Masukkan Nama Mahasiswa" required>
                         </div>
                         <div class="form-group">
                             <label>NRP</label>
@@ -347,8 +336,7 @@ if (isset($_POST['edit'])) {
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="temail" class="form-control" placeholder="Masukkan Email"
-                                required>
+                            <input type="email" name="temail" class="form-control" placeholder="Masukkan Email" required>
                         </div>
                         <!-- <div class="form-group">
                             <label>Password</label>
@@ -370,12 +358,12 @@ if (isset($_POST['edit'])) {
     <!-- end-modal-tambah -->
     <?php include_once 'template/footer.php' ?>
     <script>
-    $(document).ready(function() {
-        $("#idmhsw").load("tmpmhsw.php");
-        setInterval(function() {
+        $(document).ready(function() {
             $("#idmhsw").load("tmpmhsw.php");
-        }, 500);
-    });
+            setInterval(function() {
+                $("#idmhsw").load("tmpmhsw.php");
+            }, 500);
+        });
     </script>
 </body>
 
