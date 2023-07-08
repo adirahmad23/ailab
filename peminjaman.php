@@ -67,9 +67,9 @@ $jumlah = $kon->jumlah_data($kondisi);
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Data Peminjaman</button>
                     </div> -->
                     <?php if ($jumlah > 0) { ?>
-                        <div class="card-body">
-                            <table class="table table-striped display " id="example">
-                                <thead>
+                        <div class="card-body table-responsive">
+                            <table id="example" class="display" style="width:100%">
+                                <thead class=" table-responsive">
                                     <tr>
                                         <th></th>
                                         <th>Nama Mahasiswa</th>

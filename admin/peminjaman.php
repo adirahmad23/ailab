@@ -178,8 +178,8 @@ $kon = new koneksi();
         <?php include_once 'template/footer.php' ?>
     </div>
     </div>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/app.js"></script>
+    <!-- <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/app.js"></script> -->
     <script>
         $(document).ready(function() {
             $("#ktmInput").load("tmpbalik.php");

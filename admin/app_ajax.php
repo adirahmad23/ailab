@@ -66,6 +66,7 @@
 
     $(document).ready(function() {
         var table = $("#example").DataTable({
+
             ajax: {
                 url: "bacajson.php"
             },
@@ -100,6 +101,7 @@
             order: [
                 [1, "asc"]
             ],
+            responsive: true
         });
 
         // Add event listener for opening and closing details

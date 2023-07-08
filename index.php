@@ -27,9 +27,7 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 </head>
 
 <body>
-
     <?php include_once "sidebar.php" ?>
-
     <div id="main">
         <header class="mb-3">
             <a href="#" class="burger-btn d-block d-xl-none">
@@ -152,8 +150,8 @@ if (!isset($_SESSION["mahasiswa_id"])) {
 
         <?php include_once 'footer.php' ?>
     </div>
-    <script src="assets/js/bootstrap.js"></script>
-    <script src="assets/js/app.js"></script>
+    <!-- <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/app.js"></script> -->
 
     <!-- kalender -->
     <script src="assets/js/kalender.js"></script>
