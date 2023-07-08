@@ -261,7 +261,7 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
 
         <script>
             <?php
-            $kueri = $kon->kueri("SELECT tgl_kembali FROM tb_peminjaman WHERE status = '4' order by tgl_kembali asc");
+            $kueri = $kon->kueri("SELECT tgl_kembali FROM tb_peminjaman WHERE status = '4'");
             $jumlahPeminjamanHariIni = 0;
             $tanggalHariIni = date('d-m-Y'); // Mendapatkan tanggal hari ini dalam format 'YYYY-MM-DD'
             $jumlahTglPinjam = 0; // Inisialisasi variabel untuk menyimpan jumlah $tglPinjam
