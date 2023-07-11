@@ -53,6 +53,8 @@ foreach ($kueri as $row) {
         }
         // Kirim email ke $email
         // Implementasikan pengiriman email menggunakan library atau fungsi yang sesuai
+    } else {
+        echo "tidak ada";
     }
 }
 
