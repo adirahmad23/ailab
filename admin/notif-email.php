@@ -9,7 +9,7 @@ $kueri = $kon->kueri("SELECT
     FROM 
     tb_peminjaman p
     INNER JOIN 
-    tb_mahasiswa m ON p.id_mahasiswa = m.id_mahasiswa;
+    tb_mahasiswa m ON p.id_mahasiswa = m.id_mahasiswa WHERE p.status = '2';
 ");
 
 use PHPMailer\PHPMailer\PHPMailer;
