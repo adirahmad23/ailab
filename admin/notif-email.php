@@ -47,20 +47,13 @@ foreach ($kueri as $row) {
 
         if (!$mail->send()) {
             // echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
-            header("Refresh: 0; url=notif-email.php");
-            exit;
         } else {
             // $abc = $kon->kueri("UPDATE tabel_pesan SET status_kirim = '2' WHERE id = '$idpesan' ");
             // echo '<script>alert("Pesan Terkirim");</script>';
-            header("Refresh: 0; url=notif-email.php");
-            exit;
         }
         // Kirim email ke $email
         // Implementasikan pengiriman email menggunakan library atau fungsi yang sesuai
-        // } else {
-        //     echo "tidak ada";
-        header("Refresh: 0; url=notif-email.php");
+    } else {
+        echo "tidak ada";
     }
-
-    exit;
 }
