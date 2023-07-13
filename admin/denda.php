@@ -66,6 +66,7 @@
                                     <th>Tanggal Pinjam</th>
                                     <th>Tanggal Kembali</th>
                                     <th>Denda Pembayaran</th>
+                                    <th>Aksi</th>
                             </thead>
                             <tbody>
 
@@ -77,8 +78,9 @@
                                     <td>
                                         <form action="" method="POST" id="aksi">
                                             <input type="hidden" name="id" value="">
-                                            <button type="submit" class="btn btn-success" name="sukses"><i class="bi bi-check-circle"></i></button>
-                                            <button type="submit" class="btn btn-danger" name="tolak"><i class="bi bi-x-circle"></i></button>
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#setujui" name="sukses"><i
+                                                    class="bi bi-check-circle"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -89,6 +91,25 @@
                     </div>
                 </div>
             </section>
+        </div>
+
+        <!-- modal setujui -->
+        <div class="modal fade" id="setujui" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Denda Pembayaran!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Terima denda keterlambatan peminjaman barang!</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-primary">Terima</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- end-modal-hapus -->
