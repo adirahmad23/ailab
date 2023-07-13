@@ -142,8 +142,17 @@
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="persetujuan.php" class='sidebar-link'>
-                            <i class="bi bi-cash"></i>
+                            <i class="bi bi-puzzle"></i>
                             <span>Persetujuan</span>
+                        </a>
+                        </li>
+
+                        <?php if ($url == 'admin/denda') {
+                            echo ' <li class="sidebar-item active ">';
+                        } ?>
+                        <a href="denda.php" class='sidebar-link'>
+                            <i class="bi bi-cash"></i>
+                            <span>Denda</span>
                         </a>
                         </li>
 
@@ -154,10 +163,6 @@
                             <i class="bi bi-stack"></i>
                             <span>Riwayat Peminjaman</span>
                         </a>
-                        </li>
-
-                        </li>
-
                         </li>
 
                         <?php if ($url == 'admin/users-profile') {
