@@ -1,6 +1,7 @@
 <?php
 /*call the FPDF library*/
 require('assets/fpdf/fpdf.php');
+date_default_timezone_set('Asia/Jakarta');
 
 include_once "proses/koneksi.php";
 
@@ -129,7 +130,7 @@ $pdf->Content($customerInfo, $invoiceDetails);
 
 // Atur header
 header('Content-Type: application/pdf');
-$filename = 'Ailab-Invoice' . '.pdf';
+$filename = 'Ailab-Invoice_' .  date('dmyHis') . '.pdf';
 header('Content-Disposition: attachment; filename="' . $filename . '"');
 
 // Keluarkan output file PDF
