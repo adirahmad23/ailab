@@ -50,18 +50,18 @@ class Invoice extends FPDF
     {
         // Informasi pelanggan
         $this->SetFont('Arial', '', 11);
-        $this->Cell(0, 1, 'Informasi Peminjaman:', 0, 1, 'L');
+        $this->Cell(0, 1, 'Informasi Peminjaman :', 0, 1, 'L');
         $this->Ln(0.5);
-        $this->Cell(4.5, 1, 'Nama:', 0, 0, 'L');
-        $this->Cell(0, 1, $customerInfo['nama'], 0, 1, 'L');
-        $this->Cell(4.5, 1, 'ID RFID :', 0, 0, 'L');
-        $this->Cell(0, 1, $customerInfo['idrfid'], 0, 1, 'L');
-        $this->Cell(4.5, 1, 'Tanggal Peminjaman :', 0, 0, 'L');
-        $this->Cell(0, 1, $customerInfo['tglpinjam'], 0, 1, 'L');
-        $this->Cell(4.5, 1, 'Tanggal Batas Kembali :', 0, 0, 'L');
-        $this->Cell(0, 1, $customerInfo['tglkembali'], 0, 1, 'L');
-        $this->Cell(4.5, 1, 'Status :', 0, 0, 'L');
-        $this->Cell(0, 1, $customerInfo['status'], 0, 1, 'L');
+        $this->Cell(4.5, 1, 'Nama', 0, 0, 'L');
+        $this->Cell(0, 1, ': ' . $customerInfo['nama'], 0, 1, 'L');
+        $this->Cell(4.5, 1, 'ID RFID', 0, 0, 'L');
+        $this->Cell(0, 1, ': ' . $customerInfo['idrfid'], 0, 1, 'L');
+        $this->Cell(4.5, 1, 'Tanggal Peminjaman', 0, 0, 'L');
+        $this->Cell(0, 1, ': ' . $customerInfo['tglpinjam'], 0, 1, 'L');
+        $this->Cell(4.5, 1, 'Tanggal Batas Kembali', 0, 0, 'L');
+        $this->Cell(0, 1, ': ' . $customerInfo['tglkembali'], 0, 1, 'L');
+        $this->Cell(4.5, 1, 'Status', 0, 0, 'L');
+        $this->Cell(0, 1,  ': ' . $customerInfo['status'], 0, 1, 'L');
         $this->Ln(0.5);
 
         // Detail invoice
