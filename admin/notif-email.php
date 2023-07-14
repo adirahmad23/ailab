@@ -26,34 +26,70 @@ foreach ($kueri as $row) {
 
     $tgl_sekarang = date('d F Y');
     $tgl_batas_kirim = date('d F Y', strtotime('-2 days', strtotime($tgl_batas_kembali)));
-    if ($tgl_sekarang >= $tgl_batas_kirim) {
-        $mail = new PHPMailer(true);
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'ailab.cyberpink.my.id';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'ailab@ailab.cyberpink.my.id';                     //SMTP username
-        $mail->Password   = 'ailab2023lulus';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 465;                                   // TCP port to connect to
-        $mail->SMTPDebug = 0; // Nonaktifkan log
-        $mail->setFrom('ailab@ailab.cyberpink.my.id', 'Ailab');
-        $mail->addAddress($email, 'Mahasiswa');     // Add a recipient
-        $mail->isHTML(true);                                  // Set email format to HTML
+    if (strtotime($tgl_sekarang) >= strtotime($tgl_batas_kirim)) {
+        if (strtotime($tgl_sekarang) > strtotime($tgl_batas_kembali)) {
+            $diff = strtotime($tgl_sekarang) - strtotime($tgl_batas_kembali);
+            $daysLate = ceil($diff / (60 * 60 * 24)); // Menghitung jumlah hari terlambat (pembulatan ke atas)
+            $denda = $daysLate * 5000; // Denda per hari terlambat adalah 5000
 
-        $mail->Subject = 'Peringatan Pengembalian Barang';
-        $mail->Body    =  "Yth. Mahasiswa, $nama <br> <br> Jatuh tempo pengembalian barang yang anda dipinjam adalah <b>$tgl_batas_kembali</b>. Mohon segera melakukan pengembalian barang.<br> <br> Salam Hangat, Ailab <br>Terima Kasih";
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail = new PHPMailer(true);
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->Host       = 'ailab.cyberpink.my.id';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'ailab@ailab.cyberpink.my.id';
+            $mail->Password   = 'ailab2023lulus';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
+            $mail->SMTPDebug = 0; // Nonaktifkan log
+            $mail->setFrom('ailab@ailab.cyberpink.my.id', 'Ailab');
+            $mail->addAddress($email, 'Mahasiswa');
+            $mail->isHTML(true);
 
-        if (!$mail->send()) {
-            // echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
+            $mail->Subject = 'Peringatan Keterlambatan Pengembalian Barang';
+            $mail->Body    =  "Yth. Mahasiswa, $nama <br> <br>"
+                . "Barang yang Anda pinjam seharusnya dikembalikan pada tanggal <b>$tgl_batas_kembali</b>,"
+                . " namun hingga saat ini barang tersebut belum dikembalikan."
+                . " Kami ingin mengingatkan Anda untuk segera mengembalikan barang tersebut."
+                . " Jika barang tidak dikembalikan segera, Anda akan dikenakan denda keterlambatan"
+                . " sebesar $denda rupiah untuk $daysLate hari terlambat."
+                . " Terima kasih atas perhatiannya."
+                . "<br> <br> Salam Hangat, Ailab <br>Terima Kasih";
+
+            if (!$mail->send()) {
+                // echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
+            } else {
+
+                $kon->kueri("UPDATE tb_mahasiswa SET denda = '$denda' WHERE id_mahasiswa = '$row[id_mahasiswa]'");
+            }
+
+            // echo "Penalty fee for $nama ($email) is $denda";
+            // echo "<br><br>";
         } else {
-            // $abc = $kon->kueri("UPDATE tabel_pesan SET status_kirim = '2' WHERE id = '$idpesan' ");
-            // echo '<script>alert("Pesan Terkirim");</script>';
+            $mail = new PHPMailer(true);
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->Host       = 'ailab.cyberpink.my.id';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'ailab@ailab.cyberpink.my.id';
+            $mail->Password   = 'ailab2023lulus';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
+            $mail->SMTPDebug = 0; // Nonaktifkan log
+            $mail->setFrom('ailab@ailab.cyberpink.my.id', 'Ailab');
+            $mail->addAddress($email, 'Mahasiswa');
+            $mail->isHTML(true);
+
+            $mail->Subject = 'Peringatan Pengembalian Barang';
+            $mail->Body    =  "Yth. Mahasiswa, $nama <br> <br> Jatuh tempo pengembalian barang yang anda dipinjam adalah <b>$tgl_batas_kembali</b>. Mohon segera melakukan pengembalian barang.<br> <br> Salam Hangat, Ailab <br>Terima Kasih";
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            if (!$mail->send()) {
+                echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
+            }
+            // echo "ada";
         }
-        // Kirim email ke $email
-        // Implementasikan pengiriman email menggunakan library atau fungsi yang sesuai
     } else {
-        echo "tidak ada";
+        // echo "tidak ada";
     }
 }

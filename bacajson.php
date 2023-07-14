@@ -33,6 +33,9 @@ foreach ($value as $data) {
     $tgl_batas_kembali_array = explode(",", $data["tgl_batas_kembali"]);
     $first_tgl_batas_kembali = $tgl_batas_kembali_array[0];
 
+    $invoice = '<a href="invoice.php?id=' . $data['id_pinjam'] . '" class="btn btn-primary " target="_blank"><i class="bi bi-printer-fill"></i></a>';
+
+
     $kuantiti_array = explode(",", $data["kuantiti"]);
     $first_kuantiti = $kuantiti_array[0];
 
@@ -48,10 +51,10 @@ foreach ($value as $data) {
     $status_array = explode(",", $data["status"]);
     $first_status = $status_array[0];
 
-    $json =   $first_kd_barang . "," . $first_nama_mahasiswa . "," . $first_nama_barang . "," . $first_merek . "," . $first_kuantiti .  "," . $first_tgl_pinjam . ","  . $first_tgl_batas_kembali . "," . $first_status;
+    $json =   $first_kd_barang . "," . $first_nama_mahasiswa . "," . $first_nama_barang . "," . $first_merek . "," . $first_kuantiti .  "," . $first_tgl_pinjam . ","  . $first_tgl_batas_kembali . "," . $invoice . "," . $first_status;
     $arrayData = explode(",", $json);
 
-    $keys = ['kd_barang', 'nama_mahasiswa', 'nama_barang', 'merek', 'kuantiti', 'tgl_pinjam', 'tgl_batas_kembali', 'status'];
+    $keys = ['kd_barang', 'nama_mahasiswa', 'nama_barang', 'merek', 'kuantiti', 'tgl_pinjam', 'tgl_batas_kembali', 'invoice', 'status'];
     $combinedArray = array_combine($keys, $arrayData);
 
     $dataArray[] = $combinedArray;

@@ -70,43 +70,49 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                             <!-- <button class="btn btn-primary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover"><i class="bi bi-bell-fill"></i></button> -->
-                            <button type="button" class="btn btn-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="<?php
-                                                                                                                                                                        $pengingatganti = $kon->kueri("SELECT * FROM tb_mahasiswa WHERE id_mahasiswa = '$user'");
-                                                                                                                                                                        $dataganti = $kon->hasil_data($pengingatganti);
-                                                                                                                                                                        $jumlahDataTerpenuhi = 0; // Variabel untuk menyimpan jumlah data yang terpenuhi
+                            <button type="button" class=" btn btn-primary m-4" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="<?php
+                                                                                                                                                                            $pengingatganti = $kon->kueri("SELECT * FROM tb_mahasiswa WHERE id_mahasiswa = '$user'");
+                                                                                                                                                                            $dataganti = $kon->hasil_data($pengingatganti);
+                                                                                                                                                                            $jumlahDataTerpenuhi = 0; // Variabel untuk menyimpan jumlah data yang terpenuhi
 
-                                                                                                                                                                        $counter = 0; // Inisialisasi variabel penampung
-                                                                                                                                                                        $no = 0;
+                                                                                                                                                                            $counter = 0; // Inisialisasi variabel penampung
+                                                                                                                                                                            $no = 0;
 
-                                                                                                                                                                        if (md5($dataganti['nrp']) == $dataganti['pass']) {
-                                                                                                                                                                            $counter++; // Tambah counter jika kondisi pertama terpenuhi
-                                                                                                                                                                            $no++;
-                                                                                                                                                                            echo $no . ". Anda belum mengganti password
-                                                                                                                                                                                ";
-                                                                                                                                                                        }
+                                                                                                                                                                            if (md5($dataganti['nrp']) == $dataganti['pass']) {
+                                                                                                                                                                                $counter++; // Tambah counter jika kondisi pertama terpenuhi
+                                                                                                                                                                                $no++;
+                                                                                                                                                                                echo $no . ". Anda belum mengganti password.
+                                                                                                                                                                                            <br>";
+                                                                                                                                                                            }
 
-                                                                                                                                                                        if ($dataganti['email'] == '') {
-                                                                                                                                                                            $counter++; // Tambah counter jika kondisi kedua terpenuhi
-                                                                                                                                                                            $no++;
-                                                                                                                                                                            echo $no . ". Anda belum mengisi email
-                                                                                                                                                                                ";
-                                                                                                                                                                        }
+                                                                                                                                                                            if ($dataganti['email'] == '') {
+                                                                                                                                                                                $counter++; // Tambah counter jika kondisi kedua terpenuhi
+                                                                                                                                                                                $no++;
+                                                                                                                                                                                echo $no . ". Anda belum mengisi email
+                                                                                                                                                                            <br> ";
+                                                                                                                                                                            }
 
-                                                                                                                                                                        if ($jumlahpengingat > 0) {
-                                                                                                                                                                            $counter++; // Tambah counter jika kondisi kedua terpenuhi
-                                                                                                                                                                            $no++;
-                                                                                                                                                                            echo $no . ". Anda memiliki peminjaman yang belum dikembalikan
-                                                                                                                                                                                ";
-                                                                                                                                                                        }
+                                                                                                                                                                            if ($jumlahpengingat > 0) {
+                                                                                                                                                                                $counter++; // Tambah counter jika kondisi kedua terpenuhi
+                                                                                                                                                                                $no++;
+                                                                                                                                                                                echo $no . ". Anda memiliki peminjaman yang belum dikembalikan.
+                                                                                                                                                                            <br> ";
+                                                                                                                                                                            }
+                                                                                                                                                                            if ($dataganti['denda'] > 0) {
+                                                                                                                                                                                $counter++; // Tambah counter jika kondisi kedua terpenuhi
+                                                                                                                                                                                $no++;
+                                                                                                                                                                                echo $no . ". Anda memiliki denda sebesar <br> <b> Rp. " . $dataganti['denda'] . "</b>. Segera kembalikan barang yang anda pinjam.
+                                                                                                                                                                            <br> ";
+                                                                                                                                                                            }
 
-                                                                                                                                                                        if ($counter > 0) {
-                                                                                                                                                                        } else {
-                                                                                                                                                                            echo "Tidak ada pemberitahuan";
-                                                                                                                                                                        }
+                                                                                                                                                                            if ($counter > 0) {
+                                                                                                                                                                            } else {
+                                                                                                                                                                                echo "Tidak ada pemberitahuan";
+                                                                                                                                                                            }
 
 
 
-                                                                                                                                                                        ?>">
+                                                                                                                                                                            ?>">
                                 <i class="bi bi-bell-fill"></i>
                                 <span class="badge bg-danger badge-number"><?= $counter ?></span>
                             </button>
@@ -377,10 +383,14 @@ $jumlahpengingat = $kon->jumlah_data($pengingat);
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
         var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
+            return new bootstrap.Popover(popoverTriggerEl, {
+                html: true
+            })
+
         });
         var popover = new bootstrap.Popover(document.querySelector('.example-popover'), {
             container: 'body'
+
         })
     </script>
 

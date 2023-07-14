@@ -1,3 +1,68 @@
+<?php
+session_start();
+if (!isset($_SESSION['teknisi_id'])) {
+    header("Location: login.php");
+    exit();
+}
+include_once "../proses/koneksi.php";
+$kon = new Koneksi();
+if (isset($_GET['id'])) {
+    $abc = $kon->kueri("SELECT
+m.id_mahasiswa,
+m.nama_mahasiswa,
+m.denda,
+p.id_pinjam,
+p.kd_barang,
+p.tgl_pinjam,
+p.tgl_batas_kembali,
+p.status
+FROM
+tb_mahasiswa m
+INNER JOIN
+tb_peminjaman p
+ON
+m.id_mahasiswa = p.id_mahasiswa
+WHERE
+m.denda > 0 AND m.id_mahasiswa = '$_GET[id]'
+");
+} else {
+    $abc = $kon->kueri("SELECT
+m.id_mahasiswa,
+m.nama_mahasiswa,
+m.denda,
+p.id_pinjam,
+p.kd_barang,
+p.tgl_pinjam,
+p.tgl_batas_kembali,
+p.status
+FROM
+tb_mahasiswa m
+INNER JOIN
+tb_peminjaman p
+ON
+m.id_mahasiswa = p.id_mahasiswa
+WHERE
+m.denda > 0 AND status = '2'
+");
+}
+
+
+if (isset($_POST['proses'])) {
+    $id = $_POST['proses'];
+    $update = $kon->kueri("UPDATE tb_mahasiswa SET denda = '' WHERE id_mahasiswa = '$id' ");
+    if ($update) {
+        $_SESSION['sukses'] = 1;
+        header("Location: denda.php");
+        exit();
+    } else {
+        $_SESSION['gagal'] = 1;
+        header("Location: denda.php");
+        exit();
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,20 +104,20 @@
                         if (isset($_SESSION['sukses'])) {
                             if ($_SESSION['sukses'] == 1) {
                                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <strong>Peminjaman Disetujui !
+                                        <strong>Pembayaran Denda Telah Berhasil !
                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>';
                                 unset($_SESSION['sukses']);
                             }
                         }
 
-                        if (isset($_SESSION['tolak'])) {
-                            if ($_SESSION['tolak'] == 1) {
+                        if (isset($_SESSION['gagal'])) {
+                            if ($_SESSION['gagal'] == 1) {
                                 echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                          <strong>Peminjaman Ditolak !
+                                          <strong>Pembayaran Denda Tidak Berhasil  !
                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                       </div>';
-                                unset($_SESSION['tolak']);
+                                unset($_SESSION['gagal']);
                             }
                         }
 
@@ -64,56 +129,68 @@
                                 <tr>
                                     <th>Nama Mahasiswa</th>
                                     <th>Tanggal Pinjam</th>
-                                    <th>Tanggal Kembali</th>
+                                    <th>Tanggal Batas Kembali</th>
+                                    <th>Jumlah Hari Keterlambatan</th>
                                     <th>Denda Pembayaran</th>
                                     <th>Aksi</th>
                             </thead>
                             <tbody>
-
-                                <tr>
-                                    <td>yayaya</td>
-                                    <td>yayaya</td>
-                                    <td>yayaya</td>
-                                    <td>yayaya</td>
-                                    <td>
-                                        <form action="" method="POST" id="aksi">
-                                            <input type="hidden" name="id" value="">
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#setujui" name="sukses"><i
-                                                    class="bi bi-check-circle"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                <?php foreach ($abc as $value) { ?>
+                                    <tr>
 
 
-                            </tbody>
-                        </table>
+                                        <td><?= $value['nama_mahasiswa'] ?></td>
+                                        <td><?= $value['tgl_pinjam'] ?></td>
+                                        <td><?= $value['tgl_batas_kembali'] ?></td>
+                                        <td>
+                                            <?php
+                                            $tgl_sekarang = date('d F Y');
+                                            $diff = strtotime($tgl_sekarang) - strtotime($value['tgl_batas_kembali']);
+                                            $daysLate = ceil($diff / (60 * 60 * 24));
+                                            echo $daysLate;
+                                            ?>
+                                            Hari
+                                        </td>
+                                        <td><?= $value['denda'] ?></td>
+                                        <td>
+                                            <?php echo '<button type="button" data-bs-toggle="modal" class="btn btn-success" data-bs-target="#hapus' . $value['id_mahasiswa'] . '"><i class="bi bi-check-circle"></i></button>'; ?>
+                                        </td>
+
+                                        <!-- modal-hapus -->
+                                        <?php echo '<div class="modal fade" id="hapus' . $value['id_mahasiswa'] . '" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">'; ?>
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Denda Pembayaran!</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <center>
+                                                        <h5>Terima denda keterlambatan peminjaman barang!</h5>
+                                                    </center>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                                                    <form action="" method="POST">
+                                                        <?php echo '<button type="submit" class="btn btn-primary" name="proses" value="' . $value['id_mahasiswa'] . ' " ">Terima</button>'; ?>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                     </div>
+                    </tr>
+                <?php } ?>
+                </tbody>
+                </table>
                 </div>
-            </section>
         </div>
+        </section>
+    </div>
 
-        <!-- modal setujui -->
-        <div class="modal fade" id="setujui" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Denda Pembayaran!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h5>Terima denda keterlambatan peminjaman barang!</h5>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
-                        <button type="button" class="btn btn-primary">Terima</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- end-modal-hapus -->
-        <?php include_once 'template/footer.php' ?>
+    <!-- end-modal-hapus -->
+    <?php include_once 'template/footer.php' ?>
 </body>
 
 </html>

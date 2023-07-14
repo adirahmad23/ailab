@@ -113,14 +113,23 @@ $kon = new Koneksi();
                       <td><?= $row['nama_mahasiswa'] ?></td>
                       <td><?= $row['id_rfid'] ?></td>
                       <td>
-                        <a href="javascript:void(0)" class="btn btn-primary" onclick="setCookieAndRedirect(<?= $row['id_pinjam'] ?>)">Proses
-                          Pengembalian</a>
-                        <script>
-                          function setCookieAndRedirect(idPinjam) {
-                            document.cookie = "idPinjam=" + idPinjam;
-                            window.location.href = "proses_pengembalian.php";
-                          }
-                        </script>
+
+                        <?php $idmahasasiswa = $row['id_mahasiswa'];
+                        $kondisi = $kon->kueri("SELECT denda FROM tb_mahasiswa WHERE id_mahasiswa = '$idmahasasiswa' ");
+                        $data = $kon->hasil_data($kondisi);
+                        if ($data['denda'] > 0) {
+                          echo "<a href='denda.php?id=" . $row['id_mahasiswa'] . "' class='btn btn-danger'>Bayar Denda</a>";
+                        } else {
+                        ?>
+                          <a href="javascript:void(0)" class="btn btn-primary" onclick="setCookieAndRedirect(<?= $row['id_pinjam'] ?>)">Proses
+                            Pengembalian</a>
+                          <script>
+                            function setCookieAndRedirect(idPinjam) {
+                              document.cookie = "idPinjam=" + idPinjam;
+                              window.location.href = "proses_pengembalian.php";
+                            }
+                          </script>
+                        <?php } ?>
                       </td>
                     </tr>
                 <?php $no++;

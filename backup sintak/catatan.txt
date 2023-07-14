@@ -24,4 +24,6 @@ jika tombol ditekan lampu nyala 1 2 detik lampu 2 nyala 2 detik
 Username: cyberpin
 Password: dz23lPX9t6
 
+php -q /home/cyberpin/ailab.cyberpink.my.id/admin/notif-email.php >> /home/cyberpin/ailab.cyberpink.my.id/admin/backup.log 2>&1
+
 ssfylzzcsjodlrzr

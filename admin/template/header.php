@@ -31,6 +31,9 @@
         <?php if ($url == 'admin/inventaris') {
           echo '<title>Inventaris</title>';
         } ?>
+        <?php if ($url == 'admin/denda') {
+          echo '<title>Denda</title>';
+        } ?>
         <link rel="stylesheet" href="assets/css/main/app.css">
         <link rel="stylesheet" href="assets/css/main/app-dark.css">
         <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/x-icon">

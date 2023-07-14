@@ -4,8 +4,17 @@ if (!isset($_SESSION["mahasiswa_id"])) {
   header("Location: login.php");
   exit;
 }
+
 include "proses/koneksi.php";
 $kon = new Koneksi();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'admin/assets/email/vendor/autoload.php';
+
+
 $nama = $_SESSION['nama'];
 $idmhsw = $_SESSION['mahasiswa_id'];
 $message = '';
@@ -167,6 +176,33 @@ if (isset($_POST['chekout'])) {
   if ($kon->kueri("INSERT INTO tb_chekout(id_chekout, id_barang,id_inventaris,kd_barang, id_mahasiswa, nama_mahasiswa, nama_barang, merek, kuantiti, status) VALUES (NULL,'$id_barang','$id_inventaris','$kdbarang','$idmhswa','$nama','$nama_barang','$merek','$kuantiti','$status')")) {
     $kon->kueri("INSERT INTO tb_peminjaman(id_mahasiswa,id_rfid,nama_mahasiswa, kd_barang, nama_barang, merek, kuantiti, status) VALUES ('$idmhsw','$idrfid','$nama','$kdbarang','$nama_barang','$merek','$kuantiti','0')");
     setcookie("cart_barang", "", time() - 3600);
+
+    $datamail = $kon->kueri("SELECT * FROM tb_teknisi WHERE id_teknisi = '1' ");
+    $datamael = $kon->hasil_data($datamail);
+    $mail = new PHPMailer(true);
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->isSMTP();
+    $mail->Host       = 'ailab.cyberpink.my.id';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'ailab@ailab.cyberpink.my.id';
+    $mail->Password   = 'ailab2023lulus';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = 465;
+    $mail->SMTPDebug = 0; // Nonaktifkan log
+    $mail->setFrom('ailab@ailab.cyberpink.my.id', 'Ailab');
+    $mail->addAddress($datamael['email'], 'Kepala LAB');
+    $mail->isHTML(true);
+
+    $mail->Subject = 'Notifikasi Persetujuan Peminjaman Barang';
+    $mail->Body    =  "Anda Memiliki Notifikasi Persetujuan Peminjaman Barang Dari Mahasiswa,  $nama dengan, <br> Nama barang : $nama_barang <br> Spesifikasi barang : $merek. <br> <br> Mohon untuk segera menyetujui peminjaman barang tersebut. <br><br> <a href='https://ailab.cyberpink.my.id/admin/persetujuan.php' class='btn btn-primary'>Masuk Ke Persetujuan</a> <br> <br> Terimakasih.";
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    if (!$mail->send()) {
+      echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
+    }
+
+
+
     header("location:inventaris.php?clearall=1");
     $_SESSION['chekout'] = "1";
     header("Location: " . $_SERVER['PHP_SELF']);

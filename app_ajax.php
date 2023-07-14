@@ -101,6 +101,9 @@ $idmhsw = $_SESSION['mahasiswa_id'];
                     data: "tgl_batas_kembali"
                 },
                 {
+                    data: "invoice"
+                },
+                {
                     data: "status"
                 },
             ],

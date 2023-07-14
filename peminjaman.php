@@ -78,6 +78,7 @@ $jumlah = $kon->jumlah_data($kondisi);
                                         <th>Kuantiti</th>
                                         <th>Tanggal Peminjaman</th>
                                         <th>Tanggal Batas Pengembalian</th>
+                                        <th>Invoice</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -96,6 +97,7 @@ $jumlah = $kon->jumlah_data($kondisi);
                                         <th>Kuantiti</th>
                                         <th>Tanggal Peminjaman</th>
                                         <th>Tanggal Batas Pengembalian</th>
+                                        <th>Invoice</th>
                                         <th>Status</th>
                                     </tr>
                                     <tr>
