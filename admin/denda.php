@@ -24,7 +24,7 @@ tb_peminjaman p
 ON
 m.id_mahasiswa = p.id_mahasiswa
 WHERE
-m.denda > 0 AND m.id_mahasiswa = '$_GET[id]'
+m.denda > 0 AND m.id_mahasiswa = '$_GET[id]' AND status = '2'
 ");
 } else {
     $abc = $kon->kueri("SELECT
