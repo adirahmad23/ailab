@@ -4,16 +4,18 @@ if (!isset($_SESSION['teknisi_id'])) {
   header("Location: login.php");
   exit();
 }
+date_default_timezone_set('Asia/Jakarta');
+
 include_once "../proses/koneksi.php";
 $kon = new Koneksi();
 $tampil = $kon->kueri("SELECT * FROM tb_peminjaman WHERE status = '0' ");
 
 if (isset($_POST['sukses'])) {
-
   function getTanggalPeminjamanPengembalian($jedaHari)
   {
     $tanggalPeminjaman = date('d F Y');  // Tanggal peminjaman (hari ini) dalam format "tanggal bulan tahun"
-
+    echo $tanggalPeminjaman;
+    die;
     // Menambahkan jeda hari untuk tanggal pengembalian
     $tanggalPengembalian = date('d F Y', strtotime($tanggalPeminjaman . ' +' . $jedaHari . ' days'));
 

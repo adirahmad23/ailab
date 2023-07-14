@@ -4,6 +4,7 @@ if (!isset($_SESSION["teknisi_id"])) {
     header("Location: login.php");
     exit;
 }
+date_default_timezone_set('Asia/Jakarta');
 include_once "../proses/koneksi.php";
 $kon = new Koneksi();
 
