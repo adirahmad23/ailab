@@ -127,5 +127,10 @@ $pdf->AddPage();
 // Memanggil fungsi Content()
 $pdf->Content($customerInfo, $invoiceDetails);
 
-// Menampilkan output PDF
-$pdf->Output();
+// Atur header
+header('Content-Type: application/pdf');
+$filename = 'Ailab-Invoice' . '.pdf';
+header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+// Keluarkan output file PDF
+$pdf->Output('F', 'php://output');
