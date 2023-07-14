@@ -14,8 +14,6 @@ if (isset($_POST['sukses'])) {
   function getTanggalPeminjamanPengembalian($jedaHari)
   {
     $tanggalPeminjaman = date('d F Y');  // Tanggal peminjaman (hari ini) dalam format "tanggal bulan tahun"
-    echo $tanggalPeminjaman;
-    die;
     // Menambahkan jeda hari untuk tanggal pengembalian
     $tanggalPengembalian = date('d F Y', strtotime($tanggalPeminjaman . ' +' . $jedaHari . ' days'));
 

@@ -1,7 +1,8 @@
 <?php
 include_once "../proses/koneksi.php";
-$kon = new Koneksi();
+date_default_timezone_set('Asia/Jakarta');
 
+$kon = new Koneksi();
 $kueri = $kon->kueri("SELECT 
     p.id_pinjam, p.id_mahasiswa, p.id_rfid, p.nama_mahasiswa, p.kd_barang,
     p.nama_barang, p.merek, p.kuantiti, p.tgl_pinjam, p.tgl_batas_kembali,
