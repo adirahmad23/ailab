@@ -175,9 +175,9 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a class='sidebar-link'>
+                            <a href="#" class='sidebar-link' data-bs-toggle="modal" data-bs-target="#keluar">
                                 <i class="bi bi-x-octagon-fill"></i>
-                                <span data-bs-toggle="modal" data-bs-target="#keluar">Keluar</span>
+                                <span>Keluar</span>
                             </a>
                         </li>
 
