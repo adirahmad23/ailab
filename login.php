@@ -8,12 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $nrp = $_POST['tnrp'];
   $password = md5($_POST['tpass']);
   if (empty($_POST['tnrp']) || empty(md5($_POST['tpass']))) {
-    $error = 'Masukan NRP and password.';
+    $error = 'Masukan NRP & Password.';
   } else {
     $abc = $kon->kueri("SELECT * FROM tb_mahasiswa WHERE nrp='$nrp' AND pass = '$password' ");
     $user = $kon->hasil_data($abc);
     if (!$user) {
-      $error = 'Invalid NRP atau password.';
+      $error = 'Invalid NRP atau Password.';
     } else {
       // Check if the password matches the hshed password stored in the database
       if (($password == $user['pass'])) {
@@ -85,7 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php
             // Display any error messages
             if (isset($error)) {
-              echo '<p>' . $error . '</p>';
+              echo '<h6 class="text-danger">' . $error . '</h6>';
+              // echo '<script>alert($error)</script>';
             }
             ?>
           </div>

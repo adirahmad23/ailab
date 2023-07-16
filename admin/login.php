@@ -8,17 +8,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $username = $_POST['tteknisi'];
   $pass = md5($_POST['tpass']);
   if ($pass == 0) {
-    $error = 'Masukan NRP/Email and password.';
+    $error = 'Masukan Username dan Password Yang Benar.';
   } else {
     // Perform validation on the input values
     if (empty($_POST['tteknisi']) || empty(md5($_POST['tpass']))) {
-      $error = 'Masukan NRP/Email and password.';
+      $error = 'Masukan Username dan Password.';
     } else {
 
       $abc = $kon->kueri("SELECT * FROM tb_teknisi WHERE nama_teknisi='$username' AND pass = '$pass'");
       $user = $kon->hasil_data($abc);
       if (!$user) {
-        $error = 'Invalid NRP/email atau password.';
+        $error = 'Invalid Username atau Password.';
       } else {
         // Check if the password matches the hshed password stored in the database
         if (($pass == $user['pass'])) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           exit;
         } else if ($pass != $user['pass']) {
           // Passwords do not match, so display an error message
-          $error = 'Invalid NRP/email atau password.';
+          $error = 'Invalid Username atau password.';
         }
       }
     }
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php
             // Display any error messages
             if (isset($error)) {
-              echo '<p>' . $error . '</p>';
+              echo '<h6 class="text-danger">' . $error . '</h6>';
             }
             ?>
           </div>
