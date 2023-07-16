@@ -84,7 +84,7 @@
                         $url = $directory . '/' . str_replace('.php', '', $file_name);
                         $url = str_replace('/ailab/', '', $url);
                         ?>
-                        <?php if ($url == 'admin/index') {
+                        <?php if ($url == '/admin/index') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="index.php" class='sidebar-link'>
@@ -93,7 +93,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/inventaris') {
+                        <?php if ($url == '/admin/inventaris') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="inventaris.php" class='sidebar-link'>
@@ -102,7 +102,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/listbarang') {
+                        <?php if ($url == '/admin/listbarang') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="listbarang.php" class='sidebar-link'>
@@ -111,7 +111,7 @@
                         </a>
                         </li>
 
-                        <?php if (($url == 'admin/peminjaman') || ($url == 'admin/proses_peminjaman')) {
+                        <?php if (($url == '/admin/peminjaman') || ($url == '/admin/proses_peminjaman')) {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="peminjaman.php" class='sidebar-link'>
@@ -120,7 +120,7 @@
                         </a>
                         </li>
 
-                        <?php if (($url == 'admin/pengembalian') || ($url == 'admin/proses_pengembalian')) {
+                        <?php if (($url == '/admin/pengembalian') || ($url == '/admin/proses_pengembalian')) {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="pengembalian.php" class='sidebar-link'>
@@ -129,7 +129,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/datamhsw') {
+                        <?php if ($url == '/admin/datamhsw') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="datamhsw.php" class='sidebar-link'>
@@ -138,7 +138,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/persetujuan') {
+                        <?php if ($url == '/admin/persetujuan') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="persetujuan.php" class='sidebar-link'>
@@ -147,7 +147,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/denda') {
+                        <?php if ($url == '/admin/denda') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="denda.php" class='sidebar-link'>
@@ -156,7 +156,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/riwayat') {
+                        <?php if ($url == '/admin/riwayat') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="riwayat.php" class='sidebar-link'>
@@ -165,7 +165,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'admin/users-profile') {
+                        <?php if ($url == '/admin/users-profile') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="users-profile.php" class='sidebar-link'>

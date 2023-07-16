@@ -5,33 +5,33 @@
         $file_name = basename($_SERVER['PHP_SELF']);
         $directory = str_replace('/' . $file_name, '', $_SERVER['PHP_SELF']);
         $url = $directory . '/' . str_replace('.php', '', $file_name);
-        $url = str_replace('/ailab/', '', $url);
+        $url = str_replace('/ailab', '', $url);
         ?>
-        <?php if ($url == 'admin/index') {
+        <?php if ($url == '/admin/index') {
           echo '<title>Dashboard</title>';
         } ?>
-        <?php if ($url == 'admin/listbarang') {
+        <?php if ($url == '/admin/listbarang') {
           echo '<title>List Barang</title>';
         } ?>
-        <?php if ($url == 'admin/datamhsw') {
+        <?php if ($url == '/admin/datamhsw') {
           echo '<title>Tambah Mahasiswa</title>';
         } ?>
-        <?php if (($url == 'admin/peminjaman') || ($url == 'admin/proses_peminjaman')) {
+        <?php if (($url == '/admin/peminjaman') || ($url == '/admin/proses_peminjaman')) {
           echo '<title>Peminjaman Barang</title>';
         } ?>
-        <?php if (($url == 'admin/pengembalian') || ($url == 'admin/proses_pengembalian')) {
+        <?php if (($url == '/admin/pengembalian') || ($url == '/admin/proses_pengembalian')) {
           echo '<title>Pengembalian Barang</title>';
         } ?>
-        <?php if ($url == 'admin/persetujuan') {
+        <?php if ($url == '/admin/persetujuan') {
           echo '<title>Persetujuan</title>';
         } ?>
-        <?php if ($url == 'admin/riwayat') {
+        <?php if ($url == '/admin/riwayat') {
           echo '<title>Riwayat Peminjaman</title>';
         } ?>
-        <?php if ($url == 'admin/inventaris') {
+        <?php if ($url == '/admin/inventaris') {
           echo '<title>Inventaris</title>';
         } ?>
-        <?php if ($url == 'admin/denda') {
+        <?php if ($url == '/admin/denda') {
           echo '<title>Denda</title>';
         } ?>
         <link rel="stylesheet" href="assets/css/main/app.css">

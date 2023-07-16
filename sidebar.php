@@ -53,9 +53,10 @@
                         $file_name = basename($_SERVER['PHP_SELF']);
                         $directory = str_replace('/' . $file_name, '', $_SERVER['PHP_SELF']);
                         $url = $directory . '/' . str_replace('.php', '', $file_name);
-                        $url = str_replace('/ailab/', '', $url);
+                        $url = str_replace('/ailab', '', $url);
+
                         ?>
-                        <?php if ($url == 'index') {
+                        <?php if ($url == '/index') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="index.php" class='sidebar-link'>
@@ -64,7 +65,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'inventaris') {
+                        <?php if ($url == '/inventaris') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="inventaris.php" class='sidebar-link'>
@@ -73,7 +74,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'peminjaman') {
+                        <?php if ($url == '/peminjaman') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="peminjaman.php" class='sidebar-link'>
@@ -81,7 +82,7 @@
                             <span>Peminjaman Barang</span>
                         </a>
                         </li>
-                        <?php if ($url == 'riwayat') {
+                        <?php if ($url == '/riwayat') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="riwayat.php" class='sidebar-link'>
@@ -90,7 +91,7 @@
                         </a>
                         </li>
 
-                        <?php if ($url == 'users-profile') {
+                        <?php if ($url == '/users-profile') {
                             echo ' <li class="sidebar-item active ">';
                         } ?>
                         <a href="users-profile.php" class='sidebar-link'>
