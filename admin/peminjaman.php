@@ -65,6 +65,7 @@ $kon = new koneksi();
                                     <th>Kuantiti</th>
                                     <th>Tgl Peminjaman</th>
                                     <th>Tgl Batas Pengembalian</th>
+                                    <th>Invoice</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -82,6 +83,7 @@ $kon = new koneksi();
                                             <td><?= $row['nama_barang'] ?></td>
                                             <td><?= $row['merek'] ?></td>
                                             <td><?= $row['kuantiti'] ?></td>
+                                            <td><a href="invoice.php?id=<?= $row['id_pinjam'] ?> " class="btn btn-primary " target="_blank"><i class="bi bi-printer-fill"></i></a></td>
                                             <?php
                                             $status = $row['status'];
                                             if ($status == 0) {
@@ -139,7 +141,10 @@ $kon = new koneksi();
                                             } else if ($status == 1) { ?>
                                                 <td><?= $row['tgl_pinjam'] ?></td>
                                                 <td><?= $row['tgl_batas_kembali'] ?></td>
+
                                             <?php  } ?>
+                                            <td><a href="../invoice.php?id=<?= $row['id_pinjam'] ?> " class="btn btn-primary " target="_blank"><i class="bi bi-printer-fill"></i></a></td>
+
                                             <td>
                                                 <?php
                                                 $status = $row['status'];
