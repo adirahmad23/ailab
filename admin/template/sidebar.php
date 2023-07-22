@@ -82,7 +82,7 @@
                         $file_name = basename($_SERVER['PHP_SELF']);
                         $directory = str_replace('/' . $file_name, '', $_SERVER['PHP_SELF']);
                         $url = $directory . '/' . str_replace('.php', '', $file_name);
-                        $url = str_replace('/ailab/', '', $url);
+                        $url = str_replace('/ailab', '', $url);
                         ?>
                         <?php if ($url == '/admin/index') {
                             echo ' <li class="sidebar-item active ">';

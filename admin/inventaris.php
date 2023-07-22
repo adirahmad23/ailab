@@ -95,6 +95,7 @@ if (isset($_POST['delete'])) {
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Inventaris Barang</h3>
+                        <p class="text-subtitle text-muted">Silahkan Pilih Barang Yang Akan Anda Pinjam</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -112,8 +113,7 @@ if (isset($_POST['delete'])) {
                         Data List Barang
                     </div>
                     <div class="btn-tambah p-3">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah
-                            Inventaris</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah">Tambah Inventaris</button>
                     </div>
                     <div class="card-header">
                         <?php
@@ -169,7 +169,7 @@ if (isset($_POST['delete'])) {
                                     <th width="5%">No</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
-                                    <th>Spesifikasi</th>
+                                    <th>Merek</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -255,9 +255,9 @@ if (isset($_POST['delete'])) {
                         </div>
 
                         <div class="form-group">
-                            <label">Spesifikasi :</label>
+                            <label">Merk :</label>
                                 <select style="width:100%" class="form-control select-merek" id="selectmerek" name="tmerek" required>
-                                    <option value="" selected disabled>Pilih Spesifikasi</option>
+                                    <option value="" selected disabled>Pilih Merek</option>
                                 </select>
                         </div>
                 </div>
@@ -319,11 +319,10 @@ if (isset($_POST['delete'])) {
                     },
                     success: function(data) {
                         $('.select-merek').empty();
-                        $('.select-merek').append('<option value="">Pilih Spesifikasi</option>');
+                        $('.select-merek').append('<option value="">Pilih Merek</option>');
                         if (data.length > 0) {
                             $.each(data, function(index, value) {
-                                $('.select-merek').append('<option value="' + value.id_barang +
-                                    '">' + value.merek + '</option>');
+                                $('.select-merek').append('<option value="' + value.id_barang + '">' + value.merek + '</option>');
                             });
                             $('.select-merek').prop('disabled', false);
                         } else {

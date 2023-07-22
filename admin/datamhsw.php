@@ -29,20 +29,7 @@ if (isset($_POST['tambah'])) {
     $kelas = strip_tags($_POST['tkelas']);
     $email = strip_tags($_POST['temail']);
     $pass = md5($_POST['tnrp']);
-    // $pass1 = md5($_POST['tpass1']);
-    // if ($pass != $pass1) {
-    //     $_SESSION['tambah'] = "2";
-    //     header("Location: " . $_SERVER['PHP_SELF']);
-    //     exit();
-    // }
 
-    // $verif = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE id_rfid = '$idrfid' ");
-    // $jumlah = $kon->jumlah_data($verif);
-    // if ($jumlah > 0) {
-    //     $_SESSION['tambah'] = "3";
-    //     header("Location: " . $_SERVER['PHP_SELF']);
-    //     exit();
-    // }
 
     $verifnrp = $kon->kueri("SELECT * FROM  tb_mahasiswa WHERE nrp = '$nrp' OR id_rfid = '$idrfid' ");
     $jumlah = $kon->jumlah_data($verifnrp);
@@ -94,11 +81,7 @@ if (isset($_POST['edit'])) {
 <body>
     <?php include_once "template/sidebar.php" ?>
     <div id="main">
-        <header class="mb-3">
-            <a href="#" class="burger-btn d-block d-xl-none">
-                <i class="bi bi-justify fs-3"></i>
-            </a>
-        </header>
+
 
         <div class="page-heading">
             <div class="page-title">
@@ -211,7 +194,7 @@ if (isset($_POST['edit'])) {
                             <tbody>
                                 <?php
                                 $loop = $kon->kueri("SELECT * FROM tb_mahasiswa");
-                                foreach ($loop as $value) : ?>
+                                foreach ($loop as $value) { ?>
                                     <tr>
                                         <td><?= $value['id_rfid'] ?></td>
                                         <td><?= $value['nama_mahasiswa'] ?></td>
@@ -301,7 +284,7 @@ if (isset($_POST['edit'])) {
                 </div>
                 <!-- end-modal-edit -->
 
-            <?php endforeach; ?>
+            <?php } ?>
             </tbody>
             </table>
         </div>
@@ -338,14 +321,6 @@ if (isset($_POST['edit'])) {
                             <label>Email</label>
                             <input type="email" name="temail" class="form-control" placeholder="Masukkan Email" required>
                         </div>
-                        <!-- <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="tpass" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Konfirmasi Password</label>
-                            <input type="password" name="tpass1" class="form-control" required>
-                        </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
@@ -353,16 +328,22 @@ if (isset($_POST['edit'])) {
                     </form>
                 </div>
             </div>
+            <?php include_once 'template/footer.php' ?>
+
         </div>
     </div>
     <!-- end-modal-tambah -->
-    <?php include_once 'template/footer.php' ?>
     <script>
         $(document).ready(function() {
-            $("#idmhsw").load("tmpmhsw.php");
-            setInterval(function() {
+            function loadDataFromServer() {
                 $("#idmhsw").load("tmpmhsw.php");
-            }, 500);
+            }
+
+            loadDataFromServer(); // Panggil pertama kali saat halaman dimuat
+
+            setInterval(function() {
+                loadDataFromServer();
+            }, 2000); // Panggil setiap 2 detik
         });
     </script>
 </body>
