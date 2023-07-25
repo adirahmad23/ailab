@@ -49,6 +49,8 @@ if (isset($_POST["add_to_cart"])) {
       'stok'                 =>    $_POST["stok"]
     );
     $cart_data[] = $item_array;
+    // var_dump($cart_data);
+    // die;
   }
 
 
@@ -129,7 +131,16 @@ if (isset($_POST['chekout'])) {
   $length = count($aray_idbarang);
   $kuantitis = explode(",", $kuantiti);
   $total = 0;
-
+  // echo "Nama: " . $nama . "<br>";
+  // echo "ID Mahasiswa: " . $idmhsw . "<br>";
+  // echo "ID Barang: " . $id_barang . "<br>";
+  // echo "Nama Barang: " . $nama_barang . "<br>";
+  // echo "Merek: " . $merek . "<br>";
+  // echo "Kuantiti: " . $kuantiti . "<br>";
+  // echo "Status: " . $status . "<br>";
+  // echo "Kode Barang: " . $kdbarang . "<br>";
+  // echo "ID Inventaris: " . $id_inventaris . "<br>";
+  // die;
   foreach ($kuantitis as $nilai) {
     $total += $nilai;
   }
@@ -197,9 +208,9 @@ if (isset($_POST['chekout'])) {
     $mail->Body    =  "Anda Memiliki Notifikasi Persetujuan Peminjaman Barang Dari Mahasiswa,  $nama dengan, <br> Nama barang : $nama_barang <br> Spesifikasi barang : $merek. <br> <br> Mohon untuk segera menyetujui peminjaman barang tersebut. <br><br> <a href='https://ailab.cyberpink.my.id/admin/persetujuan.php' class='btn btn-primary'>Masuk Ke Persetujuan</a> <br> <br> Terimakasih.";
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-    if (!$mail->send()) {
-      echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
-    }
+    // if (!$mail->send()) {
+    //   echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
+    // }
 
 
 
@@ -314,12 +325,12 @@ if (isset($_POST['chekout'])) {
               <thead>
                 <tr>
                   <th width="5%">No</th>
-                  <!-- <th>ID Barang</th>git -->
-
                   <th>Nama Barang</th>
                   <th>Spesifikasi</th>
                   <th>Jumlah Stock</th>
-                  <th>Aksi</th>
+                  <th width="23%">
+                    <center>Aksi</center>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -328,42 +339,52 @@ if (isset($_POST['chekout'])) {
                 $data = $kon->hasil_data($minim);
                 if ($data > 0) { ?>
                   <tr>
-                    <td colspan="6" class="text-center">Anda Sudah Meminjam Barang</td>
+                    <td colspan=" 6" class="text-center">Anda Sudah Meminjam Barang</td>
                   </tr>
                 <?php } else { ?>
-                  <?php $no = 1;
-                  foreach ($result as $row) { ?>
+                  <?php foreach ($result as $index => $row) { ?>
                     <tr>
-                      <td><?= $no ?></td>
-                      <!-- <td><?= $row["id_barang"] ?></td> -->
-
+                      <td><?= $index + 1 ?></td>
                       <td><?= $row["nama_barang"] ?></td>
                       <td><?= $row["merek"] ?></td>
                       <td><?= $row["stok"] ?></td>
-                      <?php if ($row["stok"] == 0) { ?>
-                        <td>
-                          <input type="submit" style="margin-top:5px;" class="btn btn-primary" value="Kosong" disabled />
-                        </td>
-                      <?php } else { ?>
-                        <td>
-                          <form method="post">
-                            <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Chekout" />
-                            <input type="hidden" name="kuantiti" value="1" class="form-control" />
-                            <input type="hidden" name="nama_barang" value="<?php echo $row["nama_barang"]; ?>" />
-                            <input type="hidden" name="merek" value="<?php echo $row["merek"]; ?>" />
-                            <input type="hidden" name="stok" value="<?php echo $row["stok"]; ?>" />
-                            <input type="hidden" name="hidden_id" value="<?php echo $row["id_barang"]; ?>" />
-                            <input type="hidden" name="kdbarang" value="<?php echo $row["kd_barang"]; ?>" />
-                          </form>
-                        </td>
+                      <td>
+                        <form action="" method="post">
+                          <div class="col-md-12">
+                            <div class="input-group">
+                              <?php if ($row["stok"] > 0) : ?>
+                                <button class="btn btn-outline-primary minus-btn" type="button">-</button>
+                                <input type="text" name="kuantiti" class="form-control text-center quantity-input md-1 form-control-sm" value="1" min="1" max="<?= $row["stok"] ?>" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                <button class="btn btn-outline-primary plus-btn" type="button">+</button>
+                              <?php endif; ?>
+
+                              <?php if ($row["stok"] == 0) : ?>
+
+                                <input type="submit" style="width:100%;" class="btn btn-primary" value="Kosong" disabled />
+
+                              <?php else : ?>
+                                <div class="input-group-append" style="margin-left: 10px;">
+                                  <input type="submit" name="add_to_cart" class="btn btn-primary" value="Checkout" />
+                                </div>
+                                <input type="hidden" name="nama_barang" value="<?= $row["nama_barang"]; ?>" />
+                                <input type="hidden" name="merek" value="<?= $row["merek"]; ?>" />
+                                <input type="hidden" name="stok" value="<?= $row["stok"]; ?>" />
+                                <input type="hidden" name="hidden_id" value="<?= $row["id_barang"]; ?>" />
+                                <input type="hidden" name="kdbarang" value="<?= $row["kd_barang"]; ?>" />
+                              <?php endif; ?>
+
+                            </div>
+                          </div>
+
+                        </form>
+
+                      </td>
+
                     </tr>
-              <?php
-                      }
-                      $no++;
-                    }
-                  }
-              ?>
+                  <?php } ?>
+                <?php } ?>
               </tbody>
+
             </table>
           </div>
         </div>
@@ -410,13 +431,12 @@ if (isset($_POST['chekout'])) {
                       <td><?php echo $values["stok"]; ?></td>
                       <td>
                         <form action="" method="post">
-                          <div class="input-group mb-3">
-                            <button class="btn btn-outline-primary minus-btn" type="button">-</button>
-                            <input type="text" name="kuantiti[]" class="form-control text-center quantity-input" value="<?= $values['kuantiti'] ?>" min="1" max="<?= $values["stok"] ?>" aria-label="Example text with button addon" aria-describedby="button-addon1" data-idbarang="<?= $values["id_barang"] ?>">
-                            <button class="btn btn-outline-primary plus-btn" type="button">+</button>
-                          </div>
+                          <?php echo $values["kuantiti"]; ?>
+                          <input type="hidden" name="kuantiti[]" class="form-control text-center quantity-input" value="<?= $values['kuantiti'] ?>">
                       </td>
-                      <td><a href="inventaris.php?action=delete&id=<?php echo $values["id_barang"]; ?>" class="btn btn-danger"><i class="bi bi-trash-fill"></i></span></a></td>
+
+                      <td><a href=" inventaris.php?action=delete&id=<?php echo $values["id_barang"]; ?>" class="btn btn-danger"><i class="bi bi-trash-fill"></i></span></a>
+                      </td>
                     </tr>
                   <?php
                     // $total = $total + ($values["kuantiti"] * $values["merek"]);
@@ -434,6 +454,7 @@ if (isset($_POST['chekout'])) {
 
                     // buatkan input hidden untuk setiap data yang akan diinputkan ke database beri nama array[] agar bisa diinputkan ke database berikan , untuk memisahkan data
                   ?>
+
                     <input type="hidden" name="id_barang[]" value="<?php echo $values["id_barang"]; ?>">
                     <input type="hidden" name="nama_barang[]" value="<?php echo $values["nama_barang"]; ?>">
                     <input type="hidden" name="merek[]" value="<?php echo $values["merek"]; ?>">

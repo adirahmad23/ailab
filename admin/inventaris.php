@@ -281,7 +281,7 @@ if (isset($_POST['delete'])) {
             $("#kdbarang").load("tmpbarang.php");
             setInterval(function() {
                 $("#kdbarang").load("tmpbarang.php");
-            }, 500);
+            }, 1500);
         });
     </script>
     <script>
