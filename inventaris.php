@@ -208,9 +208,9 @@ if (isset($_POST['chekout'])) {
     $mail->Body    =  "Anda Memiliki Notifikasi Persetujuan Peminjaman Barang Dari Mahasiswa,  $nama dengan, <br> Nama barang : $nama_barang <br> Spesifikasi barang : $merek. <br> <br> Mohon untuk segera menyetujui peminjaman barang tersebut. <br><br> <a href='https://ailab.cyberpink.my.id/admin/persetujuan.php' class='btn btn-primary'>Masuk Ke Persetujuan</a> <br> <br> Terimakasih.";
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-    // if (!$mail->send()) {
-    //   echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
-    // }
+    if (!$mail->send()) {
+      echo '<script>alert("Pesan Gagal Terkirim / Periksa Jaringan");</script>';
+    }
 
 
 
